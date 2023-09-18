@@ -6,3 +6,19 @@
     justify-content: space-between;
     color: #fff;
 }
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.header-icon{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 15px;
+}
+.header-right-author{
+    margin-right: 1rem;
+}
