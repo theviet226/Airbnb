@@ -22,3 +22,27 @@
 .header-right-author{
     margin-right: 1rem;
 }
+
+.nav{
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    padding: 1.6rem 2.5rem;
+    justify-content: center;
+    text-align: center;
+    a{
+      font-weight: 300;
+      font-size: 2rem;  
+    }
+    .active{
+        font-weight: 400;
+        border-radius: 100px;
+        background-color: #1a4e9c;
+        width: 10rem;
+        height: 4rem;
+        line-height: 4rem;
+        display: block;
+        border: 1px solid #fff;
+      }
+    
+  }

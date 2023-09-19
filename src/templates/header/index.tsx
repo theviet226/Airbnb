@@ -2,6 +2,7 @@ import React from 'react'
 import css from "./header.module.scss"
 import { Link, useNavigate } from 'react-router-dom'
 import imgVn from "src/assets/images/vn.png"
+import Search from 'src/components/search'
 
 function Header() {
   return (
@@ -28,6 +29,26 @@ function Header() {
           </div>
 
         </header>
+        <nav>
+          <ul className={css["nav"]}>
+            <li>
+              <Link className={css["active"]} to={'/'}>
+                Chỗ ở
+              </Link>
+            </li>
+            <li>
+              <Link to={'/'}>
+                Địa điểm tham quan
+              </Link>
+            </li>
+            <li>
+              <Link to={'/'}>
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        
       </div>
 
     </div>
