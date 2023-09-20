@@ -13,7 +13,14 @@ export type TSignup = {
   name: string;
   date: string;
 };
-const signupSchema = Y.object({});
+const signupSchema = Y.object({
+  email:Y.string().email("Email không hợp lệ").required("Bạn chưa nhập Email"),
+  password:Y.string().min(2,"Password quá ngắn").max(20,"Password quá ngắn"),
+  confirmPassword:Y.string().oneOf([Y.ref("password")],"Phải trùng với Password").required("Bạn chưa nhập lại password"),
+  phone:Y.number().typeError("Số điện thoại không đúng").positive("Số điện thoại không bắt đầu bằng chữ hoặc ký tự đặc biệt").integer("Số điện thoại không bao gồm dấu thập phân").min(10,"Số điện thoại không được dưới 10 số").max(11,"Số điện thoại không được dài hơn 11 số"),
+  name:Y.string().matches(/^[A-Za-z ]*$/,"Vui lòng nhập tên hợp lệ").max(40).required("Bạn chưa nhập dữ liệu"),
+  date:Y.date().required("Bạn chưa chọn ngày tháng năm sinh")
+});
 function Register() {
   const [gender, setGender] = useState<boolean | undefined>(undefined);
   const navigate = useNavigate();
@@ -74,6 +81,7 @@ function Register() {
                           placeholder="Enter email address"
                           {...formik.getFieldProps("email")}
                         />
+                        {formik.touched.email && formik.errors.email && (<p style={{color:"red"}}>{formik.errors.email}</p>)}
                       </div>
                       <div className={css["register-input"]}>
                         <label
@@ -83,12 +91,13 @@ function Register() {
                           Password
                         </label>
                         <input
-                          type="current-password"
+                          type="password"
                           required
                           className={css["register-control"]}
                           placeholder="Enter password"
                           {...formik.getFieldProps("password")}
                         />
+                        {formik.touched.password && formik.errors.password && (<p style={{color:"red"}}>{formik.errors.password}</p>)}
                       </div>
                       <div className={css["register-input"]}>
                         <label
@@ -98,12 +107,13 @@ function Register() {
                           Confirm Password
                         </label>
                         <input
-                          type="new-password"
+                          type="password"
                           required
                           className={css["register-control"]}
                           placeholder="Enter confirm password"
                           {...formik.getFieldProps("confirmPassword")}
                         />
+                        {formik.touched.confirmPassword && formik.errors.confirmPassword && (<p style={{color:"red"}}>{formik.errors.confirmPassword}</p>)}
                       </div>
                     </div>
                     <div className={css["register-right"]}>
@@ -121,6 +131,7 @@ function Register() {
                           placeholder="Enter full name"
                           {...formik.getFieldProps("name")}
                         />
+                        {formik.touched.name && formik.errors.name && (<p style={{color:"red"}}>{formik.errors.name}</p>)}
                       </div>
                       <div className={css["register-input"]}>
                         <label
@@ -136,6 +147,7 @@ function Register() {
                           placeholder="Enter phone number"
                           {...formik.getFieldProps("phone")}
                         />
+                        {formik.touched.phone && formik.errors.phone && (<p style={{color:"red"}}>{formik.errors.phone}</p>)}
                       </div>
                       <div className={css["register-input"]}>
                         <label
@@ -151,6 +163,7 @@ function Register() {
                           placeholder="Enter birth date"
                           {...formik.getFieldProps("date")}
                         />
+                        {formik.touched.date && formik.errors.date && (<p style={{color:"red"}}>{formik.errors.date}</p>)}
                       </div>
                     </div>
                   </div>

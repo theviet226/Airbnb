@@ -1,9 +1,11 @@
-import React from 'react'
-
+import React from "react";
+import css from "./list-room.module.scss";
 function ListRoom() {
   return (
     <div>ListRoom</div>
-  )
+      
+    
+  );
 }
 
-export default ListRoom
+export default ListRoom;
