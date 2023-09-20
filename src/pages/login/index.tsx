@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-
-import css from './login.module.scss'
-import { Link, useNavigate } from 'react-router-dom'
-import { useAppDispatch } from 'src/redux/config-store'
-import { useFormik } from 'formik'
-import { authLogin } from 'src/services/auth.service'
-import { setLocalStorage } from 'src/utils'
-import { AUTH_LOGIN } from 'src/constants'
-import { authLoginn } from 'src/redux/authReduceLogin'
-export type TSignin ={
-  email:string,
-  password:string,
-}
-=======
 import React ,{useState,useEffect} from "react";
 import css from "./login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
@@ -27,7 +12,6 @@ export type TSignin = {
   password: string;
 };
 
->>>>>>> 32bfea71ea18e0671f9bd6e29bd5b503be46cd9f
 function Login() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
