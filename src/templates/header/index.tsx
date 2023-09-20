@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Search from '../search'
 
 function Header() {
+ 
   return (
     <div style={{
       background: "#003b91"
@@ -19,7 +20,7 @@ function Header() {
               <span>VND</span>
               <img className={css["header-icon"]} src="src/assets/images/vn.png" />
             </div>
-            <div className={css["header-right-author"]}>
+            <div className={css["header-right-author"]} >
               <Link to="/login">Login</Link>
             </div>
             <div className={css["header-right-author"]}>
@@ -52,7 +53,7 @@ function Header() {
           <Search />
         </div>
       </div>
-
+  
     </div>
   )
 }
