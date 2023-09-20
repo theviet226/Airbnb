@@ -1,6 +1,6 @@
-import React from 'react'
+
 import css from "./header.module.scss"
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Search from '../search'
 
 function Header() {

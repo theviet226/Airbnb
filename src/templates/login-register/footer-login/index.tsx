@@ -1,7 +1,7 @@
 
-import css from './footer.module.scss';
+import css from './footer-login.module.scss';
 
-function Footer() {
+function FooterLogin() {
   return (
     <footer className={css.footer}>
       <div className="container">
@@ -63,4 +63,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default FooterLogin;

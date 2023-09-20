@@ -1,10 +1,10 @@
-
 import { RouterProvider } from "react-router-dom";
-import { router } from './router';
-
+import { router } from "./router";
+import { Provider as ReduxProvider } from "react-redux";
 import { GlobalStyle } from "./components/global-style";
 
-import { Provider as ReduxProvider } from "react-redux";
+
+
 import { store } from "./redux/config-store";
 
 export function App() {
@@ -17,5 +17,5 @@ export function App() {
       
     </ReduxProvider>
   )
-}
 
+}

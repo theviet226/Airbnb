@@ -1,0 +1,40 @@
+/* admin-header.module.scss */
+
+.header-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #3c4b64;
+    color: #fff;
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.icon-sm {
+    font-size: 18px;
+}
+
+.btn img {
+    height: 16px;
+    margin-right: 10px;
+}
+
+/* Thêm mã CSS để đặt tất cả các thẻ bên phải nằm trên cùng một hàng */
+.header-admin > div:last-child {
+    display: flex;
+    align-items: center;
+}
+
+/* Thêm mã CSS để làm cho các thẻ bên phải không phân tách bởi dấu cách */
+.header-admin > div:last-child > * {
+    margin-right: 10px; /* Hoặc bất kỳ khoảng cách nào bạn muốn giữa các thẻ */
+}

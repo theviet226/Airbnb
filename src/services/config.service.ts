@@ -1,6 +1,5 @@
 import axios from "axios";
-import { ACCESS_TOKEN } from "src/constants";
-import { getLocalStorage } from "src/utils";
+
 
 
 const BASE_URL = "https://airbnbnew.cybersoft.edu.vn/api"
@@ -14,7 +13,16 @@ export const axiosWithoutAuth = axios.create({
 })
 axiosWithAuth.interceptors.request.use(
     (config) => {
-        config.headers["Authorization"] = `Bearer ${getLocalStorage(ACCESS_TOKEN)}`
+        config.headers["tokenCybersoft"] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MDA4IiwiSGV0SGFuU3RyaW5nIjoiMjgvMDEvMjAyNCIsIkhldEhhblRpbWUiOiIxNzA2NDAwMDAwMDAwIiwibmJmIjoxNjc3NDMwODAwLCJleHAiOjE3MDY1NDc2MDB9.eo3y0MmcjE8Jl4fRzUJLBoZzylEeFDcUTfWXvtb1hdc`
+        return config
+    },
+    (e) => {
+        return Promise.reject(e)
+    }
+)
+axiosWithoutAuth.interceptors.request.use(
+    (config) => {
+        config.headers["tokenCybersoft"] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MDA4IiwiSGV0SGFuU3RyaW5nIjoiMjgvMDEvMjAyNCIsIkhldEhhblRpbWUiOiIxNzA2NDAwMDAwMDAwIiwibmJmIjoxNjc3NDMwODAwLCJleHAiOjE3MDY1NDc2MDB9.eo3y0MmcjE8Jl4fRzUJLBoZzylEeFDcUTfWXvtb1hdc`
         return config
     },
     (e) => {

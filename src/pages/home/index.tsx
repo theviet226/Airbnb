@@ -1,4 +1,4 @@
-import React from 'react'
+
 import HomeCarousel from './home-carousel'
 import HomeLocal from './home-local'
 

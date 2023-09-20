@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import css from './search.module.scss';
-import { DatePicker, Space } from 'antd';
+import { DatePicker } from 'antd';
 // import 'antd/dist/antd.css';
 
 const { RangePicker } = DatePicker;

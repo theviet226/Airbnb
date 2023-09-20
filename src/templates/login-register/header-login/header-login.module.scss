@@ -1,0 +1,50 @@
+.header {
+    background-color: #003b91;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.header-icon{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 15px;
+}
+.header-right-author{
+    margin-right: 1rem;
+}
+
+.nav{
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    padding-top: 1rem;
+    padding: 1rem 2.5rem;
+    justify-content: center;
+    text-align: center;
+    a{
+      font-weight: 300;
+      font-size: 2rem;  
+    }
+    .active{
+        font-weight: 400;
+        border-radius: 100px;
+        background-color: #1a4e9c;
+        width: 10rem;
+        height: 4rem;
+        line-height: 4rem;
+        display: block;
+        border: 1px solid #fff;
+      }
+    
+  }

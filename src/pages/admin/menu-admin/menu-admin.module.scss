@@ -1,0 +1,72 @@
+/* menu-admin.module.scss */
+.menu{
+    background-color: #3c4b64;
+    height: 100vh;
+    
+}
+
+.navbar-brand-box {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 30px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.btn {
+    position: absolute;
+    left: 250px;
+    top: 20px;
+    font-size: 20px;
+    z-index: 2;
+    background-color: #fff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+
+#side-menu {
+    padding: 0;
+    list-style: none;
+}
+
+.menu-title {
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.menu-content {
+    margin-top: 10px;
+    padding: 10px 0;
+}
+
+
+.menu-item {
+    color: #fff;
+    padding: 10px 30px;
+    margin: 20px 0;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.menu-content:hover {
+    background-color: #0429cf;
+    color: #fff;
+}
+
+.nav-icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+a {
+    color: #fff;
+}

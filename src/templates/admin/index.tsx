@@ -1,12 +1,15 @@
-// AdminBaseTemplate.js
-import React from "react";
 
-export function AdminBaseTemplate({ children }) {
+import { Outlet } from "react-router-dom";
+import { Suspense } from "react";
+
+export function AdminBaseTemplate() {
   return (
     <div className="admin-template">
-      
-      {children}
-      
+      <Suspense fallback={<>Loading...</>}>
+        <Outlet />
+      </Suspense>
+
+
       {/* Bất kỳ phần footer của trang admin nào bạn muốn thêm vào đây */}
     </div>
   );
