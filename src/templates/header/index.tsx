@@ -1,8 +1,7 @@
 import React from 'react'
 import css from "./header.module.scss"
 import { Link, useNavigate } from 'react-router-dom'
-import imgVn from "src/assets/images/vn.png"
-import Search from 'src/components/search'
+import Search from '../search'
 
 function Header() {
   return (
@@ -43,12 +42,15 @@ function Header() {
             </li>
             <li>
               <Link to={'/'}>
-                Contact
+                Liên hệ
               </Link>
             </li>
           </ul>
         </nav>
-        
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {/* Các phần khác của Header ở đây */}
+          <Search />
+        </div>
       </div>
 
     </div>
