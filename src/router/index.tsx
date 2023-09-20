@@ -1,11 +1,12 @@
 import {createBrowserRouter} from "react-router-dom"
 import  {BaseTemplate}  from "../templates/base"
-import Home from "../pages/home"
-import ListRoom from "../pages/list-room"
-import DetailRoom from "../pages/detail-room"
-import Profile from "../pages/profile"
-import Login from "../pages/login"
-import Register from "../pages/register"
+import { lazy } from "react"
+const Home = lazy(() => import( "../pages/home"))
+const ListRoom = lazy(() => import("../pages/list-room")) 
+const DetailRoom =lazy(() =>import("../pages/detail-room")) 
+const Profile = lazy (() => import ("../pages/profile")) 
+const Login = lazy (() => import ("../pages/login")) 
+const Register = lazy (() => import("../pages/register")) 
 
 
 export const router = createBrowserRouter([
