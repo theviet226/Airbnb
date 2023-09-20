@@ -1,0 +1,49 @@
+.search {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 100px;
+    align-items: center;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+    margin-bottom: -40px;
+   z-index: 10
+
+}
+
+.search-content {
+    margin: 10px 0;
+    border-right: 1px solid gray;
+    padding: 0 35px;
+}
+
+.search-item {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.search-input {
+    margin-left: 10px;
+    outline: none;
+    border: none;
+}
+.search-label{
+    display: flex;
+}
+/* CSS cho input của ngày nhận phòng và ngày trả phòng */
+.react-datepicker-ignore-onclickoutside {
+    font-size: 14px;
+    /* Điều chỉnh kích thước font chữ */
+    padding: 5px px;
+    /* Điều chỉnh khoảng cách trong input */
+    width: 100px;
+    /* Điều chỉnh chiều rộng */
+}
+
+/* CSS cho lựa chọn ngày */
+.react-datepicker-popper {
+    font-size: 14px;
+    /* Điều chỉnh kích thước font chữ trong lịch */
+}
