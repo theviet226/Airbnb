@@ -4,6 +4,8 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 import authReduceLogin from './authReduceLogin';
 import userReducer  from './user.slice';
 import roomReducer from './room.slice';
+import bookingReducer from './booking-room.slice'
+import localReducer from './localtion.slice'
 
 
 export const store = configureStore({
@@ -11,6 +13,8 @@ export const store = configureStore({
     authReducerLogin:authReduceLogin,
     user: userReducer,
     room : roomReducer,
+    booking: bookingReducer,
+    local: localReducer,
   },
 })
 

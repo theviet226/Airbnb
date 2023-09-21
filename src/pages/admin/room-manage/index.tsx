@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Room } from "src/services/room.service"
@@ -32,8 +32,8 @@ function RoomMangage() {
           <div className="card-header text-center">
             <h2>Danh sách phòng</h2>
           </div>
-          <div className="card-body table-responsive">
-            <table className="table table-bordered table-responsive" id="danhSachAdmin">
+          <div className="card-body ">
+            <table className="table " id="danhSachAdmin">
               <thead>
                 <tr className="text-center bg-primary">
                   <th className="text-nowrap">Mã phòng</th>
@@ -52,6 +52,14 @@ function RoomMangage() {
                     <td><img className={css["img-room"]} src={room.hinhAnh} alt="11" /></td>
                     <td>{room.maViTri}</td>
                     <td>{room.khach}</td>
+                    <td>
+                      <button style={{ marginRight: "10px" }} className='btn btn-danger' >
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                      <button className='btn btn-warning'>
+                        <i className="fa-solid fa-user-pen"></i>
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
