@@ -4,7 +4,13 @@ import { lazy } from "react"
 // import BaseLoginRegister from "../templates/login-register"
 import { AdminBaseTemplate } from "../templates/admin"
 import BaseLoginRegister from "src/templates/login-register"
-const Admin = lazy(() => import("../pages/admin/admin"))
+import RoomMangage from "src/pages/admin/room-manage"
+
+
+const Location = lazy(() => import("../pages/admin/localtion"))
+const BookingInfo = lazy(() => import("../pages/admin/booking-info"))
+const Admin = lazy(() => import("../pages/admin"))
+const ListUsers = lazy(() => import("../pages/admin/list-user"))
 const Home = lazy(() => import("../pages/home"))
 const ListRoom = lazy(() => import("../pages/list-room"))
 const DetailRoom = lazy(() => import("../pages/detail-room"))
@@ -44,6 +50,22 @@ export const router = createBrowserRouter([
                 index: true,
                 path: "/admin",
                 element: <Admin />
+            },
+            {
+                path: "/admin/quan-ly-nguoi-dung",
+                element: <ListUsers />
+            },
+            {
+                path: "/admin/quan-ly-phong",
+                element: <RoomMangage />
+            },
+            {
+                path: "/admin/thong-tin-dat-phong",
+                element: <BookingInfo />
+            },
+            {
+                path: "/admin/quan-ly-vi-tri",
+                element: <Location/>
             }
         ]
     },

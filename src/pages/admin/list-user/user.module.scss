@@ -1,0 +1,57 @@
+.user {
+    padding-top: 50px;
+}
+
+.user-input {
+    font-size: 20px;
+}
+
+
+/* CSS cho modal */
+.modal {
+    position: fixed;
+    top: 50%;
+    /* Đặt modal ở giữa màn hình theo chiều dọc */
+    left: 50%;
+    /* Đặt modal ở giữa màn hình theo chiều ngang */
+    transform: translate(-50%, -50%);
+    /* Dịch chuyển modal để nằm giữa màn hình */
+    z-index: 1055;
+    display: block;
+    width: 100%;
+    /* Đặt chiều rộng tối đa của modal */
+    height: 100%;
+    /* Đặt chiều cao tối đa của modal */
+    overflow: auto;
+    /* Cho phép cuộn nếu nội dung quá lớn */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Tạo hiệu ứng mờ nền */
+}
+
+/* CSS cho nội dung modal */
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    /* Đổ bóng cho modal */
+
+    button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #555;
+    }
+}
+.modal-label{
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}

@@ -1,5 +1,6 @@
 
 import css from "./menu-admin.module.scss"
+import { Link } from 'react-router-dom'
 
 function MenuAdmin() {
     return (
@@ -21,22 +22,30 @@ function MenuAdmin() {
                     <ul className="metismenu list-unstyled" id="side-menu">
                         <li className={css["menu-title"]} data-key="t-menu">Menu</li>
                         <li className={css["menu-content"]}>
-                            <a href="">
+                            <Link to="/admin/quan-ly-nguoi-dung">
                                 <i className="fa fa-user nav-icon"></i>
                                 <span className={css["menu-item"]} data-key="t-dashboard">Quản lý người dùng</span>
-                            </a>
+                            </Link>
                         </li>
                         <li className={css["menu-content"]}>
-                            <a href="">
-                                <i className="fa-solid fa-truck-field nav-icon"></i>
-                                <span className={css["menu-item"]} data-key="t-gallery">Quản lý vị trí</span>
-                            </a>
+                        <Link to="/admin/quan-ly-vi-tri">
+                                <i className="fa-solid fa-warehouse nav-icon"></i>
+                                <span className={css["menu-item"]} data-key="t-ecommerce">Quản lý vị trí</span>
+                            </Link>
                         </li>
                         <li className={css["menu-content"]}>
-                            <a href="">
+                            <Link to="/admin/quan-ly-phong">
                                 <i className="fa-solid fa-warehouse nav-icon"></i>
                                 <span className={css["menu-item"]} data-key="t-ecommerce">Quản lý phòng</span>
-                            </a>
+                            </Link>
+
+                        </li>
+                        <li className={css["menu-content"]}>
+                            <Link to="/admin/thong-tin-dat-phong">
+                                <i className="fa-solid fa-warehouse nav-icon"></i>
+                                <span className={css["menu-item"]} data-key="t-ecommerce">Quản lý thông tin đặt phòng</span>
+                            </Link>
+
                         </li>
                         <li className={css["menu-content"]}>
                             <a href="">
