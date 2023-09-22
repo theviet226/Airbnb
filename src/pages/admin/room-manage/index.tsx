@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Room } from "src/services/room.service"
 import { setListRoom } from "src/redux/room.slice";

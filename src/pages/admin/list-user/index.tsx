@@ -11,8 +11,8 @@ function ListUsers() {
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
   const users = useSelector((state:any) => state.user.usersList);
-  const selectedUser = useSelector((state:any) => state.user.selectedUser);
-  const [editedUser, setEditedUser] = useState({});
+  // const selectedUser = useSelector((state:any) => state.user.selectedUser);
+  // const [editedUser, setEditedUser] = useState({});
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
   const [editedGender, setEditedGender] = useState(""); 
@@ -44,7 +44,7 @@ function ListUsers() {
   }, [dispatch]);
   const handleViewUser = (user:any) => {
     dispatch(setSelectedUser(user)); 
-    setEditedUser(user);
+    // setEditedUser(user);
     setEditedName(user.name);
     setEditedEmail(user.email);
     setEditedGender(user.gender.toString()); 

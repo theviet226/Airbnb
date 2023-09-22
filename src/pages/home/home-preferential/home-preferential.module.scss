@@ -1,0 +1,37 @@
+.preferential {
+    display: flex;
+    justify-content: space-between;
+}
+
+.preferential-item {
+    margin-right: 20px;
+    border-radius: 20px;
+    position: relative; /* Thiết lập vị trí tương đối cho .preferential-item */
+}
+
+.preferential-item img {
+    width: 100%;
+    display: block;
+    border-radius: 20px;
+}
+
+.preferential-content {
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    right: 0; 
+    background: rgba(0, 0, 0, 0.7); 
+    padding: 10px 20px; 
+    color: #fff; 
+    border-radius: 0px 0 20px 20px;
+}
+.preferential-text{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+}
+.preferential-text2{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}

@@ -1,39 +1,56 @@
-import React, { useRef } from 'react';
-import css from './home-local.module.scss';
-import { Carousel } from 'antd';
+import {  useRef } from 'react'
+// import { useDispatch, useSelector } from 'react-redux'
+import css from "./home-local.module.scss"
+// import { Local } from 'src/services/localtion.service';
+// import { setListLocal } from 'src/redux/localtion.slice';
 import { CarouselRef } from 'antd/es/carousel';
+import { Carousel } from 'antd';
 
 const HomeLocal: React.FC = () => {
     const refCarousel = useRef<CarouselRef>(null);
+    const locals = [
+        { imgSrc: 'src/assets/images/local/danang.jpg', title: 'Đà Nẵng' },
+        { imgSrc: 'src/assets/images/local/dl.jpg', title: 'Đà Lạt' },
+        { imgSrc: 'src/assets/images/local/hcm.jpg', title: 'Hồ Chí Minh' },
+        { imgSrc: 'src/assets/images/local/hn.jpg', title: 'Hà Nội' },
+        { imgSrc: 'src/assets/images/local/nhatrang.jpg', title: 'Nha Trang' },
+        { imgSrc: 'src/assets/images/local/phanthiet.jpg', title: 'Phan Thiết' },
+        { imgSrc: 'src/assets/images/local/vungtau.jpg', title: 'Vũng Tàu' },
+    ]
+    // const dispatch = useDispatch();   
+    // const locals = useSelector((state: any) => state.local.listLocal)
+    // console.log(locals)
 
-    const items = [
-        { imgSrc: 'src/assets/images/room/1.jpeg', title: 'Khách sạn' },
-        { imgSrc: 'src/assets/images/room/2.jpeg', title: 'Căn hộ' },
-        { imgSrc: 'src/assets/images/room/3.jpeg', title: 'Resort' },
-        { imgSrc: 'src/assets/images/room/4.jpeg', title: 'Biệt thự' },
-        { imgSrc: 'src/assets/images/room/5.jpeg', title: 'Nhà gỗ' },
-        { imgSrc: 'src/assets/images/room/6.jpeg', title: 'Nhà nghĩ thôn dã' },
-        { imgSrc: 'src/assets/images/room/7.jpeg', title: 'Khách sạn căn hộ' },
-        { imgSrc: 'src/assets/images/room/8.jpeg', title: 'Nhà nghỉ ven đường' },
-        // Thêm các thẻ khác ở đây
-    ];
-
+    // useEffect(() => {
+    //     Local({
+    //         id: locals?.id,
+    //         tenViTri: locals?.tenViTri,
+    //         tinhThanh: locals?.tinhThanh,
+    //         quocGia: locals?.quocGia,
+    //         hinhAnh: locals?.hinhAnh,
+    //     })
+    //         .then((content) => {
+    //             dispatch(setListLocal(content));
+    //         })
+    // }, [dispatch])
     return (
-        <div className={css.room}>
+        <div className='home'>
             <div className='container'>
-                <h1>Loại chỗ nghỉ</h1>
-                <Carousel ref={refCarousel} autoplay slidesToShow={4}>
-                    {items.map((item, index) => (
-                        <div key={`item-${index}`} className={css['carousel-item']}>
+                <p className="home-title">Khám phá Việt Nam
+                    <p className='home-text'>Các địa điểm nổi tiếng này có nhiều điều chờ đón bạn</p>
+                </p>
+
+                <Carousel ref={refCarousel} autoplay slidesToShow={6}>
+                    {locals.map((item, index) => (
+                        <div key={index} className={css['carousel-item']}>
                             <img src={item.imgSrc} alt="" />
-                            <h2>{item.title}</h2>
+                            <h2 style={{ marginTop: "10px" }}>{item.title}</h2>
                         </div>
                     ))}
                 </Carousel>
             </div>
-
         </div>
-    );
-};
+    )
+}
 
-export default HomeLocal;
+export default HomeLocal

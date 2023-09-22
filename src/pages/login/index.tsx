@@ -1,10 +1,10 @@
-import React ,{useState,useEffect} from "react";
+import {useState} from "react";
 import css from "./login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "src/redux/config-store";
 import { useFormik } from "formik";
 import { authLogin } from "src/services/auth.service";
-import { getLocalStorage, setLocalStorage } from "src/utils";
+import {  setLocalStorage } from "src/utils";
 import { AUTH_LOGIN } from "src/constants";
 import { authLoginn } from "src/redux/authReduceLogin";
 export type TSignin = {

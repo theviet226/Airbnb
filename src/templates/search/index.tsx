@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import css from './search.module.scss';
 import { DatePicker } from 'antd';
+import  { Dayjs } from 'dayjs';
 // import 'antd/dist/antd.css';
 
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 function Search() {
-    const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
+    const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
+
+
 
     const handleDateRangeChange = (dates: any, dateStrings: any) => {
         setSelectedDateRange(dates);
@@ -31,7 +34,7 @@ function Search() {
                         <p>Ngày nhận phòng -- Ngày trả phòng</p>
                         <div className={css["search-label"]}>
                             <i className="fa-regular fa-calendar-days"></i>
-                            <RangePicker
+                            <DatePicker.RangePicker
                                 className={css['search-input']}
                                 placeholder={['Ngày nhận phòng', 'Ngày trả phòng']}
                                 format="DD/MM/YYYY"
@@ -39,6 +42,7 @@ function Search() {
                                 value={selectedDateRange}
                                 onChange={handleDateRangeChange}
                             />
+
                         </div>
                     </div>
                 </div>
