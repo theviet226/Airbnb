@@ -1,0 +1,41 @@
+.container{
+    padding: 50px 30px;
+    font-family: "Inter";  
+}
+.list-title{
+    font-weight: 600;
+    font-size: 26px;
+
+}
+.list-detail,ul{
+   display: flex;
+}
+.list-detail,li{
+    padding-right: 10px;
+}
+.list-button{
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-weight: 400px;
+    color: #e9f4fb;
+    background: #2691d9;
+    border: 1px solid;
+}
+.list-button:hover{
+    border-color: #2691d9;
+    transition: .5s;
+}
+.list-col{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 15px 0;
+    max-height: auto;
+    overflow: auto;
+    
+}
+.list-map{
+    width: 100%;
+    height: auto;
+    position: sticky;
+    z-index: 0;
+}

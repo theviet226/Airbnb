@@ -23,11 +23,11 @@ export const router = createBrowserRouter([
                 element: <Home />
             },
             {
-                path: "list-room",
+                path: "list-room/:maViTri",
                 element: <ListRoom />
             },
             {
-                path: "detail",
+                path: "detail/:detailId",
                 element: <DetailRoom />
             },
             {
