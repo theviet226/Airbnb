@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import css from "./list-room.module.scss";
 import { useParams } from "react-router-dom";
@@ -10,6 +11,10 @@ import { useDispatch } from "react-redux";
 type TPrams = {
   maViTri: string;
 };
+
+
+// import css from "./list-room.module.scss";
+
 function ListRoom() {
   const params = useParams<TPrams>();
   const listRoom = useAppSelector((state: RootState) => {

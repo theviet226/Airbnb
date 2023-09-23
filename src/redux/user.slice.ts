@@ -1,15 +1,25 @@
-// userSlice.js
 import { createSlice } from '@reduxjs/toolkit';
+
+
+
+
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: [],
+  initialState: {
+    usersList: [],    
+    selectedUser: null 
+  },
   reducers: {
     setUsers: (state, action) => {
-      return action.payload; // Lưu danh sách người dùng vào state
+      state.usersList = action.payload; 
     },
-  },
-});
+    setSelectedUser: (state, action) => {
+      state.selectedUser = action.payload; 
+    },
 
-export const { setUsers } = userSlice.actions;
+  },
+})
+
+export const { setUsers, setSelectedUser} = userSlice.actions;
 export default userSlice.reducer;

@@ -1,0 +1,58 @@
+.homesale-content {
+    display: grid;
+    grid-template-columns: 160px auto;
+    /* 2 cột: .homesale-item và .homesale-info */
+    grid-template-rows: auto;
+    /* 1 hàng */
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+    background-image: url(/src/assets/images/login/world-map.png);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: right center;
+    align-items: center;
+    /* Canh giữa theo chiều dọc */
+}
+
+.homesale-item img {
+    display: block;
+    width: 100%;
+}
+
+.homesale-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Các phần tử bên trong được căn cách dọc */
+    padding: 10px;
+    /* Tạo khoảng cách với biên */
+}
+
+.homesale-links {
+    margin-top: 20px;
+
+}
+
+.homesale-links a {
+    color: #006ce4;
+    text-decoration: none;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    // margin-right: 15px;
+    padding: 10px 20px;
+
+    
+    
+}
+a.active {
+    border: 1px solid #006ce4;
+    border-radius: 8px;
+}
+
+.homesale-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+}

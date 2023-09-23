@@ -21,10 +21,10 @@ function Header() {
               <img className={css["header-icon"]} src="src/assets/images/vn.png" />
             </div>
             <div className={css["header-right-author"]} >
-              <Link to="/login">Login</Link>
+              <Link to="/login">Đăng nhập</Link>
             </div>
             <div className={css["header-right-author"]}>
-              <Link to="/register">Register</Link>
+              <Link to="/register">Đăng ký</Link>
             </div>
           </div>
 
@@ -33,12 +33,12 @@ function Header() {
           <ul className={css["nav"]}>
             <li>
               <Link className={css["active"]} to={'/'}>
-                Chỗ ở
+                Trang chủ
               </Link>
             </li>
             <li>
               <Link to={'/'}>
-                Địa điểm tham quan
+                Chỗ ở
               </Link>
             </li>
             <li>
