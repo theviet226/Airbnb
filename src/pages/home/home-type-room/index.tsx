@@ -2,19 +2,28 @@ import React, { useRef } from 'react';
 import css from './home-type-room.module.scss';
 import { Carousel } from 'antd';
 import { CarouselRef } from 'antd/es/carousel';
+import ks from 'src/assets/images/room/1.jpeg'
+import ch from 'src/assets/images/room/2.jpeg'
+import rs from 'src/assets/images/room/3.jpeg'
+import bt from 'src/assets/images/room/4.jpeg'
+import ng from 'src/assets/images/room/5.jpeg'
+import nn from 'src/assets/images/room/6.jpeg'
+import ksch from 'src/assets/images/room/7.jpeg'
+import nnvd from 'src/assets/images/room/8.jpeg'
+
 
 const HomeTypeRoom: React.FC = () => {
     const refCarousel = useRef<CarouselRef>(null);
 
     const items = [
-        { imgSrc: 'src/assets/images/room/1.jpeg', title: 'Khách sạn' },
-        { imgSrc: 'src/assets/images/room/2.jpeg', title: 'Căn hộ' },
-        { imgSrc: 'src/assets/images/room/3.jpeg', title: 'Resort' },
-        { imgSrc: 'src/assets/images/room/4.jpeg', title: 'Biệt thự' },
-        { imgSrc: 'src/assets/images/room/5.jpeg', title: 'Nhà gỗ' },
-        { imgSrc: 'src/assets/images/room/6.jpeg', title: 'Nhà nghĩ thôn dã' },
-        { imgSrc: 'src/assets/images/room/7.jpeg', title: 'Khách sạn căn hộ' },
-        { imgSrc: 'src/assets/images/room/8.jpeg', title: 'Nhà nghỉ ven đường' },
+        { imgSrc: ks, title: 'Khách sạn' },
+        { imgSrc: ch, title: 'Căn hộ' },
+        { imgSrc: rs, title: 'Resort' },
+        { imgSrc: bt, title: 'Biệt thự' },
+        { imgSrc: ng, title: 'Nhà gỗ' },
+        { imgSrc: nn, title: 'Nhà nghĩ thôn dã' },
+        { imgSrc: ksch, title: 'Khách sạn căn hộ' },
+        { imgSrc: nnvd, title: 'Nhà nghỉ ven đường' },
     ];
 
     return (

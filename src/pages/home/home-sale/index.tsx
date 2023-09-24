@@ -1,6 +1,7 @@
 
 import css from "./home-sale.module.scss"
 import { Link } from 'react-router-dom'
+import sale from "src/assets/images/login/GlobeGeniusBadge.png"
 
 function HomeSale() {
   return (
@@ -8,7 +9,7 @@ function HomeSale() {
       <div className='container'>
         <div className={css['homesale-content']}>
           <div className={css['homesale-item']}>
-            <img src="src/assets/images/login/GlobeGeniusBadge.png" alt="" />
+            <img src={sale} alt="" />
           </div>
           <div className={css['homesale-info']}>
             <div className={css['homesale-text']}>
