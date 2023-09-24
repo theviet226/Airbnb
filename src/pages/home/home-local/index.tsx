@@ -9,9 +9,9 @@ import { Carousel } from 'antd';
 const HomeLocal: React.FC = () => {
     const refCarousel = useRef<CarouselRef>(null);
     const locals = [
-        { imgSrc: 'src/assets/images/local/danang.jpg', title: 'Đà Nẵng' },
+        { imgSrc: 'src/assets/images/local/danang.jpg', title: 'Đà Nẵng', id: '' },
         { imgSrc: 'src/assets/images/local/dl.jpg', title: 'Đà Lạt' },
-        { imgSrc: 'src/assets/images/local/hcm.jpg', title: 'Hồ Chí Minh' },
+        { imgSrc: 'src/assets/images/local/hcm.jpg', title: 'Hồ Chí Minh',id: '1' },
         { imgSrc: 'src/assets/images/local/hn.jpg', title: 'Hà Nội' },
         { imgSrc: 'src/assets/images/local/nhatrang.jpg', title: 'Nha Trang' },
         { imgSrc: 'src/assets/images/local/phanthiet.jpg', title: 'Phan Thiết' },

@@ -1,6 +1,30 @@
-import css from "./admin-header.module.scss"
-
+// import  { useEffect, useState } from "react";
+import css from "./admin-header.module.scss";
+// import { useNavigate } from "react-router-dom";
 function AdminHeader() {
+    // const [userData, setUserData] = useState(null);
+    // const navigate = useNavigate();
+
+    // useEffect(() => {
+
+    //     const userDataString = localStorage.getItem("userData");
+    //     if (userDataString) {
+    //         const user = JSON.parse(userDataString);
+    //         setUserData(user);
+
+    //     }
+    // }, []);
+
+    // const handleLogout = () => {
+
+    //     localStorage.removeItem("userData");
+    //     setUserData(null);
+    //     navigate("/")
+
+
+    //     window.location.href = "/login"; 
+    // };
+
     return (
         <div>
             <header className={css["header-admin"]}>
@@ -12,26 +36,21 @@ function AdminHeader() {
                                 <span className="bx bx-search icon-sm"></span>
                             </div>
                         </form>
-
                     </div>
-
                 </div>
                 <div>
                     <button type="button" className="btn">
-                        <img id="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg/230px-Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg.png"
-                            height="16" />
+                        <img
+                            id=""
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg/230px-Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg.png"
+                            height="16"
+                        />
                     </button>
-                    <div className={css["dropdown"]}>
-                       <img src="" alt="img" />
-                       <span>Mai Thế Việt</span>
 
-                    </div>
                 </div>
-
-
             </header>
         </div>
-    )
+    );
 }
 
-export default AdminHeader
+export default AdminHeader;

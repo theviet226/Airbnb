@@ -1,10 +1,11 @@
 
-import css from "./header.module.scss"
+import Search from "src/templates/search"
+import css from "./header-list-room.module.scss"
 import { Link } from 'react-router-dom'
-import Search from '../search'
 
-function Header() {
- 
+
+function HeaderListRoom() {
+
   return (
     <div style={{
       background: "#003b91"
@@ -49,12 +50,14 @@ function Header() {
           </ul>
         </nav>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
           <Search />
         </div>
       </div>
-  
+
+
     </div>
   )
 }
 
-export default Header
+export default HeaderListRoom

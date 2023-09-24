@@ -38,3 +38,5 @@ export const UserPage = async (pageIndex: number, pageSize: number) => {
         console.log(error)
     }
 }
+
+

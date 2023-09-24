@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import css from "./list-room.module.scss";
 import { useParams } from "react-router-dom";
 
@@ -13,7 +13,7 @@ type TPrams = {
 };
 
 
-// import css from "./list-room.module.scss";
+
 
 function ListRoom() {
   const params = useParams<TPrams>();
@@ -36,7 +36,9 @@ function ListRoom() {
   }, [params.maViTri]);
   return (
     <>
-      <div className={css["container"]}>
+      <div style={{
+        padding: "50px 10px"
+      }} className='container'>
         <div>
           <div className={css["list-title"]}>
             <p>Chỗ ở tại khu vực bản đồ đã chọn</p>
