@@ -1,21 +1,18 @@
-
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
+import HeaderListRoom from "./header-list-room";
+import Footer from "../footer";
 
-import HeaderLogin from './header-login';
-
-
-
-function BaseLoginRegister() {
+function ListRoomTemplate() {
     return (
         <div>
-            <HeaderLogin/>
+            <HeaderListRoom/>
             <Suspense fallback={<>Loading...</>}>
                 <Outlet />
             </Suspense>
-            
+            <Footer/>
         </div>
     )
 }
 
-export default BaseLoginRegister
+export default ListRoomTemplate

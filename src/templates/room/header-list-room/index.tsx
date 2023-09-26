@@ -1,11 +1,11 @@
 
-import css from "./header.module.scss"
+import Search from "src/templates/search"
+import css from "./header-list-room.module.scss"
 import { Link } from 'react-router-dom'
-import Search from '../search'
-import icvn from "src/assets/images/vn.png"
 
-function Header() {
- 
+
+function HeaderListRoom() {
+
   return (
     <div style={{
       background: "#003b91"
@@ -19,7 +19,7 @@ function Header() {
           <div className={css["header-right"]}>
             <div className={css["header-right-icon"]}>
               <span>VND</span>
-              <img className={css["header-icon"]} src={icvn} />
+              <img className={css["header-icon"]} src="src/assets/images/vn.png" />
             </div>
             <div className={css["header-right-author"]} >
               <Link to="/login">Đăng nhập</Link>
@@ -50,12 +50,14 @@ function Header() {
           </ul>
         </nav>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
           <Search />
         </div>
       </div>
-  
+
+
     </div>
   )
 }
 
-export default Header
+export default HeaderListRoom

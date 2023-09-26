@@ -209,15 +209,22 @@
     grid-template-columns: 1fr 1fr;
     padding: 0 15px;
 }
-.detail-select{
+.detail-select {
     border: 1px solid;
-    border-radius: 15px;
-}
+    border-radius:0 0 15px 15px;
+    z-index: 1;
+    position: absolute; 
+    top: 220px; 
+    left: 40px; 
+    display: block;
+    background-color: #fff;
+  }
+  
 .dropdown{
     border: none;
     outline: none;
     align-items: center;
-    padding: 0 15px;
+    padding: 0 55px;
     font-family: "Inter";
 }
 .detail-dropdown{

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import css from './search.module.scss';
 import { DatePicker } from 'antd';
-import  { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
+import AutoCompleteInput from 'src/components/SearchResults';
 // import 'antd/dist/antd.css';
 
 // const { RangePicker } = DatePicker;
@@ -9,7 +10,9 @@ import  { Dayjs } from 'dayjs';
 function Search() {
     const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
 
-
+    const handleSelect = (data: any) => {
+        console.log('Selected:', data);
+    };
 
     const handleDateRangeChange = (dates: any, dateStrings: any) => {
         setSelectedDateRange(dates);
@@ -25,7 +28,8 @@ function Search() {
                         <p>Địa điểm</p>
                         <div className={css["search-label"]}>
                             <i className="fa-solid fa-map"></i>
-                            <input className={css['search-input']} placeholder="Bạn sắp đi đâu ?" />
+                            {/* <input className={css['search-input']} placeholder="Bạn sắp đi đâu ?" /> */}
+                            <AutoCompleteInput onSelect={handleSelect} />
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,8 @@
 import css from "./card.module.scss";
 import { Link } from "react-router-dom";
 
+
+
 type TRoom = {
   tenPhong: string;
   giuong: number;

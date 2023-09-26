@@ -5,6 +5,7 @@ import { lazy } from "react"
 import { AdminBaseTemplate } from "../templates/admin"
 import BaseLoginRegister from "src/templates/login-register"
 import RoomMangage from "src/pages/admin/room-manage"
+import ListRoomTemplate from "src/templates/room"
 
 
 const Location = lazy(() => import("../pages/admin/localtion"))
@@ -28,6 +29,11 @@ export const router = createBrowserRouter([
                 path: "/",
                 element: <Home />
             },
+        ]
+    },
+    {
+        element: <ListRoomTemplate/>,
+        children: [
             {
                 path: "list-room/:maViTri",
                 element: <ListRoom />
@@ -40,7 +46,6 @@ export const router = createBrowserRouter([
                 path: "profile",
                 element: <Profile />
             },
-
         ]
     },
     {

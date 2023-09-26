@@ -8,8 +8,9 @@
     width: 80%;
     margin: auto;
     margin-bottom: -40px;
-   z-index: 10
-
+    z-index: 10;
+    border: 1px solid #006dde;
+    
 }
 
 .search-content {
@@ -29,21 +30,19 @@
     outline: none;
     border: none;
 }
-.search-label{
+
+.search-label {
     display: flex;
 }
-/* CSS cho input của ngày nhận phòng và ngày trả phòng */
+
+
 .react-datepicker-ignore-onclickoutside {
     font-size: 14px;
-    /* Điều chỉnh kích thước font chữ */
     padding: 5px px;
-    /* Điều chỉnh khoảng cách trong input */
     width: 100px;
-    /* Điều chỉnh chiều rộng */
 }
 
-/* CSS cho lựa chọn ngày */
+
 .react-datepicker-popper {
     font-size: 14px;
-    /* Điều chỉnh kích thước font chữ trong lịch */
 }

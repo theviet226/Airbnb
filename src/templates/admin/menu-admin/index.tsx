@@ -1,8 +1,16 @@
-
+import { useState } from "react";
 import css from "./menu-admin.module.scss"
 import { Link } from 'react-router-dom'
 
 function MenuAdmin() {
+    const [userData, setUserData] = useState(null);
+    const handleLogout = () => {
+
+        localStorage.removeItem("userData");
+        setUserData(null);
+
+        window.location.href = "/login";
+    };
     return (
         <div className={css.menu}>
             <div className={css["navbar-brand-box"]}>
@@ -28,7 +36,7 @@ function MenuAdmin() {
                             </Link>
                         </li>
                         <li className={css["menu-content"]}>
-                        <Link to="/admin/quan-ly-vi-tri">
+                            <Link to="/admin/quan-ly-vi-tri">
                                 <i className="fa-solid fa-warehouse nav-icon"></i>
                                 <span className={css["menu-item"]} data-key="t-ecommerce">Quản lý vị trí</span>
                             </Link>
@@ -48,10 +56,10 @@ function MenuAdmin() {
 
                         </li>
                         <li className={css["menu-content"]}>
-                            <a href="">
+                            <Link onClick={handleLogout} to='/'>
                                 <i className="fa-solid fa-right-from-bracket nav-icon"></i>
                                 <span className={css["menu-item"]} data-key="t-gallery">Đăng Xuất</span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
