@@ -1,18 +1,16 @@
-// AdminComponent.js
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from 'src/services/user.service'; 
 import css from "./user.module.scss";
 import { setUsers, setSelectedUser } from "src/redux/user.slice";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { updateUser } from 'src/services/user.service'; 
 
 function ListUsers() {
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
   const users = useSelector((state:any) => state.user.usersList);
-  // const selectedUser = useSelector((state:any) => state.user.selectedUser);
-  // const [editedUser, setEditedUser] = useState({});
+  const selectedUser = useSelector((state:any) => state.user.selectedUser);
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
   const [editedGender, setEditedGender] = useState(""); 
@@ -25,16 +23,30 @@ function ListUsers() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  const handleUpdateUser = () => {
+    const updatedUserData = {
+      name: editedName,
+      email: editedEmail,
+      gender: editedGender,
+      role: editedRole,
+      avatar: '',
+    };
 
-  
 
+    updateUser(selectedUser.id, updatedUserData) 
+      .then((updatedUser) => {
+        const updatedUsers = users.map((user: { id: any; }) =>
+          user.id === updatedUser.id ? updatedUser : user
+        );
+        dispatch(setUsers(updatedUsers));
+       closeModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   useEffect(() => {
-        User({name: users?.name,
-             email: users?.email,
-             avatar: users?.avatar,
-             role: users?.role,
-             gender:users?.gender
-        })
+        User()
     .then((content) => {
         dispatch(setUsers(content)); 
       })
@@ -44,7 +56,6 @@ function ListUsers() {
   }, [dispatch]);
   const handleViewUser = (user:any) => {
     dispatch(setSelectedUser(user)); 
-    // setEditedUser(user);
     setEditedName(user.name);
     setEditedEmail(user.email);
     setEditedGender(user.gender.toString()); 
@@ -52,7 +63,6 @@ function ListUsers() {
     openModal(); 
     
   };
-
 
   return (
     <div className={css.user}>
@@ -239,7 +249,7 @@ function ListUsers() {
           <Button style={{fontSize:"20px"}} color="primary" onClick={closeModal}>
             Đóng
           </Button>
-          <Button style={{fontSize:"20px"}} color="primary" >
+          <Button style={{fontSize:"20px"}} color="primary" onClick={handleUpdateUser} >
             Cập nhật
           </Button>
         </ModalFooter>

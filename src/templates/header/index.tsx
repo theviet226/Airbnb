@@ -2,6 +2,7 @@
 import css from "./header.module.scss"
 import { Link } from 'react-router-dom'
 import Search from '../search'
+import icvn from "src/assets/images/vn.png"
 
 function Header() {
  
@@ -18,7 +19,7 @@ function Header() {
           <div className={css["header-right"]}>
             <div className={css["header-right-icon"]}>
               <span>VND</span>
-              <img className={css["header-icon"]} src="src/assets/images/vn.png" />
+              <img className={css["header-icon"]} src={icvn} />
             </div>
             <div className={css["header-right-author"]} >
               <Link to="/login">Đăng nhập</Link>

@@ -2,6 +2,7 @@
 
 import { Link } from 'react-router-dom'
 import css from "./header-login.module.scss"
+import icvn from "src/assets/images/vn.png"
 
 
 function HeaderLogin() {
@@ -18,7 +19,7 @@ function HeaderLogin() {
             <div className={css["header-right"]}>
               <div className={css["header-right-icon"]}>
                 <span>VND</span>
-                <img className={css["header-icon"]} src="src/assets/images/vn.png" />
+                <img className={css["header-icon"]} src={icvn} />
               </div>
               <div className={css["header-right-author"]}>
                 <Link to="/login">Login</Link>

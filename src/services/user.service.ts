@@ -1,19 +1,17 @@
-import { axiosWithoutAuth ,axiosWithAuth} from "./config.service";
+import { axiosWithoutAuth, axiosWithAuth } from "./config.service";
 
-export const User = async (data: { name: string, email: string, avatar: string, role: string, gender: string }) => {
+export const User = async () => {
     try {
         const resp = await axiosWithoutAuth({
             method: "get",
             url: "/users",
-            data,
-        })
-        // console.log(resp.data.content)
-        return resp.data.content
-
+        });
+        return resp.data.content;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
+
 export const updateUser = async (id: string, data: { name: string, email: string, avatar: string, role: string, gender: string }) => {
     try {
         const resp = await axiosWithAuth({
@@ -22,10 +20,10 @@ export const updateUser = async (id: string, data: { name: string, email: string
             data: data,
         });
         console.log(resp.data)
-        return resp.data; 
+        return resp.data;
     } catch (error) {
         console.error(error);
-        throw error; 
+        throw error;
     }
 };
 
