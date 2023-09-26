@@ -17,7 +17,7 @@ const signupSchema = Y.object({
   email:Y.string().email("Email không hợp lệ").required("Bạn chưa nhập Email"),
   password:Y.string().min(2,"Password quá ngắn").max(20,"Password quá ngắn"),
   confirmPassword:Y.string().oneOf([Y.ref("password")],"Phải trùng với Password").required("Bạn chưa nhập lại password"),
-  phone:Y.number().typeError("Số điện thoại không đúng").positive("Số điện thoại không bắt đầu bằng chữ hoặc ký tự đặc biệt").integer("Số điện thoại không bao gồm dấu thập phân").min(10,"Số điện thoại không được dưới 10 số").max(11,"Số điện thoại không được dài hơn 11 số"),
+  // phone:Y.number().typeError("Số điện thoại không đúng").positive("Số điện thoại không bắt đầu bằng chữ hoặc ký tự đặc biệt").integer("Số điện thoại không bao gồm dấu thập phân").min(10,"Số điện thoại không được dưới 10 số").max(11,"Số điện thoại không được dài hơn 11 số"),
   name:Y.string().matches(/^[A-Za-z ]*$/,"Vui lòng nhập tên hợp lệ").max(40).required("Bạn chưa nhập dữ liệu"),
   date:Y.date().required("Bạn chưa chọn ngày tháng năm sinh")
 });

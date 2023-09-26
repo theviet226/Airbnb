@@ -3,7 +3,7 @@ import css from "./menu-admin.module.scss"
 import { Link } from 'react-router-dom'
 
 function MenuAdmin() {
-    const [userData, setUserData] = useState(null);
+    const [, setUserData] = useState(null);
     const handleLogout = () => {
 
         localStorage.removeItem("userData");

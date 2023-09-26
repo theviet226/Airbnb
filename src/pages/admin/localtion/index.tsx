@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { setListLocal } from 'src/redux/localtion.slice';
 import { Local } from 'src/services/localtion.service';
@@ -6,6 +6,10 @@ import { Local } from 'src/services/localtion.service';
 function Location() {
   const dispatch = useDispatch();
   const locals = useSelector((state: any) => state.local.listLocal)
+  const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+  const localsPerPage = 9; // Số lượng người dùng trên mỗi trang
+  const indexOfLastUser = currentPage * localsPerPage;
+  const indexOfFirstUser = indexOfLastUser - localsPerPage;
 
   useEffect(() => {
     Local({
@@ -20,6 +24,22 @@ function Location() {
         dispatch(setListLocal(content));
       })
   }, [dispatch])
+  const totalUsers = locals.length;
+  const totalPages = Math.ceil(totalUsers / localsPerPage);
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
   return (
     <div className='row'>
       <div className="col-md-12">
@@ -40,26 +60,45 @@ function Location() {
                 </tr>
               </thead>
               <tbody>
-                {locals.map((local: any, index: any) => (
+                {locals.slice(indexOfFirstUser, indexOfLastUser).map((local: any, index: any) => (
                   <tr key={index}>
                     <td>{local.id}</td>
                     <td>{local.tenViTri}</td>
                     <td>{local.tinhThanh}</td>
                     <td>{local.quocGia}</td>
-                    <td><img style={{ display: "block", width: "50%" }} src={local.hinhAnh} alt="" /></td>
+                    <td><img style={{ display: "block", width: "100px" }} src={local.hinhAnh} alt="" /></td>
                     <td>
                       <button style={{ marginRight: "10px" }} className='btn btn-danger' >
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning'>
                         <i className="fa-solid fa-user-pen"></i>
-                      </button>    
-                      </td>
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+        </div>
+        <div style={{
+          textAlign: "center"
+        }}>
+
+          <button className='btn ' onClick={prevPage}><i className="fa-solid fa-backward"></i></button>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              style={{
+                fontSize: '20px'
+              }}
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`btn ${currentPage === index + 1 ? 'btn-primary' : 'btn-light'}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button className='btn ' onClick={nextPage}><i className="fa-solid fa-forward"></i></button>
         </div>
       </div>
     </div>

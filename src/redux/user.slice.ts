@@ -1,11 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface UserState {
+  usersList: any[]; // Thay any[] bằng kiểu dữ liệu thật của user
+  selectedUser: any | null; // Thay any bằng kiểu dữ liệu thật của user
+}
+const initialState: UserState = {
+  usersList: [],
+  selectedUser: null,
+};
+
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    usersList: [],
-    selectedUser: null
-  },
+  initialState,
   reducers: {
     setUsers: (state, action) => {
       state.usersList = action.payload;

@@ -5,7 +5,7 @@ import sale from "src/assets/images/login/GlobeGeniusBadge.png"
 
 function HomeSale() {
   return (
-    <div>
+    <div className="home">
       <div className='container'>
         <div className={css['homesale-content']}>
           <div className={css['homesale-item']}>

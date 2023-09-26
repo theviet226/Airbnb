@@ -11,10 +11,6 @@ export default defineConfig({
       src: "/src"
     },
   },
-<<<<<<< HEAD
   base:"./"
-=======
-  base: "./",
->>>>>>> d21a9bc982e9e85ea5bc2358d14ee1713c8df421
 
 })

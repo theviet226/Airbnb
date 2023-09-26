@@ -1,9 +1,8 @@
-<<<<<<< HEAD
 
 import { axiosWithoutAuth } from "./config.service";
 
 
-export const getAllRoomList = async ()=>{
+export const getAllRoomList = async () => {
     try {
         const resp = await axiosWithoutAuth("/phong-thue")
         return resp.data
@@ -11,7 +10,7 @@ export const getAllRoomList = async ()=>{
         console.log(error)
     }
 }
-export const getRoomList = async (maViTri:number|string) =>{
+export const getRoomList = async (maViTri: number | string) => {
     try {
         const resp = await axiosWithoutAuth(`/phong-thue/lay-phong-theo-vi-tri?maViTri=${maViTri}`)
         return resp.data
@@ -19,21 +18,18 @@ export const getRoomList = async (maViTri:number|string) =>{
         console.log(error)
     }
 }
-export const getRoomId = async (id:number|string) =>{
+export const getRoomId = async (id: number | string) => {
     try {
         const resp = await axiosWithoutAuth(`/phong-thue/${id}`)
         return resp.data
     } catch (error) {
-console.log(error)
+        console.log(error)
     }
 }
 
-=======
-import { axiosWithoutAuth } from "./config.service";
->>>>>>> d21a9bc982e9e85ea5bc2358d14ee1713c8df421
 
-export const Room = async (data:{tenphong:string,khach:string,hinhanh:string,vitri:string}) =>{
-    try{
+export const Room = async (data: { tenphong: string, khach: string, hinhanh: string, vitri: string }) => {
+    try {
         const resp = await axiosWithoutAuth({
             method: "get",
             url: "/phong-thue",
@@ -41,11 +37,11 @@ export const Room = async (data:{tenphong:string,khach:string,hinhanh:string,vit
         })
         console.log(resp.data)
         return resp.data.content
-    }catch(error){
+    } catch (error) {
         console.log(error)
     }
 }
-export const BookingRoom = async (data:{id:string,maPhong:string,ngayDen:string,ngayDi:string,soLuongKhach:string}) =>{
+export const BookingRoom = async (data: { id: string, maPhong: string, ngayDen: string, ngayDi: string, soLuongKhach: string }) => {
     try {
         const resp = await axiosWithoutAuth({
             method: "get",
@@ -53,34 +49,9 @@ export const BookingRoom = async (data:{id:string,maPhong:string,ngayDen:string,
             data,
         })
         return resp.data.content
-    }catch(error){
-<<<<<<< HEAD
- 
-=======
->>>>>>> d21a9bc982e9e85ea5bc2358d14ee1713c8df421
+    } catch (error) {
+
         console.log(error)
     }
 }
-export const getAllRoomList = async ()=>{
-    try {
-        const resp = await axiosWithoutAuth("/phong-thue")
-        return resp.data
-    } catch (error) {
-        console.log(error)
-    }
-}
-export const getRoomList = async (maViTri:number|string) =>{
-    try {
-        const resp = await axiosWithoutAuth(`/phong-thue/lay-phong-theo-vi-tri?maViTri=${maViTri}`)
-        return resp.data
-    } catch (error) {
-        console.log(error)
-    }
-}
-export const getRoomId = async (id:number|string) =>{
-    try {
-        const resp = await axiosWithoutAuth(`/phong-thue/${id}`)
-        return resp.data
-    } catch (error) {
-        console.log(error)
-    }}
+

@@ -1,0 +1,18 @@
+.service{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding-top: 20px;
+}
+.service-item{
+    margin: 0 60px;
+}
+.service-text{
+    color: #212529;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    font-size: 20px;
+}
