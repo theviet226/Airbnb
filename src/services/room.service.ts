@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 
 import { axiosWithoutAuth } from "./config.service";
+
 
 export const getAllRoomList = async ()=>{
     try {
@@ -23,8 +23,10 @@ export const getRoomId = async (id:number|string) =>{
         const resp = await axiosWithoutAuth(`/phong-thue/${id}`)
         return resp.data
     } catch (error) {
-=======
-import { axiosWithoutAuth } from "./config.service";
+console.log(error)
+    }
+}
+
 
 export const Room = async (data:{tenphong:string,khach:string,hinhanh:string,vitri:string}) =>{
     try{
@@ -48,7 +50,7 @@ export const BookingRoom = async (data:{id:string,maPhong:string,ngayDen:string,
         })
         return resp.data.content
     }catch(error){
->>>>>>> fe5f3e7745dbad4cce27d9488a2789a26e7de3f0
+ 
         console.log(error)
     }
 }

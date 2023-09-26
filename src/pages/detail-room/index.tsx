@@ -6,16 +6,42 @@ import { getRoomId } from "src/services/room.service";
 
 import { TRoomIteam } from "src/types";
 
+import { useAppDispatch, useAppSelector } from "src/redux/config-store";
+import { Booking, checkBooking } from "src/services/booking.service";
+import { setBookingRoom } from "src/redux/bookingReduce";
+import { setLocalStorage } from "src/utils";
+import { ACCESS_TOKEN, BOOKING } from "src/constants";
+import { type } from "os";
+import { number } from "yup";
+
 type TPrams = {
   detailId: string;
 };
+
 function DetailRoom() {
   const [open, setOpen] = useState<boolean>(false);
+  const orderBooking = useAppSelector(
+    (state: any) => state.booking.setBookingRoom,
+  );
   const hanldeDropDown = (state: boolean) => {
     setOpen(!state);
   };
+  const [booking, setBooking] = useState({
+    ngayDen: "",
+    ngayDi: "",
+    soLuongKhach: "",
+    maNguoiDung:0,
+    maPhong:0,
+   
+  });
+
   const params = useParams<TPrams>();
   const [roomId, setRoomId] = useState<TRoomIteam>();
+  const [quantity,setQuantity] = useState(0)
+  const [childQuanTiTy,setChildQuanTity] = useState(0)
+  const [babyQuanTiTy,setBabyQuanTity] = useState(0)
+  const [total,setTotal] =useState(0)
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (!params.detailId) return;
     getRoomId(params.detailId)
@@ -26,7 +52,73 @@ function DetailRoom() {
         console.log(e);
       });
   }, [params.detailId]);
+  const [soLuongKhach,setSoLuongKhach] = useState("")
+  const handleBooking = (e: any) => {
+    e.preventDefault();
+      
+    const updatedBooking ={
+     ...booking,
+      
+      soLuongKhach:total.toString()
+    }
+  
+    setBooking(updatedBooking)
+    setSoLuongKhach(updatedBooking.soLuongKhach)
+    Booking(updatedBooking)
+      .then((resp) => {
+        setLocalStorage(BOOKING, resp.content);
+        dispatch(setBookingRoom(resp.content));
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  useEffect(() =>{
+    checkBooking(params).then((content)=>{
 
+    }).catch((e)=>{
+      console.log(e)
+    })
+  })
+  
+  const handleIncrease = () =>{
+    setQuantity(quantity+1)
+    setTotal(total+1)
+  }
+  const handleDecrease = () =>{
+    if (quantity > 0){
+      setQuantity(quantity-1)
+      setTotal(total-1)
+    }
+  }
+  const handleIncreaseChild = () =>{
+    setChildQuanTity(childQuanTiTy+1)
+    setTotal(total+1)
+  }
+  const handleDecreaseChild = () =>{
+    if (childQuanTiTy > 0){
+      setChildQuanTity(childQuanTiTy-1)
+      setTotal(total-1)
+    }
+  }
+  const handleIncreaseBaby = () =>{
+    setBabyQuanTity(babyQuanTiTy+1)
+    setTotal(total+1)
+  }
+  const handleDecreaseBaby = () =>{
+    if (babyQuanTiTy >0){
+      setBabyQuanTity(babyQuanTiTy-1)
+      setTotal(total-1)
+    }
+  }
+
+  const handleChange = (e: any) => {
+    const { value, name } = e.target;
+    setBooking({
+      ...booking,
+      [name]: value,
+    });
+  };
   return (
     <>
       <div className={css["detail-header"]}>
@@ -309,102 +401,145 @@ function DetailRoom() {
               </span>
             </span>
           </div>
-          <div>
+          <div className={css["detail-under"]}>
             <div className={css["detail-booking"]}>
-              <div className={css["detail-booking-col"]}>
-                <label className={css["detail-label"]} style={{borderRight:"1px solid"}}>
-                  <div style={{ padding: "10px 10px" }}>
-                    <p style={{ marginBottom: 0 }}>NHẬN PHÒNG</p>
-                    <input
-                      type="date"
-                      style={{ outline: "none", border: "none" }}
-                    />
-                  </div>
-                </label>
-                <label className={css["detail-label"]}>
-                  <div style={{ padding: "10px 10px" }}>
-                    <p style={{ marginBottom: 0 }}>TRẢ PHÒNG</p>
-                    <input
-                      type="date"
-                      style={{ outline: "none", border: "none" }}
-                    />
-                  </div>
-                </label>
-              </div>
-              <div className={css["dropdown1"]}>
-                <label style={{padding:"8px 0"}}>
-                  <div style={{fontSize:"14px",fontWeight:"300"}}>KHÁCH</div>
+              <div style={{ zIndex: "1" }}>
+                <div className={css["detail-booking-col"]}>
+                  <label
+                    className={css["detail-label"]}
+                    style={{ borderRight: "1px solid" }}
+                  >
+                    <div style={{ padding: "10px 10px" }}>
+                      <p style={{ marginBottom: 0 }}>NHẬN PHÒNG</p>
+                      <input
+                        type="date"
+                        style={{ outline: "none", border: "none" }}
+                        onChange={handleChange}
+                        value={booking.ngayDen}
+                        name="ngayDen"
+                      />
+                    </div>
+                  </label>
+                  <label className={css["detail-label"]}>
+                    <div style={{ padding: "10px 10px" }}>
+                      <p style={{ marginBottom: 0 }}>TRẢ PHÒNG</p>
+                      <input
+                        type="date"
+                        style={{ outline: "none", border: "none" }}
+                        onChange={handleChange}
+                        value={booking.ngayDi}
+                        name="ngayDi"
+                      />
+                    </div>
+                  </label>
+                </div>
+                <div className={css["dropdown1"]}>
+                  <label style={{ padding: "8px 0" }}>
+                    <div style={{ fontSize: "14px", fontWeight: "300" }}>
+                      KHÁCH
+                    </div>
+                    <div>
+                      <div>
+                        <span>Số Lượng:</span>
+                        <input  type="text" value={total} name="soLuongKhach" onChange={handleChange} style={{ outline: "none", border: "none" }}/>
+                        
+                      </div>
+                    </div>
+                  </label>
                   <div>
-                    <div>
-                      <span>1 Khách</span>
+                    <i
+                      className="fa-solid fa-chevron-down"
+                      onClick={() => hanldeDropDown(open)}
+                    ></i>
+                  </div>
+                </div>
+                {open && (
+                  <div className={css["detail-select"]}>
+                    <div className={css["dropdown"]}>
+                      <label className={css["detail-dropdown"]}>
+                        <div style={{ fontWeight: "600" }}>Người lớn</div>
+                        <div>
+                          <div>
+                            <span style={{ fontWeight: "300" }}>
+                              Từ 13 tuổi trở lên
+                            </span>
+                          </div>
+                        </div>
+                      </label>
+                      <div>
+                        <button onClick={handleDecrease} className={css["detail-dropdown-button"]}>
+                          -
+                        </button>
+                        <span style={{ padding: "0 10px" }}>{quantity}</span>
+                        <button onClick={handleIncrease} className={css["detail-dropdown-button"]}>
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div className={css["dropdown"]}>
+                      <label className={css["detail-dropdown"]}>
+                        <div style={{ fontWeight: "600" }}>Trẻ em</div>
+                        <div>
+                          <div>
+                            <span style={{ fontWeight: "300" }}>
+                              Độ tuổi 2 - 12 tuổi
+                            </span>
+                          </div>
+                        </div>
+                      </label>
+                      <div>
+                        <button onClick={handleDecreaseChild} className={css["detail-dropdown-button"]}>
+                          -
+                        </button>
+                        <span style={{ padding: "0 10px" }}>{childQuanTiTy}</span>
+                        <button onClick={handleIncreaseChild} className={css["detail-dropdown-button"]}>
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div className={css["dropdown"]}>
+                      <label className={css["detail-dropdown"]}>
+                        <div style={{ fontWeight: "600" }}>Em bé</div>
+                        <div>
+                          <div>
+                            <span style={{ fontWeight: "300" }}>
+                              Dưới 2 tuổi
+                            </span>
+                          </div>
+                        </div>
+                      </label>
+                      <div>
+                        <button onClick={handleDecreaseBaby} className={css["detail-dropdown-button"]}>
+                          -
+                        </button>
+                        <span style={{ padding: "0 10px" }}>{babyQuanTiTy}</span>
+                        <button onClick={handleIncreaseBaby} className={css["detail-dropdown-button"]}>
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </label>
-                <div>
-                  <i
-                    className="fa-solid fa-chevron-down"
-                    onClick={(e) => hanldeDropDown(open)}
-                  ></i>
-                </div>
+                )}
               </div>
-              {open && (
-                <div className={css["detail-select"]}>
-                  <div className={css["dropdown"]}>
-                    <label className={css["detail-dropdown"]}>
-                      <div style={{fontWeight:"600"}}>Người lớn</div>
-                      <div>
-                        <div>
-                          <span style={{fontWeight:"300"}}>Từ 13 tuổi trở lên</span>
-                        </div>
-                      </div>
-                    </label>
-                    <div>
-                      <button className={css["detail-dropdown-button"]}>-</button>
-                      <span style={{padding:"0 10px"}}>0</span>
-                      <button className={css["detail-dropdown-button"]}>+</button>
-                    </div>
-                  </div>
-                  <div className={css["dropdown"]}>
-                    <label className={css["detail-dropdown"]}>
-                      <div style={{fontWeight:"600"}}>Trẻ em</div>
-                      <div>
-                        <div>
-                          <span style={{fontWeight:"300"}}>Độ tuổi 2 - 12 tuổi</span>
-                        </div>
-                      </div>
-                    </label>
-                    <div>
-                      <button className={css["detail-dropdown-button"]}>-</button>
-                      <span style={{padding:"0 10px"}}>0</span>
-                      <button className={css["detail-dropdown-button"]}>+</button>
-                    </div>
-                  </div>
-                  <div className={css["dropdown"]}>
-                    <label className={css["detail-dropdown"]}>
-                      <div style={{fontWeight:"600"}}>Em bé</div>
-                      <div>
-                        <div>
-                          <span style={{fontWeight:"300"}}>Dưới 2 tuổi</span>
-                        </div>
-                      </div>
-                    </label>
-                    <div>
-                      <button className={css["detail-dropdown-button"]}>-</button>
-                      <span style={{padding:"0 10px"}}>0</span>
-                      <button className={css["detail-dropdown-button"]}>+</button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
-            <div style={{padding:"15px 40px"}}>
-              <button className={css["detail-pay"]}>Đặt phòng</button>
-              <p style={{
-                padding:"20px 0 0px 0",
-                textAlign:"center",
-                fontWeight:"300",
-                fontSize:"16px"
-              }}>Bạn vẫn chưa bị trừ tiền</p>
+            <div style={{ padding: "15px 40px" }}>
+              <button
+                className={css["detail-pay"]}
+                type="submit"
+                onClick={handleBooking}
+              >
+                Đặt phòng
+              </button>
+              <p
+                style={{
+                  padding: "20px 0 0px 0",
+                  textAlign: "center",
+                  fontWeight: "300",
+                  fontSize: "16px",
+                }}
+              >
+                Bạn vẫn chưa bị trừ tiền
+              </p>
             </div>
             <div className={css["detail-cacl"]}>
               <p>$254 x 5 đêm</p>
@@ -413,7 +548,7 @@ function DetailRoom() {
             <div className={css["detail-cacl"]}>
               <p>Phí dịch vụ</p>
               <p>$28</p>
-            </div >
+            </div>
             <hr />
             <div className={css["detail-total"]}>
               <p>Tổng trước thuế</p>

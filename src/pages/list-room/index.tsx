@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import css from "./list-room.module.scss";
 import { useParams } from "react-router-dom";
 
