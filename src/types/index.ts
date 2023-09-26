@@ -1,4 +1,5 @@
 
+
 export type TRoomIteam ={
     id:       number;
     tenPhong: string;
@@ -32,4 +33,3 @@ export type TUserInfo = {
     role:string;
     // Thêm các trường thông tin khác của người dùng nếu cần
 };
-
