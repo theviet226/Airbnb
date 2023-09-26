@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from 'src/services/user.service'; 
 import css from "./user.module.scss";
-import { setUsers, setSelectedUser } from "src/redux/user.slice";
+import { setUsers, setSelectedUser,deleteUserId } from "src/redux/user.slice";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { updateUser } from 'src/services/user.service'; 
+import { updateUser,deleteUser } from 'src/services/user.service'; 
+import ModalAddUser from './modal-add-user';
+
 
 function ListUsers() {
     const dispatch = useDispatch();
@@ -45,6 +47,16 @@ function ListUsers() {
         console.error(error);
       });
   };
+  const handleDeleteUser = (userId: string) => {
+    deleteUser(userId)
+      .then(() => {
+        dispatch(deleteUserId(userId));
+        console.log('Người dùng đã được xoá.');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   useEffect(() => {
         User()
     .then((content) => {
@@ -68,70 +80,7 @@ function ListUsers() {
     <div className={css.user}>
         <div className="row">
             <div className="col-md-3">
-                <div className="card ">
-                    <form id="formdata" >
-                        <div className="card-header text-center">
-                            <h2>Thêm Mới Tài Khoản</h2>
-                        </div>
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="mb-3">
-                                        <label className="form-label">Họ Và Tên</label>
-                                        <input style={{fontSize:"18px"}} tabIndex={1} className="form-control" id="name" name="name" type="text"
-                                        placeholder="Nhập vào họ và tên "/>
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className={css["user-input"]}>
-                                        <label className="form-label">Email</label>
-                                        <input style={{fontSize:"18px"}} tabIndex={1} className="form-control" id="email" name="email" type="text"
-                                        v-model="email" v-on:blur="checkEmail()" placeholder="Nhập vào email" />
-
-                                        <small id="message_email"></small>
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="mb-3">
-                                        <label className={css["user-input"]}>Mật Khẩu</label>
-                                              <input style={{fontSize:"18px"}} tabIndex={1} className="form-control" id="password" name="password"
-                                           type="password" />
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="mb-3">
-                                        <label className={css["user-input"]}>Nhập Lại Mật Khẩu</label>
-                                 
-                                              <input style={{fontSize:"18px"}} tabIndex={1} className="form-control" id="re_password" name="re_password"
-                                            type="password" />
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="mb-3">
-                                        <label className={css["user-input"]}>Giới Tính</label>
-                                        <select style={{fontSize:"18px"}} name="gioi_tinh" id="gioi_tinh" className="form-control">
-                                            <option value="1">Nam</option>
-                                            <option value="0">Nữ</option>
-                                            <option value="2">Không xác định</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                     <div className="mb-3">
-                                        <label className={css["user-input"]}>Quyền Quản Trị</label>
-                                        <select style={{fontSize:"18px"}} name="id_quyen" id="id_quyen" className="form-control">                        
-                                            <option value="1">Admin</option>
-                                            <option value="2">User</option>                                  
-                                        </select>
-                                     </div>
-                                 </div>
-                            </div>
-                        </div>
-                        <div className="card-footer text-end">
-                            <button className="btn btn-primary" type="submit">Tạo Tài Khoản</button>
-                        </div>
-                    </form>
-                </div>
+               <ModalAddUser/>
             </div>
             <div className="col-md-9">
                 <div className="card">
@@ -165,7 +114,9 @@ function ListUsers() {
                                         </button>
                                     </td>
                                     <td>
-                                        <button style={{ marginRight: "10px" }} className='btn btn-danger' >
+                                        <button style={{ marginRight: "10px" }}
+                                        onClick={() => handleDeleteUser(user.id)}
+                                        className='btn btn-danger' >
                                             <i  className="fa-solid fa-trash"></i>
                                         </button>
                                         <button className='btn btn-warning'

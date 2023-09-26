@@ -1,4 +1,5 @@
 import { axiosWithoutAuth, axiosWithAuth } from "./config.service";
+import { TUserInfo } from "src/types";
 
 export const User = async () => {
     try {
@@ -27,6 +28,32 @@ export const updateUser = async (id: string, data: { name: string, email: string
     }
 };
 
+export const deleteUser = async (id: string) => {
+    try{
+        const resp = await axiosWithAuth({
+            method: "delete",
+            url : `/users?id=${id}`,
+        });
+        console.log(resp.data)
+        return resp.data;
+    }catch (error) {
+        console.log(error)
+    }
+}
+
+export const addUser = async (data:TUserInfo) =>{
+    try {
+        const resp = await axiosWithoutAuth({
+            method: "post",
+            url : `/users`,
+            data,
+        });
+        console.log(resp.data)
+        return resp.data
+    }catch(error){
+        console.log(error)
+    }
+}
 
 export const UserPage = async (pageIndex: number, pageSize: number) => {
     try {

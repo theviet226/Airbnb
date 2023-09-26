@@ -22,8 +22,6 @@ export type TRoomIteam ={
 }
 
 export type TUserInfo = {
-    id: number;
-    username: string;
     email: string;
     password: string;
     confirmPassword: string;
