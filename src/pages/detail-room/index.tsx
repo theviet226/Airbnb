@@ -404,192 +404,7 @@ function DetailRoom() {
               </span>
             </div>
             <div>
-              <div className={css["detail-booking"]}>
-                <div className={css["detail-booking-col"]}>
-                  <label className={css["detail-label"]} style={{ borderRight: "1px solid" }}>
-                    <div style={{ padding: "10px 10px" }}>
-                      <p style={{ marginBottom: 0 }}>NHẬN PHÒNG</p>
-                      <input
-                        type="date"
-                        style={{ outline: "none", border: "none" }}
-                      />
-                    </div>
-                  </label>
-                  <label className={css["detail-label"]}>
-                    <div style={{ padding: "10px 10px" }}>
-                      <p style={{ marginBottom: 0 }}>TRẢ PHÒNG</p>
-                      <input
-                        type="date"
-                        style={{ outline: "none", border: "none" }}
-                      />
-                    </div>
-                  </label>
-                </div>
-                <div className={css["dropdown1"]}>
-                  <label style={{ padding: "8px 0" }}>
-                    <div style={{ fontSize: "14px", fontWeight: "300" }}>KHÁCH</div>
-                    <div>
-                      <div>
-                        <span>1 Khách</span>
-                      </div>
-                    </div>
-                  </label>
-                  <div>
-                    <i
-                      className="fa-solid fa-chevron-down"
-                      onClick={() => hanldeDropDown(open)}
-                    ></i>
-                  </div>
-                </div>
-                {open && (
-                  <div className={css["detail-select"]}>
-                    <div className={css["dropdown"]}>
-                      <label className={css["detail-dropdown"]}>
-                        <div style={{ fontWeight: "600" }}>Người lớn</div>
-                        <div>
-                          <div>
-                            <span style={{ fontWeight: "300" }}>Từ 13 tuổi trở lên</span>
-                          </div>
-                        </div>
-                      </label>
-                      <div>
-                        <button className={css["detail-dropdown-button"]}>-</button>
-                        <span style={{ padding: "0 10px" }}>0</span>
-                        <button className={css["detail-dropdown-button"]}>+</button>
-                      </div>
-                    </div>
-                    <div className={css["dropdown"]}>
-                      <label className={css["detail-dropdown"]}>
-                        <div style={{ fontWeight: "600" }}>Trẻ em</div>
-                        <div>
-                          <div>
-                            <span style={{ fontWeight: "300" }}>Độ tuổi 2 - 12 tuổi</span>
-                          </div>
-                        </div>
-                      </label>
-                      <div>
-                        <button className={css["detail-dropdown-button"]}>-</button>
-                        <span style={{ padding: "0 10px" }}>0</span>
-                        <button className={css["detail-dropdown-button"]}>+</button>
-                      </div>
-                    </div>
-                    <div className={css["dropdown"]}>
-                      <label className={css["detail-dropdown"]}>
-                        <div style={{ fontWeight: "600" }}>Em bé</div>
-                        <div>
-                          <div>
-                            <span style={{ fontWeight: "300" }}>Dưới 2 tuổi</span>
-                          </div>
-                        </div>
-                      </label>
-                      <div>
-                        <button className={css["detail-dropdown-button"]}>-</button>
-                        <span style={{ padding: "0 10px" }}>0</span>
-                        <button className={css["detail-dropdown-button"]}>+</button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div style={{ padding: "15px 40px" }}>
-                <button className={css["detail-pay"]}>Đặt phòng</button>
-                <p style={{
-                  padding: "20px 0 0px 0",
-                  textAlign: "center",
-                  fontWeight: "300",
-                  fontSize: "16px"
-                }}>Bạn vẫn chưa bị trừ tiền</p>
-              </div>
-              <div className={css["detail-cacl"]}>
-                <p>$254 x 5 đêm</p>
-                <p>$1.272</p>
-              </div>
-              <div className={css["detail-cacl"]}>
-                <p>Phí dịch vụ</p>
-                <p>$28</p>
-              </div >
-              <hr />
-              <div className={css["detail-total"]}>
-                <p>Tổng trước thuế</p>
-                <p>$1.4757</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div className={css["detail-comment"]}>
-          <div>
-            <div className={css["detail-comment-img"]}>
-              <img
-                src="http://i.pravatar.cc/?img=1"
-                style={{ width: 50, height: 50, borderRadius: "50%" }}
-              />
-              <div className={css["detail-comment-img-text"]}>
-                <h3
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "600",
-                    marginBottom: 0,
-                  }}
-                >
-                  Gero
-                </h3>
-                <p
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    marginBottom: 0,
-                    color: "#717171",
-                  }}
-                >
-                  tháng 8 năm 2023
-                </p>
-              </div>
-            </div>
-            <div>
-              <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
-                tempore?
-              </span>
-            </div>
-          </div>
-          <div>
-            <div className={css["detail-comment-img"]}>
-              <img
-                src="http://i.pravatar.cc/?img=1"
-                style={{ width: 50, height: 50, borderRadius: "50%" }}
-              />
-              <div className={css["detail-comment-img-text"]}>
-                <h3
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "600",
-                    marginBottom: 0,
-                  }}
-                >
-                  Gero
-                </h3>
-                <p
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    marginBottom: 0,
-                    color: "#717171",
-                  }}
-                >
-                  tháng 8 năm 2023
-                </p>
-              </div>
-            </div>
-            <div>
-              <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
-                tempore?
-              </span>
-
-            </div>
-          </div>
-          <div className={css["detail-under"]}>
+            <div className={css["detail-under"]}>
             <div className={css["detail-booking"]}>
               <div style={{ zIndex: "1" }}>
                 <div className={css["detail-booking-col"]}>
@@ -745,6 +560,260 @@ function DetailRoom() {
 
             </div>
           </div>
+              <div style={{ padding: "15px 40px" }}>
+                <button className={css["detail-pay"]}>Đặt phòng</button>
+                <p style={{
+                  padding: "20px 0 0px 0",
+                  textAlign: "center",
+                  fontWeight: "300",
+                  fontSize: "16px"
+                }}>Bạn vẫn chưa bị trừ tiền</p>
+              </div>
+              <div className={css["detail-cacl"]}>
+                <p>$254 x 5 đêm</p>
+                <p>$1.272</p>
+              </div>
+              <div className={css["detail-cacl"]}>
+                <p>Phí dịch vụ</p>
+                <p>$28</p>
+              </div >
+              <hr />
+              <div className={css["detail-total"]}>
+                <p>Tổng trước thuế</p>
+                <p>$1.4757</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div className={css["detail-comment"]}>
+          <div>
+            <div className={css["detail-comment-img"]}>
+              <img
+                src="http://i.pravatar.cc/?img=1"
+                style={{ width: 50, height: 50, borderRadius: "50%" }}
+              />
+              <div className={css["detail-comment-img-text"]}>
+                <h3
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "600",
+                    marginBottom: 0,
+                  }}
+                >
+                  Gero
+                </h3>
+                <p
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    marginBottom: 0,
+                    color: "#717171",
+                  }}
+                >
+                  tháng 8 năm 2023
+                </p>
+              </div>
+            </div>
+            <div>
+              <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
+                tempore?
+              </span>
+            </div>
+          </div>
+          <div>
+            <div className={css["detail-comment-img"]}>
+              <img
+                src="http://i.pravatar.cc/?img=1"
+                style={{ width: 50, height: 50, borderRadius: "50%" }}
+              />
+              <div className={css["detail-comment-img-text"]}>
+                <h3
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "600",
+                    marginBottom: 0,
+                  }}
+                >
+                  Gero
+                </h3>
+                <p
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    marginBottom: 0,
+                    color: "#717171",
+                  }}
+                >
+                  tháng 8 năm 2023
+                </p>
+              </div>
+            </div>
+            <div>
+              <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
+                tempore?
+              </span>
+
+            </div>
+          </div>
+          {/* <div className={css["detail-under"]}>
+            <div className={css["detail-booking"]}>
+              <div style={{ zIndex: "1" }}>
+                <div className={css["detail-booking-col"]}>
+                  <label
+                    className={css["detail-label"]}
+                    style={{ borderRight: "1px solid" }}
+                  >
+                    <div style={{ padding: "10px 10px" }}>
+                      <p style={{ marginBottom: 0 }}>NHẬN PHÒNG</p>
+                      <input
+                        type="date"
+                        style={{ outline: "none", border: "none" }}
+                        onChange={handleChange}
+                        value={booking.ngayDen}
+                        name="ngayDen"
+                      />
+                    </div>
+                  </label>
+                  <label className={css["detail-label"]}>
+                    <div style={{ padding: "10px 10px" }}>
+                      <p style={{ marginBottom: 0 }}>TRẢ PHÒNG</p>
+                      <input
+                        type="date"
+                        style={{ outline: "none", border: "none" }}
+                        onChange={handleChange}
+                        value={booking.ngayDi}
+                        name="ngayDi"
+                      />
+                    </div>
+                  </label>
+                </div>
+                <div className={css["dropdown1"]}>
+                  <label style={{ padding: "8px 0" }}>
+                    <div style={{ fontSize: "14px", fontWeight: "300" }}>
+                      KHÁCH
+                    </div>
+                    <div>
+                      <div>
+                        <span>Số Lượng:</span>
+                        <input  type="text" value={total} name="soLuongKhach" onChange={handleChange} style={{ outline: "none", border: "none" }}/>
+                        
+                      </div>
+                    </div>
+                  </label>
+                  <div>
+                    <i
+                      className="fa-solid fa-chevron-down"
+                      onClick={() => hanldeDropDown(open)}
+                    ></i>
+                  </div>
+                </div>
+                {open && (
+                  <div className={css["detail-select"]}>
+                    <div className={css["dropdown"]}>
+                      <label className={css["detail-dropdown"]}>
+                        <div style={{ fontWeight: "600" }}>Người lớn</div>
+                        <div>
+                          <div>
+                            <span style={{ fontWeight: "300" }}>
+                              Từ 13 tuổi trở lên
+                            </span>
+                          </div>
+                        </div>
+                      </label>
+                      <div>
+                        <button onClick={handleDecrease} className={css["detail-dropdown-button"]}>
+                          -
+                        </button>
+                        <span style={{ padding: "0 10px" }}>{quantity}</span>
+                        <button onClick={handleIncrease} className={css["detail-dropdown-button"]}>
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div className={css["dropdown"]}>
+                      <label className={css["detail-dropdown"]}>
+                        <div style={{ fontWeight: "600" }}>Trẻ em</div>
+                        <div>
+                          <div>
+                            <span style={{ fontWeight: "300" }}>
+                              Độ tuổi 2 - 12 tuổi
+                            </span>
+                          </div>
+                        </div>
+                      </label>
+                      <div>
+                        <button onClick={handleDecreaseChild} className={css["detail-dropdown-button"]}>
+                          -
+                        </button>
+                        <span style={{ padding: "0 10px" }}>{childQuanTiTy}</span>
+                        <button onClick={handleIncreaseChild} className={css["detail-dropdown-button"]}>
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div className={css["dropdown"]}>
+                      <label className={css["detail-dropdown"]}>
+                        <div style={{ fontWeight: "600" }}>Em bé</div>
+                        <div>
+                          <div>
+                            <span style={{ fontWeight: "300" }}>
+                              Dưới 2 tuổi
+                            </span>
+                          </div>
+                        </div>
+                      </label>
+                      <div>
+                        <button onClick={handleDecreaseBaby} className={css["detail-dropdown-button"]}>
+                          -
+                        </button>
+                        <span style={{ padding: "0 10px" }}>{babyQuanTiTy}</span>
+                        <button onClick={handleIncreaseBaby} className={css["detail-dropdown-button"]}>
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div style={{ padding: "15px 40px" }}>
+              <button
+                className={css["detail-pay"]}
+                type="submit"
+                onClick={handleBooking}
+              >
+                Đặt phòng
+              </button>
+              <p
+                style={{
+                  padding: "20px 0 0px 0",
+                  textAlign: "center",
+                  fontWeight: "300",
+                  fontSize: "16px",
+                }}
+              >
+                Bạn vẫn chưa bị trừ tiền
+              </p>
+            </div>
+            <div className={css["detail-cacl"]}>
+              <p>$254 x 5 đêm</p>
+              <p>$1.272</p>
+            </div>
+            <div className={css["detail-cacl"]}>
+              <p>Phí dịch vụ</p>
+              <p>$28</p>
+            </div>
+            <hr />
+            <div className={css["detail-total"]}>
+              <p>Tổng trước thuế</p>
+              <p>$1.4757</p>
+
+
+            </div>
+          </div> */}
         </div>
         <div className={css["detail-cm"]}>
           <img

@@ -14,7 +14,7 @@ function MenuAdmin() {
     return (
         <div className={css.menu}>
             <div className={css["navbar-brand-box"]}>
-                <span>Vuesy</span>
+                <span>airbnb admin</span>
             </div>
             <button type="button" style={{
                 position: "absolute",
