@@ -2,17 +2,17 @@ import { useState } from 'react';
 import css from "./admin-header.module.scss";
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import ad from 'src/assets/images/ad.jpg'
+
 
 function AdminHeader() {
     const [userData, setUserData] = useState<any>(null);
 
     const handleLogout = () => {
 
-        localStorage.removeItem("userData");
-        setUserData(null);
+        localStorage.removeItem("authLogin");
+        // setUserData(null);
 
-        window.location.href = "/login";
+        // window.location.href = "/login";
     };
 
     useEffect(() => {
@@ -42,8 +42,8 @@ function AdminHeader() {
                     <div className={css["user-name"]}>
                         {userData ? (
                             <>
-                           <img src={userData.avatar} alt="" />
-                                {userData.name}     
+                                <img src={userData.avatar} alt="" />
+                                {userData.name}
                             </>
                         ) : (
                             "Loading..."

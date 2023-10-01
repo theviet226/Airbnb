@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface UserState {
-  usersList: any[]; // Thay any[] bằng kiểu dữ liệu thật của user
-  selectedUser: any | null; // Thay any bằng kiểu dữ liệu thật của user
+  usersList: any[];
+  selectedUser: any | null; 
 }
 const initialState: UserState = {
   usersList: [],

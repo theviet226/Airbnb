@@ -1,17 +1,20 @@
-import { createBrowserRouter } from "react-router-dom"
+import { Navigate, createBrowserRouter } from "react-router-dom"
 import { BaseTemplate } from "../templates/base"
 import { lazy } from "react"
 // import BaseLoginRegister from "../templates/login-register"
 import { AdminBaseTemplate } from "../templates/admin"
 import BaseLoginRegister from "src/templates/login-register"
-import RoomMangage from "src/pages/admin/room-manage"
+// import RoomMangage from "src/pages/admin/room-manage"
 import ListRoomTemplate from "src/templates/room"
 
 
 const Location = lazy(() => import("../pages/admin/localtion"))
 const BookingInfo = lazy(() => import("../pages/admin/booking-info"))
-const Admin = lazy(() => import("../pages/admin"))
-const ListUsers = lazy(() => import("../pages/admin/list-user"))
+const Admin = lazy(() => import("../pages/admin"));
+const ListUsers = lazy(() => import("../pages/admin/list-user"));
+const RoomManage = lazy(() => import("../pages/admin/room-manage"));
+
+
 const Home = lazy(() => import("../pages/home"))
 const ListRoom = lazy(() => import("../pages/list-room"))
 const DetailRoom = lazy(() => import("../pages/detail-room"))
@@ -32,7 +35,7 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        element: <ListRoomTemplate/>,
+        element: <ListRoomTemplate />,
         children: [
             {
                 path: "list-room/:maViTri",
@@ -54,25 +57,25 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 path: "/admin",
-                element: <Admin />
+                element: isAdminLoggedIn() ? <Admin /> : <Navigate to="/login" />,
             },
             {
                 path: "/admin/quan-ly-nguoi-dung",
-                element: <ListUsers />
+                element: isAdminLoggedIn() ? <ListUsers /> : <Navigate to="/login" />,
             },
             {
                 path: "/admin/quan-ly-phong",
-                element: <RoomMangage />
+                element: isAdminLoggedIn() ? <RoomManage /> : <Navigate to="/login" />,
             },
             {
                 path: "/admin/thong-tin-dat-phong",
-                element: <BookingInfo />
+                element: isAdminLoggedIn() ? <BookingInfo /> : <Navigate to="/login" />,
             },
             {
                 path: "/admin/quan-ly-vi-tri",
-                element: <Location/>
-            }
-        ]
+                element: isAdminLoggedIn() ? <Location /> : <Navigate to="/login" />,
+            },
+        ],
     },
     {
         element: <BaseLoginRegister />,
@@ -89,3 +92,16 @@ export const router = createBrowserRouter([
     }
 
 ])
+
+// kiểm tra xem người dùng có phải là admin hay không
+function isAdminLoggedIn() {
+    const userDataFromLocalStorage = localStorage.getItem('authLogin');
+    if (userDataFromLocalStorage) {
+      const userData = JSON.parse(userDataFromLocalStorage);
+      // Kiểm tra xem vai trò của người dùng có phải là "ADMIN" hay không
+      return userData && userData.user && userData.user.role === 'ADMIN';
+    }
+  
+    return false; 
+  }
+  

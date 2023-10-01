@@ -1,4 +1,4 @@
-import React from 'react'
+
 import css from "./home-service.module.scss"
 import s1 from "src/assets/images/service/1.webp"
 import s2 from "src/assets/images/service/2.webp"

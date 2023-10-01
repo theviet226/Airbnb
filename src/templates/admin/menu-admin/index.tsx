@@ -6,10 +6,10 @@ function MenuAdmin() {
     const [, setUserData] = useState(null);
     const handleLogout = () => {
 
-        localStorage.removeItem("userData");
+        localStorage.removeItem("authLogin");
         setUserData(null);
 
-        window.location.href = "/login";
+        // window.location.href = "/login";
     };
     return (
         <div className={css.menu}>

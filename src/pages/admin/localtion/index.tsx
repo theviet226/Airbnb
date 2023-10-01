@@ -6,7 +6,7 @@ import { Local } from 'src/services/localtion.service';
 function Location() {
   const dispatch = useDispatch();
   const locals = useSelector((state: any) => state.local.listLocal)
-  const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+  const [currentPage, setCurrentPage] = useState(1);
   const localsPerPage = 9; // Số lượng người dùng trên mỗi trang
   const indexOfLastUser = currentPage * localsPerPage;
   const indexOfFirstUser = indexOfLastUser - localsPerPage;
@@ -72,7 +72,7 @@ function Location() {
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning'>
-                        <i className="fa-solid fa-user-pen"></i>
+                      <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                     </td>
                   </tr>

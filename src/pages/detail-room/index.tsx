@@ -6,13 +6,14 @@ import { getRoomId } from "src/services/room.service";
 
 import { TRoomIteam } from "src/types";
 
-import { useAppDispatch, useAppSelector } from "src/redux/config-store";
+import { useAppDispatch, } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
-import { ACCESS_TOKEN, BOOKING } from "src/constants";
-import { type } from "os";
-import { number } from "yup";
+import { BOOKING } from "src/constants";
+// import { ACCESS_TOKEN, BOOKING } from "src/constants";
+// import { type } from "os";
+// import { number } from "yup";
 
 type TPrams = {
   detailId: string;
@@ -20,9 +21,9 @@ type TPrams = {
 
 function DetailRoom() {
   const [open, setOpen] = useState<boolean>(false);
-  const orderBooking = useAppSelector(
-    (state: any) => state.booking.setBookingRoom,
-  );
+  // const orderBooking = useAppSelector(
+  //   (state: any) => state.booking.setBookingRoom,
+  // );
   const hanldeDropDown = (state: boolean) => {
     setOpen(!state);
   };
@@ -52,7 +53,7 @@ function DetailRoom() {
         console.log(e);
       });
   }, [params.detailId]);
-  const [soLuongKhach,setSoLuongKhach] = useState("")
+  const [,setSoLuongKhach] = useState("")
   const handleBooking = (e: any) => {
     e.preventDefault();
       
@@ -74,7 +75,7 @@ function DetailRoom() {
       });
   };
   useEffect(() =>{
-    checkBooking(params).then((content)=>{
+    checkBooking(params).then(()=>{
 
     }).catch((e)=>{
       console.log(e)

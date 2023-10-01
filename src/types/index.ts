@@ -31,5 +31,4 @@ export type TUserInfo = {
     name: string;
     date: string;
     role:string;
-    // Thêm các trường thông tin khác của người dùng nếu cần
 };

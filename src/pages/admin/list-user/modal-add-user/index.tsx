@@ -14,7 +14,7 @@ const addUserSchema = Y.object({
 
 });
 function ModalAddUser() {
-    const [gender, setGender] = useState<boolean | undefined>(undefined);
+    const [gender] = useState<boolean | undefined>(undefined);
     const formik = useFormik({
         initialValues: {
             email: "",

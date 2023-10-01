@@ -7,7 +7,7 @@ import { BookingRoom } from "src/services/room.service"
 function BookingInfo() {
   const dispatch = useDispatch();
   const bookings = useSelector((state: any) => state.booking.listBooking)
-  const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+  const [currentPage, setCurrentPage] = useState(1); 
   const bookingsPerPage = 21; // Số lượng người dùng trên mỗi trang
   const indexOfLastUser = currentPage * bookingsPerPage;
   const indexOfFirstUser = indexOfLastUser - bookingsPerPage;
@@ -78,7 +78,7 @@ function BookingInfo() {
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning'>
-                        <i className="fa-solid fa-user-pen"></i>
+                      <i className="fa-solid fa-pen-to-square"></i>
                       </button>    
                       </td>
                   </tr>

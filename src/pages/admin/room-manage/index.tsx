@@ -9,7 +9,7 @@ import css from "./room-manage.module.scss"
 function RoomMangage() {
   const dispatch = useDispatch();
   const rooms = useSelector((state: any) => state.room.listRoom);
-  const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+  const [currentPage, setCurrentPage] = useState(1); 
   const roomsPerPage = 6; // Số lượng người dùng trên mỗi trang
   const indexOfLastUser = currentPage * roomsPerPage;
   const indexOfFirstUser = indexOfLastUser - roomsPerPage;
@@ -77,7 +77,7 @@ function RoomMangage() {
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning'>
-                        <i className="fa-solid fa-user-pen"></i>
+                      <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                     </td>
                   </tr>
