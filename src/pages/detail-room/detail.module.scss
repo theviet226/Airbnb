@@ -200,20 +200,21 @@
     align-items: center;
     padding: 0 25px;
     font-family: "Roboto";
+   
     
     
     
 }
 .detail-booking-col{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+  
     padding: 0 15px;
 }
 .detail-select {
     border: 1px solid;
-    border-radius:0 0 15px 15px;
-    z-index: 1;
-    position: absolute; 
+    border-radius: 15px 15px 15px 15px;
+    
+    position: absolute;
     top: 220px; 
     left: 40px; 
     display: block;
@@ -224,11 +225,15 @@
     border: none;
     outline: none;
     align-items: center;
-    padding: 0 55px;
+    padding: 0 20px;
     font-family: "Inter";
+    gap: 70px;
+    z-index: 2;
+   
 }
 .detail-dropdown{
     padding: 10px 0;
+    
 }
 .detail-dropdown-button{
     border-radius: 50%;
@@ -236,6 +241,7 @@
     height: 40px;
     border: #adadad 1px solid;
     font-size: 20px;
+    
 }
 .detail-pay{
     width: 100%;
@@ -258,6 +264,7 @@
     font-family: "Inter";
     font-size: 16px;
     font-weight: 300;
+    
 
 }
 .detail-total{

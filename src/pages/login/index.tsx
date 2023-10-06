@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import css from "./login.module.scss";
 // import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "src/redux/config-store";
 import { useFormik } from "formik";
 import { authLogin } from "src/services/auth.service";
-import { setLocalStorage } from "src/utils";
-import { AUTH_LOGIN } from "src/constants";
+import { getLocalStorage, setLocalStorage } from "src/utils";
+import { ACCESS_TOKEN, AUTH_LOGIN } from "src/constants";
 import { authLoginn } from "src/redux/authReduceLogin";
+
 export type TSignin = {
   email: string;
   password: string;
 };
 
 function Login() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
   const navigate = useNavigate();
   // const role = useSelector((state:any) => state.authReducer.authLoginn)
   const dispatch = useAppDispatch();
@@ -33,8 +36,10 @@ function Login() {
         .then((resp) => {
           setLocalStorage(AUTH_LOGIN, resp.content);
           dispatch(authLoginn(resp.content));
+          const email = value.email
           const role = resp.content.user
           const userRole = role.role;
+          setLocalStorage("email",email)
 
 
           if (userRole === "ADMIN") {
@@ -49,6 +54,12 @@ function Login() {
         });
     },
   });
+  useEffect(()=>{
+    const accessToken = getLocalStorage(ACCESS_TOKEN);
+    if (accessToken) {
+      setIsLoggedIn(true);
+    }
+  },[])
   return (
     <>
       <div className={css["login-container"]}>

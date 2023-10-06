@@ -1,12 +1,62 @@
 
 import css from "./header.module.scss"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Search from '../search'
 import icvn from "src/assets/images/vn.png"
+import { useEffect, useState } from "react"
+import { getLocalStorage, removeLocalStorage } from "src/utils"
+import { ACCESS_TOKEN } from "src/constants"
+
 
 function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  useEffect(() => {
+    const accessToken = getLocalStorage(ACCESS_TOKEN);
+    const storedIsLoggedIn = getLocalStorage('isLoggedIn')
+    setIsLoggedIn(!!accessToken || storedIsLoggedIn)
+  }, []);
+  const navigate = useNavigate()
+  const handleLogout = () =>{
+    removeLocalStorage(ACCESS_TOKEN)
+    removeLocalStorage("email")
+    removeLocalStorage("isLoggedIn")
+    setIsLoggedIn(false)
+    navigate("/")
+  }
+  const renderLogin = () =>{
+    const[email,setEmail] =useState<string>('')
+    useEffect(()=>{
+      setEmail(getLocalStorage('email')|| '')
+    },[])
+   
+    if (email !== ''){
+      return(
+        <div className={css["header-right"]}>
+        <div className={css["header-right-author"]} >
+          {email}
+        </div>
+        <div className={css["header-right-author"]}>
+          <Link to="/" onClick={handleLogout}>Đăng xuất</Link>
+          
+        </div>
+      </div>
+      )
+    }else{
+      return(
+        <div className={css["header-right"]}>
+        <div className={css["header-right-author"]} >
+          <Link to="/login">Đăng nhập</Link>
+        </div>
+        <div className={css["header-right-author"]}>
+          <Link to="/register">Đăng ký</Link>
+        </div>
+      </div>
+      )
+    }
+  }
  
   return (
+    <>
     <div style={{
       background: "#003b91"
     }
@@ -21,12 +71,7 @@ function Header() {
               <span>VND</span>
               <img className={css["header-icon"]} src={icvn} />
             </div>
-            <div className={css["header-right-author"]} >
-              <Link to="/login">Đăng nhập</Link>
-            </div>
-            <div className={css["header-right-author"]}>
-              <Link to="/register">Đăng ký</Link>
-            </div>
+            {renderLogin()}
           </div>
 
         </header>
@@ -55,6 +100,7 @@ function Header() {
       </div>
   
     </div>
+    </>
   )
 }
 
