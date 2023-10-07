@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Room } from "src/services/room.service"
 import { setListRoom } from "src/redux/room.slice";
@@ -9,6 +9,10 @@ import css from "./room-manage.module.scss"
 function RoomMangage() {
   const dispatch = useDispatch();
   const rooms = useSelector((state: any) => state.room.listRoom);
+  const [currentPage, setCurrentPage] = useState(1); 
+  const roomsPerPage = 6; // Số lượng người dùng trên mỗi trang
+  const indexOfLastUser = currentPage * roomsPerPage;
+  const indexOfFirstUser = indexOfLastUser - roomsPerPage;
 
   useEffect(() => {
     Room({
@@ -25,6 +29,22 @@ function RoomMangage() {
         console.log(error)
       })
   }, [dispatch])
+  const totalUsers = rooms.length;
+  const totalPages = Math.ceil(totalUsers / roomsPerPage);
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
   return (
     <div className='row'>
       <div className="col-md-12">
@@ -45,7 +65,7 @@ function RoomMangage() {
                 </tr>
               </thead>
               <tbody>
-                {rooms.map((room: any, index: any) => (
+                {rooms.slice(indexOfFirstUser,indexOfLastUser).map((room: any, index: any) => (
                   <tr key={index}>
                     <td>{room.id}</td>
                     <td>{room.tenPhong}</td>
@@ -57,7 +77,7 @@ function RoomMangage() {
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning'>
-                        <i className="fa-solid fa-user-pen"></i>
+                      <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                     </td>
                   </tr>
@@ -65,6 +85,23 @@ function RoomMangage() {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className={css.pagination}>
+
+          <button className='btn ' onClick={prevPage}><i className="fa-solid fa-backward"></i></button>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              style={{
+                fontSize: '20px'
+              }}
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`btn ${currentPage === index + 1 ? 'btn-primary' : 'btn-light'}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button className='btn ' onClick={nextPage}><i className="fa-solid fa-forward"></i></button>
         </div>
       </div>
     </div>

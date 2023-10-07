@@ -5,9 +5,7 @@ import { CarouselRef } from "antd/es/carousel";
 import css from "./home-carousel.module.scss";
 import PrevIcon from "src/assets/icons/prev.icon";
 import NextIcon from "src/assets/icons/next.icon";
-// type Props = {
-//   data: TCard[];
-// };
+
 
 
 

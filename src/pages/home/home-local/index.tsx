@@ -13,7 +13,7 @@ import hn from 'src/assets/images/local/hn.jpg'
 import nt from 'src/assets/images/local/nhatrang.jpg'
 import pt from 'src/assets/images/local/phanthiet.jpg'
 import vt from 'src/assets/images/local/vungtau.jpg'
-import ct from 'src/assets/images/local/ct.jpg'
+// import ct from 'src/assets/images/local/ct.jpg'
 const HomeLocal: React.FC = () => {
     const refCarousel = useRef<CarouselRef>(null);
     const locals = [

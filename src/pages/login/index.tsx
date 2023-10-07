@@ -34,7 +34,7 @@ function Login() {
       };
       authLogin(data)
         .then((resp) => {
-          setLocalStorage(AUTH_LOGIN, resp.content);
+          setLocalStorage(AUTH_LOGIN, resp.content.accessToken);
           dispatch(authLoginn(resp.content));
           const email = value.email
           const role = resp.content.user
@@ -54,6 +54,7 @@ function Login() {
         });
     },
   });
+ 
   useEffect(()=>{
     const accessToken = getLocalStorage(ACCESS_TOKEN);
     if (accessToken) {

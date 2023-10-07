@@ -1,30 +1,30 @@
-// import  { useEffect, useState } from "react";
+import { useState } from 'react';
 import css from "./admin-header.module.scss";
-// import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+
+
 function AdminHeader() {
-    // const [userData, setUserData] = useState(null);
-    // const navigate = useNavigate();
+    const [userData, setUserData] = useState<any>(null);
 
-    // useEffect(() => {
+    const handleLogout = () => {
 
-    //     const userDataString = localStorage.getItem("userData");
-    //     if (userDataString) {
-    //         const user = JSON.parse(userDataString);
-    //         setUserData(user);
+        localStorage.removeItem("authLogin");
+        // setUserData(null);
 
-    //     }
-    // }, []);
+        // window.location.href = "/login";
+    };
 
-    // const handleLogout = () => {
+    useEffect(() => {
 
-    //     localStorage.removeItem("userData");
-    //     setUserData(null);
-    //     navigate("/")
-
-
-    //     window.location.href = "/login"; 
-    // };
-
+        const userFromLocalStorage = localStorage.getItem('authLogin');
+        // const user = userFromLocalStorage.user;
+        console.log(userFromLocalStorage)
+        if (userFromLocalStorage) {
+            const parsedUserData = JSON.parse(userFromLocalStorage);
+            setUserData(parsedUserData.user);
+        }
+    }, []);
     return (
         <div>
             <header className={css["header-admin"]}>
@@ -38,15 +38,23 @@ function AdminHeader() {
                         </form>
                     </div>
                 </div>
-                <div>
-                    <button type="button" className="btn">
-                        <img
-                            id=""
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg/230px-Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg.png"
-                            height="16"
-                        />
-                    </button>
-
+                <div className={css["user-profile"]} >
+                    <div className={css["user-name"]}>
+                        {userData ? (
+                            <>
+                                <img src={userData.avatar} alt="" />
+                                {userData.name}
+                            </>
+                        ) : (
+                            "Loading..."
+                        )}
+                    </div>
+                    <div className={css["profile-dropdown"]}>
+                        <div className={css["profile-actions"]}>
+                            <Link to='/profile' className={css["profile-action-btn"]}>Profile</Link>
+                            <Link onClick={handleLogout} to='/' className={css["profile-action-btn"]}>Đăng xuất</Link>
+                        </div>
+                    </div>
                 </div>
             </header>
         </div>

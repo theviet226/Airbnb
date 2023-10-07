@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setListBooking } from 'src/redux/booking-room.slice';
 import { BookingRoom } from "src/services/room.service"
@@ -7,6 +7,10 @@ import { BookingRoom } from "src/services/room.service"
 function BookingInfo() {
   const dispatch = useDispatch();
   const bookings = useSelector((state: any) => state.booking.listBooking)
+  const [currentPage, setCurrentPage] = useState(1); 
+  const bookingsPerPage = 21; // Số lượng người dùng trên mỗi trang
+  const indexOfLastUser = currentPage * bookingsPerPage;
+  const indexOfFirstUser = indexOfLastUser - bookingsPerPage;
 
   useEffect(() => {
     BookingRoom({
@@ -24,6 +28,22 @@ function BookingInfo() {
         console.log(error)
       })
   }, [dispatch])
+  const totalUsers = bookings.length;
+  const totalPages = Math.ceil(totalUsers / bookingsPerPage);
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
   return (
     <div className='row'>
       <div className="col-md-12">
@@ -45,7 +65,7 @@ function BookingInfo() {
                 </tr>
               </thead>
               <tbody>
-                {bookings.map((booking: any, index: any) => (
+                {bookings.slice(indexOfFirstUser,indexOfLastUser).map((booking: any, index: any) => (
                   <tr key={index}>
                     <td>{booking.id}</td>
                     <td>{booking.maPhong}</td>
@@ -58,7 +78,7 @@ function BookingInfo() {
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning'>
-                        <i className="fa-solid fa-user-pen"></i>
+                      <i className="fa-solid fa-pen-to-square"></i>
                       </button>    
                       </td>
                   </tr>
@@ -67,6 +87,23 @@ function BookingInfo() {
             </table>
           </div>
         </div>
+        <div style={{textAlign:"center"}}>
+            
+            <button className='btn ' onClick={prevPage}><i className="fa-solid fa-backward"></i></button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                style={{
+                  fontSize: '20px'
+                }}
+                key={index}
+                onClick={() => paginate(index + 1)}
+                className={`btn ${currentPage === index + 1 ? 'btn-primary' : 'btn-light'}`}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button className='btn ' onClick={nextPage}><i className="fa-solid fa-forward"></i></button>
+          </div>
       </div>
     </div>
   )

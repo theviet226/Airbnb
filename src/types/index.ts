@@ -23,8 +23,6 @@ export type TRoomIteam ={
 }
 
 export type TUserInfo = {
-    id: number;
-    username: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -33,5 +31,4 @@ export type TUserInfo = {
     name: string;
     date: string;
     role:string;
-    // Thêm các trường thông tin khác của người dùng nếu cần
 };

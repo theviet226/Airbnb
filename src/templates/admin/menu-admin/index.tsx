@@ -3,18 +3,18 @@ import css from "./menu-admin.module.scss"
 import { Link } from 'react-router-dom'
 
 function MenuAdmin() {
-    const [userData, setUserData] = useState(null);
+    const [, setUserData] = useState(null);
     const handleLogout = () => {
 
-        localStorage.removeItem("userData");
+        localStorage.removeItem("authLogin");
         setUserData(null);
 
-        window.location.href = "/login";
+        // window.location.href = "/login";
     };
     return (
         <div className={css.menu}>
             <div className={css["navbar-brand-box"]}>
-                <span>Vuesy</span>
+                <span>airbnb admin</span>
             </div>
             <button type="button" style={{
                 position: "absolute",
