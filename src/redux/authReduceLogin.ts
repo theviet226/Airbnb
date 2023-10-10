@@ -6,6 +6,7 @@ export interface AuthLogin {
     email:string,
     token:string,
     id:number,
+    name:string
 }
 export interface AuthState{
     authLogin :AuthLogin|null
