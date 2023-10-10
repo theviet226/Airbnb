@@ -32,11 +32,6 @@ export const router = createBrowserRouter([
                 path: "/",
                 element: <Home />
             },
-        ]
-    },
-    {
-        element: <ListRoomTemplate />,
-        children: [
             {
                 path: "list-room/:maViTri",
                 element: <ListRoom />
@@ -45,6 +40,12 @@ export const router = createBrowserRouter([
                 path: "detail/:detailId",
                 element: <DetailRoom />
             },
+        ]
+    },
+    {
+        element: <ListRoomTemplate />,
+        children: [
+
             {
                 path: "profile",
                 element: <Profile />
@@ -97,11 +98,10 @@ export const router = createBrowserRouter([
 function isAdminLoggedIn() {
     const userDataFromLocalStorage = localStorage.getItem('authLogin');
     if (userDataFromLocalStorage) {
-      const userData = JSON.parse(userDataFromLocalStorage);
-      // Kiểm tra xem vai trò của người dùng có phải là "ADMIN" hay không
-      return userData && userData.user && userData.user.role === 'ADMIN';
+        const userData = JSON.parse(userDataFromLocalStorage);
+        // Kiểm tra xem vai trò của người dùng có phải là "ADMIN" hay không
+        return userData && userData.user && userData.user.role === 'ADMIN';
     }
-  
-    return false; 
-  }
-  
+
+    return false;
+}

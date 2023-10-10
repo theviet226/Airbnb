@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TOKEN } from "src/constants";
 
 
 
@@ -13,7 +14,7 @@ export const axiosWithoutAuth = axios.create({
 })
 axiosWithAuth.interceptors.request.use(
     (config) => {
-        config.headers["tokenCybersoft"] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MDA4IiwiSGV0SGFuU3RyaW5nIjoiMjgvMDEvMjAyNCIsIkhldEhhblRpbWUiOiIxNzA2NDAwMDAwMDAwIiwibmJmIjoxNjc3NDMwODAwLCJleHAiOjE3MDY1NDc2MDB9.eo3y0MmcjE8Jl4fRzUJLBoZzylEeFDcUTfWXvtb1hdc`
+        config.headers["tokenCybersoft"] = TOKEN
         return config
     },
     (e) => {
@@ -22,7 +23,7 @@ axiosWithAuth.interceptors.request.use(
 )
 axiosWithoutAuth.interceptors.request.use(
     (config) => {
-        config.headers["tokenCybersoft"] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MDA4IiwiSGV0SGFuU3RyaW5nIjoiMjgvMDEvMjAyNCIsIkhldEhhblRpbWUiOiIxNzA2NDAwMDAwMDAwIiwibmJmIjoxNjc3NDMwODAwLCJleHAiOjE3MDY1NDc2MDB9.eo3y0MmcjE8Jl4fRzUJLBoZzylEeFDcUTfWXvtb1hdc`
+        config.headers["tokenCybersoft"] = TOKEN
         return config
     },
     (e) => {

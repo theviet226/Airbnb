@@ -1,6 +1,5 @@
 import { useState } from "react";
 import css from "./login.module.scss";
-// import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "src/redux/config-store";
 import { useFormik } from "formik";
@@ -8,6 +7,7 @@ import { authLogin } from "src/services/auth.service";
 import { setLocalStorage } from "src/utils";
 import { AUTH_LOGIN } from "src/constants";
 import { authLoginn } from "src/redux/authReduceLogin";
+
 export type TSignin = {
   email: string;
   password: string;
@@ -15,7 +15,6 @@ export type TSignin = {
 
 function Login() {
   const navigate = useNavigate();
-  // const role = useSelector((state:any) => state.authReducer.authLoginn)
   const dispatch = useAppDispatch();
   const [loginErr, setLoginErr] = useState("");
 
@@ -35,8 +34,6 @@ function Login() {
           dispatch(authLoginn(resp.content));
           const role = resp.content.user
           const userRole = role.role;
-
-
           if (userRole === "ADMIN") {
             navigate("/admin");
           } else {

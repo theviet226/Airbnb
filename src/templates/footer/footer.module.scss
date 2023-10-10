@@ -1,4 +1,4 @@
-/* Footer.module.scss */
+
 
 .footer {
     background-color: #003b91;
@@ -47,7 +47,7 @@
 
 .footer-subscribe {
     color: #fff;
-    // font-size: 20px;
+
 }
 
 .subscribe-input input {
@@ -93,7 +93,7 @@
     margin: 5px 0;
 }
 
-/* Media queries để tùy chỉnh giao diện trên các kích thước màn hình khác nhau */
+
 @media (max-width: 768px) {
     .footer-content {
         flex-direction: column;
@@ -109,4 +109,3 @@
     }
 }
 
-/* Thêm các media queries khác tùy theo nhu cầu của bạn */
