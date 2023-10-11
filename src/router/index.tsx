@@ -96,10 +96,18 @@ export const router = createBrowserRouter([
 // kiểm tra xem người dùng có phải là admin hay không
 function isAdminLoggedIn() {
     const userDataFromLocalStorage = localStorage.getItem('authLogin');
-    if (userDataFromLocalStorage) {
-      const userData = JSON.parse(userDataFromLocalStorage);
+    if (userDataFromLocalStorage !== null) {
+        try {
+            const userData = JSON.parse(userDataFromLocalStorage);
+            if (userData && userData.user && userData.user.role === 'ADMIN'){
+                return true
+            }
+
+        } catch (error) {
+            console.error("Lỗi khi parse dữ liệu JSON",error)
+        }
+      
       // Kiểm tra xem vai trò của người dùng có phải là "ADMIN" hay không
-      return userData && userData.user && userData.user.role === 'ADMIN';
     }
   
     return false; 

@@ -8,11 +8,13 @@ import { TRoomIteam } from "src/types";
 import { useAppDispatch,useAppSelector } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
-import { setLocalStorage } from "src/utils";
-import { BOOKING } from "src/constants";
+import { getLocalStorage, setLocalStorage } from "src/utils";
+import { AUTH_LOGIN, BOOKING } from "src/constants";
 import {Dayjs} from 'dayjs'
 import { DatePicker } from "antd";
 import { getRoomId } from "src/services/room.service";
+import { authLogin } from "src/services/auth.service";
+import { authLoginn } from "src/redux/authReduceLogin";
 
 
 type TPrams = {
@@ -34,7 +36,7 @@ function DetailRoom() {
     ngayDi: "",
     soLuongKhach: "",
     maNguoiDung:0,
-    maPhong:0,
+    
    
   });
   const [user,setUer] = useState(null)
@@ -47,6 +49,7 @@ function DetailRoom() {
   const [totalVAT,setTotalVAT] = useState<number>(0)
    const [numberOfDays,setNumberOfDays] = useState<number>(0)
   const [totalPrice,setTotalPrice] = useState<number>(0)
+  const [maPhong,setMaPhong] = useState("")
   const dispatch = useAppDispatch();
   const handleDateRangeChange = (date:any,dateString:any) =>{
     const startDate = dateString(date[0])
@@ -71,6 +74,7 @@ function DetailRoom() {
     getRoomId(params.detailId)
       .then((resp) => {
         setRoomId(resp.content);
+        setMaPhong(resp.content.id)
       })
       .catch((e) => {
         console.log(e);
@@ -82,15 +86,17 @@ function DetailRoom() {
       if(isLoggedIn){
         const updatedBooking ={
           ...booking,
-           
+           maPhong:maPhong.toString(),
            soLuongKhach:total.toString()
          }
        
          setBooking(updatedBooking)
          setSoLuongKhach(updatedBooking.soLuongKhach)
+         
          Booking(updatedBooking)
            .then((resp) => {
              setLocalStorage(BOOKING, resp.content);
+             
              dispatch(setBookingRoom(resp.content));
              alert("Bạn đã booking thành công")
              navigate("/")

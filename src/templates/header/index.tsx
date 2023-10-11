@@ -6,29 +6,27 @@ import icvn from "src/assets/images/vn.png"
 import { useEffect, useState } from "react"
 import { getLocalStorage, removeLocalStorage } from "src/utils"
 import { ACCESS_TOKEN } from "src/constants"
+import { useSelector } from "react-redux"
+import { RootState } from "src/redux/config-store"
+
 
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
-  useEffect(() => {
-    const accessToken = getLocalStorage(ACCESS_TOKEN);
-    const storedIsLoggedIn = getLocalStorage('isLoggedIn')
-    setIsLoggedIn(!!accessToken || storedIsLoggedIn)
-  }, []);
+  const isLoggedInn = useSelector((state:RootState) => state.authReducerLogin)
+  const[email,setEmail] =useState<string>('')
+  useEffect(()=>{
+    const storedEmail = getLocalStorage("email")
+    setEmail(storedEmail || "")
+  },[])
   const navigate = useNavigate()
   const handleLogout = () =>{
     removeLocalStorage(ACCESS_TOKEN)
     removeLocalStorage("email")
     removeLocalStorage("isLoggedIn")
-    setIsLoggedIn(false)
-    navigate("/")
+    
+    navigate("/login")
   }
   const renderLogin = () =>{
-    const[email,setEmail] =useState<string>('')
-    useEffect(()=>{
-      setEmail(getLocalStorage('email')|| '')
-    },[])
-   
     if (email !== ''){
       return(
         <div className={css["header-right"]}>
@@ -36,7 +34,7 @@ function Header() {
           {email}
         </div>
         <div className={css["header-right-author"]}>
-          <Link to="/" onClick={handleLogout}>Đăng xuất</Link>
+          <Link to="/login" onClick={handleLogout}>Đăng xuất</Link>
           
         </div>
       </div>

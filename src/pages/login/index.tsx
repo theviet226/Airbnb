@@ -18,10 +18,17 @@ function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   
   const navigate = useNavigate();
-  // const role = useSelector((state:any) => state.authReducer.authLoginn)
+  
   const dispatch = useAppDispatch();
   const [loginErr, setLoginErr] = useState("");
-
+  const [email,setEmail] = useState('')
+useEffect(()=>{
+  const storedEmail = getLocalStorage("email")
+  if(storedEmail){
+    setIsLoggedIn(true)
+    setEmail(storedEmail)
+  }
+},[])
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -32,14 +39,18 @@ function Login() {
         email: value.email,
         password: value.password,
       };
+      
       authLogin(data)
         .then((resp) => {
           setLocalStorage(AUTH_LOGIN, resp.content.accessToken);
           dispatch(authLoginn(resp.content));
-          const email = value.email
+          
+          const accessToken = resp.content.accessToken
+          
           const role = resp.content.user
           const userRole = role.role;
-          setLocalStorage("email",email)
+          setLocalStorage("email",data.email)
+        setLocalStorage("accessToken",accessToken)
 
 
           if (userRole === "ADMIN") {
