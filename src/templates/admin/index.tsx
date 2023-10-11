@@ -20,7 +20,6 @@ export function AdminBaseTemplate() {
       </div>
 
 
-      {/* Bất kỳ phần footer của trang admin nào bạn muốn thêm vào đây */}
     </div>
   );
 }

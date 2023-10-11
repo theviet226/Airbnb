@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Y from "yup";
 import { authSignup } from "src/services/auth.service";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export type TSignup = {
   email: string;
   password: string;
@@ -46,6 +48,7 @@ function Register() {
         date: value.date,
       };
       authSignup(data).then(()=>{
+        toast.success('Đăng ký thành công');
         navigate("/login")
       }).catch((e)=>{
         console.log(e)
@@ -209,6 +212,7 @@ function Register() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

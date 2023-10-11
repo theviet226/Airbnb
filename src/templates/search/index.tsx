@@ -14,10 +14,8 @@ function Search() {
         console.log('Selected:', data);
     };
 
-    const handleDateRangeChange = (dates: any, dateStrings: any) => {
+    const handleDateRangeChange = (dates: any) => {
         setSelectedDateRange(dates);
-        console.log('Ngày nhận phòng:', dateStrings[0]);
-        console.log('Ngày trả phòng:', dateStrings[1]);
     };
 
     return (

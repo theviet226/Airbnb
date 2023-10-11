@@ -1,20 +1,28 @@
 import { useState, useEffect } from "react";
 import css from "./detail.module.scss";
-import { useNavigate, useParams } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 
 import { TRoomIteam } from "src/types";
-
-import { useAppDispatch,useAppSelector } from "src/redux/config-store";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
-import { getLocalStorage, setLocalStorage } from "src/utils";
-import { AUTH_LOGIN, BOOKING } from "src/constants";
-import {Dayjs} from 'dayjs'
-import { DatePicker } from "antd";
+
+
+
+
 import { getRoomId } from "src/services/room.service";
-import { authLogin } from "src/services/auth.service";
-import { authLoginn } from "src/redux/authReduceLogin";
+
+
+
+import { setLocalStorage } from "src/utils";
+import { BOOKING } from "src/constants";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { DatePicker } from 'antd';
+import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+
 
 
 type TPrams = {
@@ -22,12 +30,37 @@ type TPrams = {
 };
 
 function DetailRoom() {
-  const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null)
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  // const orderBooking = useAppSelector(
-  //   (state: any) => state.booking.setBookingRoom,
-  // );
+  const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
+  const [numberOfNights, setNumberOfNights] = useState<number | null>(null);
+  const [totalPrice, setTotalPrice] = useState<number | null>(null);
+
+
+
+  const calculateNumberOfNights = (startDate: dayjs.Dayjs, endDate: dayjs.Dayjs) => {
+    const duration = endDate.diff(startDate, 'day');
+    return duration;
+  };
+
+
+  const handleDateRangeChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]) => {
+    setSelectedDateRange(dates);
+    if (dates[0] && dates[1]) {
+      const startDate = dayjs(dates[0]);
+      const endDate = dayjs(dates[1]);
+      const nights = calculateNumberOfNights(startDate, endDate);
+      setNumberOfNights(nights);
+      const roomPrice = roomId?.giaTien || 0;
+      const totalPrice = roomPrice * nights;
+      setTotalPrice(totalPrice);
+    } else {
+      setNumberOfNights(null);
+      setTotalPrice(null);
+    }
+  };
+
+
   const hanldeDropDown = (state: boolean) => {
     setOpen(!state);
   };
@@ -35,127 +68,151 @@ function DetailRoom() {
     ngayDen: "",
     ngayDi: "",
     soLuongKhach: "",
-    maNguoiDung:0,
-    
-   
+    maNguoiDung: "",
+    maPhong: "",
+
+
   });
-  const [user,setUer] = useState(null)
+  const [user, setUer] = useState(null)
   const params = useParams<TPrams>();
+  const maPhong = params.detailId || '';
+
+  const [userData, setUserData] = useState<any>(null);
+
+
   const [roomId, setRoomId] = useState<TRoomIteam>();
-  const [quantity,setQuantity] = useState(0)
-  const [childQuanTiTy,setChildQuanTity] = useState(0)
-  const [babyQuanTiTy,setBabyQuanTity] = useState(0)
-  const [total,setTotal] =useState(0)
-  const [totalVAT,setTotalVAT] = useState<number>(0)
-   const [numberOfDays,setNumberOfDays] = useState<number>(0)
-  const [totalPrice,setTotalPrice] = useState<number>(0)
-  const [maPhong,setMaPhong] = useState("")
+
+  const [quantity, setQuantity] = useState(0)
+  const [childQuanTiTy, setChildQuanTity] = useState(0)
+  const [babyQuanTiTy, setBabyQuanTity] = useState(0)
+  const [total, setTotal] = useState(0)
+
   const dispatch = useAppDispatch();
-  const handleDateRangeChange = (date:any,dateString:any) =>{
-    const startDate = dateString(date[0])
-    const endDate = dateString(date[1])
-    const days = endDate.diff(startDate,'day')
-    
-    setSelectedDateRange(date)
-    setNumberOfDays(days)
-    
-  }
- useEffect(()=>{
-  const roomIdGiaTien = roomId?.giaTien || 0
-  const price = roomIdGiaTien * numberOfDays
-  const vat = price +2
-  setTotalPrice(price)
-  setTotalVAT(vat)
- },[roomId?.giaTien,numberOfDays])
- 
-  const isLoggedIn = !!user
+
+
+
   useEffect(() => {
     if (!params.detailId) return;
     getRoomId(params.detailId)
       .then((resp) => {
         setRoomId(resp.content);
-        setMaPhong(resp.content.id)
+
+        console.log(resp.content)
+
       })
       .catch((e) => {
         console.log(e);
       });
+    const userFromLocalStorage = localStorage.getItem('authLogin');
+    if (userFromLocalStorage) {
+      const parsedUserData = JSON.parse(userFromLocalStorage);
+      setUserData(parsedUserData.user);
+    }
   }, [params.detailId]);
-  const [soLuongKhach,setSoLuongKhach] = useState("")
+  const [, setSoLuongKhach] = useState("")
   const handleBooking = (e: any) => {
     e.preventDefault();
-      if(isLoggedIn){
-        const updatedBooking ={
-          ...booking,
-           maPhong:maPhong.toString(),
-           soLuongKhach:total.toString()
-         }
-       
-         setBooking(updatedBooking)
-         setSoLuongKhach(updatedBooking.soLuongKhach)
-         
-         Booking(updatedBooking)
-           .then((resp) => {
-             setLocalStorage(BOOKING, resp.content);
-             
-             dispatch(setBookingRoom(resp.content));
-             alert("Bạn đã booking thành công")
-             navigate("/")
-           })
-           .catch((e) => {
-             console.log(e);
-           });
-      }else{
-        alert("Bạn phải đăng nhập để đặt phòng")
-      }
-    
-  };
-  useEffect(() =>{
-    checkBooking(params).then((content)=>{
 
-    }).catch((e)=>{
+
+    if (!selectedDateRange || !selectedDateRange[0] || !selectedDateRange[1]) {
+      toast.error('Vui lòng chọn ngày đến và ngày đi');
+      return;
+    }
+
+    const [ngayDen, ngayDi] = selectedDateRange.map((date) =>
+      date ? date.format('YYYY-MM-DD') : ''
+    );
+
+
+
+
+    if (isLoggedIn()) {
+      const updatedBooking = {
+        ...booking,
+        ngayDen,
+        ngayDi,
+        soLuongKhach: total.toString(),
+        maNguoiDung: userData.id,
+        maPhong: maPhong,
+      };
+      setBooking(updatedBooking);
+      setSoLuongKhach(updatedBooking.soLuongKhach);
+      Booking(updatedBooking)
+        .then((resp) => {
+          setLocalStorage(BOOKING, resp.content);
+          dispatch(setBookingRoom(resp.content));
+          toast.success('Đặt phòng thành công!');
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      alert("Bạn cần phải đăng nhập để đặt phòng !")
+      navigate("/login")
+      return;
+    }
+
+
+
+  };
+  useEffect(() => {
+    checkBooking(params).then(() => {
+
+    }).catch((e) => {
       console.log(e)
     })
   })
-  
-  const handleIncrease = () =>{
-    setQuantity(quantity+1)
-    setTotal(total+1)
+  const isLoggedIn = () => {
+    const authLoginData = localStorage.getItem('authLogin');
+    if (authLoginData) {
+      const authLogin = JSON.parse(authLoginData);
+      if (authLogin && authLogin.token) {
+        return true;
+      }
+    }
+
+    return false;
   }
-  const handleDecrease = () =>{
-    if (quantity > 0){
-      setQuantity(quantity-1)
-      setTotal(total-1)
+
+  const handleIncrease = () => {
+    setQuantity(quantity + 1)
+    setTotal(total + 1)
+  }
+  const handleDecrease = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1)
+      setTotal(total - 1)
     }
   }
-  const handleIncreaseChild = () =>{
-    setChildQuanTity(childQuanTiTy+1)
-    setTotal(total+1)
+  const handleIncreaseChild = () => {
+    setChildQuanTity(childQuanTiTy + 1)
+    setTotal(total + 1)
   }
-  const handleDecreaseChild = () =>{
-    if (childQuanTiTy > 0){
-      setChildQuanTity(childQuanTiTy-1)
-      setTotal(total-1)
+  const handleDecreaseChild = () => {
+    if (childQuanTiTy > 0) {
+      setChildQuanTity(childQuanTiTy - 1)
+      setTotal(total - 1)
     }
   }
-  const handleIncreaseBaby = () =>{
-    setBabyQuanTity(babyQuanTiTy+1)
-    setTotal(total+1)
+  const handleIncreaseBaby = () => {
+    setBabyQuanTity(babyQuanTiTy + 1)
+    setTotal(total + 1)
   }
-  const handleDecreaseBaby = () =>{
-    if (babyQuanTiTy >0){
-      setBabyQuanTity(babyQuanTiTy-1)
-      setTotal(total-1)
+  const handleDecreaseBaby = () => {
+    if (babyQuanTiTy > 0) {
+      setBabyQuanTity(babyQuanTiTy - 1)
+      setTotal(total - 1)
     }
   }
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     const { value, name } = e.target;
     setBooking({
       ...booking,
       [name]: value,
     });
   };
-  
+
   return (
     <>
       <div className="container">
@@ -440,33 +497,29 @@ function DetailRoom() {
               </span>
             </div>
             <div>
-            <div className={css["detail-under"]}>
-            <div className={css["detail-booking"]}>
-              <div style={{ zIndex: "1" }}>
+              <div className={css["detail-booking"]}>
                 <div className={css["detail-booking-col"]}>
-                  <label className={css["detail-label"]} >
-                    <div style={{ padding: "10px 10px" }}>
-                      <p style={{ marginBottom: 0,textAlign:"center" }}>NHẬN PHÒNG - - TRẢ PHÒNG</p>
-                      <DatePicker.RangePicker
-                                className={css['search-input']}
-                                placeholder={['Ngày nhận phòng', 'Ngày trả phòng']}
-                                format="DD/MM/YYYY"
-                                showTime={false}
-                                value={selectedDateRange}
-                                onChange={handleDateRangeChange}
-                            />
-                    </div>
-                  </label>
-                 
+
+                  <DatePicker.RangePicker
+                    style={{
+                      padding: "15px 50px",
+                      color: "#000"
+                    }}
+                    placeholder={['Ngày nhận phòng', 'Ngày trả phòng']}
+                    format="DD/MM/YYYY"
+                    showTime={false}
+                    value={selectedDateRange}
+                    
+                  />
+
                 </div>
                 <div className={css["dropdown1"]}>
                   <label style={{ padding: "8px 0" }}>
-                    <div style={{ fontSize: "14px", fontWeight: "300" }}>
-                      KHÁCH
-                    </div>
+                    <div style={{ fontSize: "14px", fontWeight: "300" }}>KHÁCH</div>
                     <div>
                       <div>
-                        <span>1 Khách</span>
+                        <span>Số Lượng:</span>
+                        <input type="text" value={total} name="soLuongKhach" onChange={handleChange} style={{ outline: "none", border: "none" }} />
                       </div>
                     </div>
                   </label>
@@ -484,16 +537,14 @@ function DetailRoom() {
                         <div style={{ fontWeight: "600" }}>Người lớn</div>
                         <div>
                           <div>
-                            <span style={{ fontWeight: "300" }}>
-                              Từ 13 tuổi trở lên
-                            </span>
+                            <span style={{ fontWeight: "300" }}>Từ 13 tuổi trở lên</span>
                           </div>
                         </div>
                       </label>
                       <div>
-                        <button className={css["detail-dropdown-button"]}>-</button>
-                        <span style={{ padding: "0 10px" }}>0</span>
-                        <button className={css["detail-dropdown-button"]}>+</button>
+                        <button onClick={handleDecrease} className={css["detail-dropdown-button"]}>-</button>
+                        <span style={{ padding: "0 10px" }}>{quantity}</span>
+                        <button onClick={handleIncrease} className={css["detail-dropdown-button"]}>+</button>
                       </div>
                     </div>
                     <div className={css["dropdown"]}>
@@ -501,16 +552,14 @@ function DetailRoom() {
                         <div style={{ fontWeight: "600" }}>Trẻ em</div>
                         <div>
                           <div>
-                            <span style={{ fontWeight: "300" }}>
-                              Độ tuổi 2 - 12 tuổi
-                            </span>
+                            <span style={{ fontWeight: "300" }}>Độ tuổi 2 - 12 tuổi</span>
                           </div>
                         </div>
                       </label>
                       <div>
-                        <button className={css["detail-dropdown-button"]}>-</button>
-                        <span style={{ padding: "0 10px" }}>0</span>
-                        <button className={css["detail-dropdown-button"]}>+</button>
+                        <button onClick={handleDecreaseChild} className={css["detail-dropdown-button"]}>-</button>
+                        <span style={{ padding: "0 10px" }}>{childQuanTiTy}</span>
+                        <button onClick={handleIncreaseChild} className={css["detail-dropdown-button"]}>+</button>
                       </div>
                     </div>
                     <div className={css["dropdown"]}>
@@ -518,46 +567,34 @@ function DetailRoom() {
                         <div style={{ fontWeight: "600" }}>Em bé</div>
                         <div>
                           <div>
-                            <span style={{ fontWeight: "300" }}>
-                              Dưới 2 tuổi
-                            </span>
+                            <span style={{ fontWeight: "300" }}>Dưới 2 tuổi</span>
                           </div>
                         </div>
                       </label>
                       <div>
-                        <button className={css["detail-dropdown-button"]}>-</button>
-                        <span style={{ padding: "0 10px" }}>0</span>
-                        <button className={css["detail-dropdown-button"]}>+</button>
+                        <button onClick={handleDecreaseBaby} className={css["detail-dropdown-button"]}>-</button>
+                        <span style={{ padding: "0 10px" }}>{babyQuanTiTy}</span>
+                        <button onClick={handleIncreaseBaby} className={css["detail-dropdown-button"]}>+</button>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
-            </div>
-            <div style={{ padding: "15px 40px" }}>
-              <button
-                className={css["detail-pay"]}
-                type="submit"
-                onClick={handleBooking}
-              >
-                Đặt phòng
-              </button>
-              <p
-                style={{
+              <div style={{ padding: "15px 40px" }}>
+                <button
+                  type="submit"
+                  onClick={handleBooking}
+                  className={css["detail-pay"]}>Đặt phòng</button>
+                <p style={{
                   padding: "20px 0 0px 0",
                   textAlign: "center",
                   fontWeight: "300",
-                  fontSize: "16px",
-                }}
-              >
-                Bạn vẫn chưa bị trừ tiền
-              </p>
-            </div>
-          </div>
-             
+                  fontSize: "16px"
+                }}>Bạn vẫn chưa bị trừ tiền</p>
+              </div>
               <div className={css["detail-cacl"]}>
-                <p>${roomId?.giaTien} x {numberOfDays !== null ? numberOfDays : ""} đêm</p>
-                <p>${totalPrice}</p>
+                <p>${roomId?.giaTien} x {numberOfNights} đêm</p>
+                <p>{totalPrice}</p>
               </div>
               <div className={css["detail-cacl"]}>
                 <p>Phí dịch vụ</p>
@@ -566,7 +603,7 @@ function DetailRoom() {
               <hr />
               <div className={css["detail-total"]}>
                 <p>Tổng trước thuế</p>
-                <p>${totalVAT}</p>
+                <p>{totalPrice}</p>
               </div>
             </div>
           </div>
@@ -644,162 +681,7 @@ function DetailRoom() {
 
             </div>
           </div>
-          <div className={css["detail-under"]}>
-            <div className={css["detail-booking"]}>
-              <div style={{ zIndex: "1" }}>
-                <div className={css["detail-booking-col"]}>
-                  <label
-                    className={css["detail-label"]}
-                    style={{ borderRight: "1px solid" }}
-                  >
-                    <div style={{ padding: "10px 10px" }}>
-                      <p style={{ marginBottom: 0 }}>NHẬN PHÒNG</p>
-                      <input
-                        type="date"
-                        style={{ outline: "none", border: "none" }}
-                        onChange={handleChange}
-                        value={booking.ngayDen}
-                        name="ngayDen"
-                      />
-                    </div>
-                  </label>
-                  <label className={css["detail-label"]}>
-                    <div style={{ padding: "10px 10px" }}>
-                      <p style={{ marginBottom: 0 }}>TRẢ PHÒNG</p>
-                      <input
-                        type="date"
-                        style={{ outline: "none", border: "none" }}
-                        onChange={handleChange}
-                        value={booking.ngayDi}
-                        name="ngayDi"
-                      />
-                    </div>
-                  </label>
-                </div>
-                <div className={css["dropdown1"]}>
-                  <label style={{ padding: "8px 0" }}>
-                    <div style={{ fontSize: "14px", fontWeight: "300" }}>
-                      KHÁCH
-                    </div>
-                    <div>
-                      <div>
-                        <span>Số Lượng:</span>
-                        <input  type="text" value={total} name="soLuongKhach" onChange={handleChange} style={{ outline: "none", border: "none" }}/>
-                        
-                      </div>
-                    </div>
-                  </label>
-                  <div>
-                    <i
-                      className="fa-solid fa-chevron-down"
-                      onClick={() => hanldeDropDown(open)}
-                    ></i>
-                  </div>
-                </div>
-                {open && (
-                  <div className={css["detail-select"]}>
-                    <div className={css["dropdown"]}>
-                      <label className={css["detail-dropdown"]}>
-                        <div style={{ fontWeight: "600" }}>Người lớn</div>
-                        <div>
-                          <div>
-                            <span style={{ fontWeight: "300" }}>
-                              Từ 13 tuổi trở lên
-                            </span>
-                          </div>
-                        </div>
-                      </label>
-                      <div>
-                        <button onClick={handleDecrease} className={css["detail-dropdown-button"]}>
-                          -
-                        </button>
-                        <span style={{ padding: "0 10px" }}>{quantity}</span>
-                        <button onClick={handleIncrease} className={css["detail-dropdown-button"]}>
-                          +
-                        </button>
-                      </div>
-                    </div>
-                    <div className={css["dropdown"]}>
-                      <label className={css["detail-dropdown"]}>
-                        <div style={{ fontWeight: "600" }}>Trẻ em</div>
-                        <div>
-                          <div>
-                            <span style={{ fontWeight: "300" }}>
-                              Độ tuổi 2 - 12 tuổi
-                            </span>
-                          </div>
-                        </div>
-                      </label>
-                      <div>
-                        <button onClick={handleDecreaseChild} className={css["detail-dropdown-button"]}>
-                          -
-                        </button>
-                        <span style={{ padding: "0 10px" }}>{childQuanTiTy}</span>
-                        <button onClick={handleIncreaseChild} className={css["detail-dropdown-button"]}>
-                          +
-                        </button>
-                      </div>
-                    </div>
-                    <div className={css["dropdown"]}>
-                      <label className={css["detail-dropdown"]}>
-                        <div style={{ fontWeight: "600" }}>Em bé</div>
-                        <div>
-                          <div>
-                            <span style={{ fontWeight: "300" }}>
-                              Dưới 2 tuổi
-                            </span>
-                          </div>
-                        </div>
-                      </label>
-                      <div>
-                        <button onClick={handleDecreaseBaby} className={css["detail-dropdown-button"]}>
-                          -
-                        </button>
-                        <span style={{ padding: "0 10px" }}>{babyQuanTiTy}</span>
-                        <button onClick={handleIncreaseBaby} className={css["detail-dropdown-button"]}>
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div style={{ padding: "15px 40px" }}>
-              <button
-                className={css["detail-pay"]}
-                type="submit"
-                onClick={handleBooking}
-              >
-                Đặt phòng
-              </button>
-              <p
-                style={{
-                  padding: "20px 0 0px 0",
-                  textAlign: "center",
-                  fontWeight: "300",
-                  fontSize: "16px",
-                }}
-              >
-                Bạn vẫn chưa bị trừ tiền
-              </p>
-            </div>
-            <div className={css["detail-cacl"]}>
-              <p>$254 x 5 đêm</p>
-              <p>$1.272</p>
-            </div>
-            <div className={css["detail-cacl"]}>
-              <p>Phí dịch vụ</p>
-              <p>$28</p>
-            </div>
-            <hr />
-            <div className={css["detail-total"]}>
-              <p>Tổng trước thuế</p>
-              <p>$1.4757</p>
 
-
-            </div>
-          </div> 
         </div>
         <div className={css["detail-cm"]}>
           <img
@@ -814,7 +696,7 @@ function DetailRoom() {
           <button className={css["detail-cm-add"]}>Add Comment</button>
         </div>
       </div>
-
+      <ToastContainer />
     </>
   );
 }

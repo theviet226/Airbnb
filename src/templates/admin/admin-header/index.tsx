@@ -10,16 +10,12 @@ function AdminHeader() {
     const handleLogout = () => {
 
         localStorage.removeItem("authLogin");
-        // setUserData(null);
 
-        // window.location.href = "/login";
     };
 
     useEffect(() => {
 
         const userFromLocalStorage = localStorage.getItem('authLogin');
-        // const user = userFromLocalStorage.user;
-        console.log(userFromLocalStorage)
         if (userFromLocalStorage) {
             const parsedUserData = JSON.parse(userFromLocalStorage);
             setUserData(parsedUserData.user);

@@ -12,18 +12,20 @@
     align-items: center;
     gap: 10px;
 }
-.header-icon{
+
+.header-icon {
     height: 3rem;
     width: 3rem;
     border-radius: 50%;
     object-fit: cover;
     margin: 0 15px;
 }
-.header-right-author{
+
+.header-right-author {
     margin-right: 1rem;
 }
 
-.nav{
+.nav {
     display: flex;
     align-items: center;
     gap: 4rem;
@@ -31,11 +33,13 @@
     padding: 1rem 2.5rem;
     justify-content: center;
     text-align: center;
-    a{
-      font-weight: 300;
-      font-size: 2rem;  
+
+    a {
+        font-weight: 300;
+        font-size: 2rem;
     }
-    .active{
+
+    .active {
         font-weight: 400;
         border-radius: 100px;
         background-color: #1a4e9c;
@@ -44,6 +48,51 @@
         line-height: 4rem;
         display: block;
         border: 1px solid #fff;
-      }
-    
-  }
+    }
+
+}
+.user-profile {
+    position: relative;
+    margin-right: 20px;
+
+}
+.user-name {
+    display: flex;
+    justify-content: center;
+
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: white;
+        object-fit: cover;
+        margin-right: 5px;
+    }
+}
+
+
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 160px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+
+    a {
+        display: block;
+        padding: 8px 16px;
+        color: #333;
+    }
+}
+
+
+.user-profile:hover .profile-dropdown {
+    display: block;
+}
+  
