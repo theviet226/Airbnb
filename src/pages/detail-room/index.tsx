@@ -109,21 +109,26 @@ function DetailRoom() {
       date ? date.format("YYYY-MM-DD") : "",
     );
     const [startDate, endDate] = selectedDateRange;
+    
+    
 
-    const isBookingAvailable = await checkBooking(
-      startDate.format('YYYY-MM-DD'),
-      endDate.format('YYYY-MM-DD')
-    );
-
-    if (!isBookingAvailable) {
-      toast.error(
-        "Ngày đến và ngày đi đã được đặt trước đó. Vui lòng chọn ngày khác.",
-      );
-      return;
-    }
+    
 
     if (isLoggedIn()) {
+      const isBookingAvailable = await checkBooking(
+        startDate.format("YYYY-MM-DD"),
+        endDate.format("YYYY-MM-DD"),
+        userData.id
+      );
+  
+      if (!isBookingAvailable) {
+        toast.error(
+          "Ngày đến và ngày đi đã được đặt trước đó. Vui lòng chọn ngày khác."
+        );
+        return;
+      }
       const updatedBooking = {
+        
         ...booking,
         ngayDen,
         ngayDi,
