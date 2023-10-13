@@ -13,14 +13,22 @@ export const Booking =  async(data:{ngayDen:string,ngayDi:string,soLuongKhach:st
         console.log(error)
     }
 }
-export const checkBooking = async(data:any) =>{
+export const checkBooking = async (startDate:string,endDate:string) =>{
     try {
-        const resp = await axiosWithoutAuth({
+        const resp   = await axiosWithoutAuth({
             method:"get",
             url:"/dat-phong",
-            data
+            params:{
+                startDate,
+                endDate
+            }
         })
-        return resp.data
+        const bookings = resp.data
+        if (bookings.length > 0){
+            return false
+        }else{
+            return true
+        }
     } catch (error) {
         console.log(error)
     }
