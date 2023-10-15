@@ -1,15 +1,17 @@
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Room } from "src/services/room.service"
-import { setListRoom } from "src/redux/room.slice";
+import { Room, deleteRoom } from "src/services/room.service"
+import { deleteRoomId, setListRoom } from "src/redux/room.slice";
 import css from "./room-manage.module.scss"
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function RoomMangage() {
   const dispatch = useDispatch();
   const rooms = useSelector((state: any) => state.room.listRoom);
-  const [currentPage, setCurrentPage] = useState(1); 
+  const [currentPage, setCurrentPage] = useState(1);
   const roomsPerPage = 6; // Số lượng người dùng trên mỗi trang
   const indexOfLastUser = currentPage * roomsPerPage;
   const indexOfFirstUser = indexOfLastUser - roomsPerPage;
@@ -29,6 +31,18 @@ function RoomMangage() {
         console.log(error)
       })
   }, [dispatch])
+  const handleDeleteRoom = (id: string) => {
+    deleteRoom(id)
+      .then(() => {
+        dispatch(deleteRoomId(id))
+        toast.success('Xoá thông tin  phòng thành công')
+      })
+      .catch((error) => {
+        console.log(error)
+        toast.error('Xoá thông tin  phòng thất bại')
+      })
+  }
+
   const totalUsers = rooms.length;
   const totalPages = Math.ceil(totalUsers / roomsPerPage);
 
@@ -65,7 +79,7 @@ function RoomMangage() {
                 </tr>
               </thead>
               <tbody>
-                {rooms.slice(indexOfFirstUser,indexOfLastUser).map((room: any, index: any) => (
+                {rooms.slice(indexOfFirstUser, indexOfLastUser).map((room: any, index: any) => (
                   <tr key={index}>
                     <td>{room.id}</td>
                     <td>{room.tenPhong}</td>
@@ -73,11 +87,11 @@ function RoomMangage() {
                     <td>{room.maViTri}</td>
                     <td>{room.khach}</td>
                     <td>
-                      <button style={{ marginRight: "10px" }} className='btn btn-danger' >
+                      <button onClick={() =>handleDeleteRoom(room.id)} style={{ marginRight: "10px" }} className='btn btn-danger' >
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning'>
-                      <i className="fa-solid fa-pen-to-square"></i>
+                        <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                     </td>
                   </tr>
@@ -104,6 +118,7 @@ function RoomMangage() {
           <button className='btn ' onClick={nextPage}><i className="fa-solid fa-forward"></i></button>
         </div>
       </div>
+      <ToastContainer />
     </div>
 
   )

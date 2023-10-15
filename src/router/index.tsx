@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/admin/quan-ly-nguoi-dung",
-                element: isAdminLoggedIn() ? <ListUsers /> : <Navigate to="/login" />,
+                element:  <ListUsers /> ,
             },
             {
                 path: "/admin/quan-ly-phong",

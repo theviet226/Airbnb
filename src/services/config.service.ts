@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TOKEN } from "src/constants";
+import { TOKENCYBERSOFT } from "src/constants";
 
 
 
@@ -12,9 +12,10 @@ export const axiosWithoutAuth = axios.create({
     baseURL: BASE_URL,
     timeout: 180_00
 })
+
 axiosWithAuth.interceptors.request.use(
     (config) => {
-        config.headers["tokenCybersoft"] = TOKEN
+        config.headers["tokenCybersoft"] = TOKENCYBERSOFT
         return config
     },
     (e) => {
@@ -23,7 +24,7 @@ axiosWithAuth.interceptors.request.use(
 )
 axiosWithoutAuth.interceptors.request.use(
     (config) => {
-        config.headers["tokenCybersoft"] = TOKEN
+        config.headers["tokenCybersoft"] = TOKENCYBERSOFT
         return config
     },
     (e) => {

@@ -15,7 +15,7 @@ import { DatePicker } from "antd";
 import { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-  
+
 dayjs.extend(isBetween);
 
 type TPrams = {
@@ -25,12 +25,9 @@ type TPrams = {
 function DetailRoom() {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedDateRange, setSelectedDateRange] = useState<
-    [Dayjs | null, Dayjs | null] | null
-  >(null);
+  const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
   const [numberOfNights, setNumberOfNights] = useState<number | null>(null);
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
-
   const calculateNumberOfNights = (
     startDate: dayjs.Dayjs,
     endDate: dayjs.Dayjs,
@@ -69,10 +66,9 @@ function DetailRoom() {
   });
 
   const params = useParams<TPrams>();
-  const maPhong = params.detailId || "";
 
   const [userData, setUserData] = useState<any>(null);
-
+  const maPhong = params.detailId || "";
   const [roomId, setRoomId] = useState<TRoomIteam>();
   const [quantity, setQuantity] = useState(0);
   const [childQuanTiTy, setChildQuanTity] = useState(0);
@@ -106,29 +102,37 @@ function DetailRoom() {
     }
 
     const [ngayDen, ngayDi] = selectedDateRange.map((date) =>
-      date ? date.format("YYYY-MM-DD") : "",
+      date ? date.format("YYYY-MM-DD") : ""
     );
-    const [startDate, endDate] = selectedDateRange;
-    
-    
-
-    
 
     if (isLoggedIn()) {
-      const isBookingAvailable = await checkBooking(
-        startDate.format("YYYY-MM-DD"),
-        endDate.format("YYYY-MM-DD"),
-        userData.id
-      );
-  
-      if (!isBookingAvailable) {
-        toast.error(
-          "Ngày đến và ngày đi đã được đặt trước đó. Vui lòng chọn ngày khác."
+      
+      console.log(maPhong)
+
+      const checkResult = await checkBooking(maPhong);
+    
+      console.log(checkResult) 
+      // Kiểm tra xung đột ngày đặt
+      const isBookingConflict = checkResult.some((booking) => {
+        const bookingStart = dayjs(booking.ngayDen);
+        const bookingEnd = dayjs(booking.ngayDi);
+        const userStart = dayjs(ngayDen);
+        const userEnd = dayjs(ngayDi);
+      
+        return (
+          userStart.isBetween(bookingStart, bookingEnd, null, "[]") ||
+          userEnd.isBetween(bookingStart, bookingEnd, null, "[]")
         );
+      });
+      
+
+      if (isBookingConflict) {
+        console.log(isBookingConflict);
+        toast.error("Ngày đặt trùng lịch với đơn đặt phòng khác.");
         return;
       }
+
       const updatedBooking = {
-        
         ...booking,
         ngayDen,
         ngayDi,
@@ -153,7 +157,11 @@ function DetailRoom() {
       return;
     }
   };
-  
+
+
+
+
+
   const isLoggedIn = () => {
     const authLoginData = localStorage.getItem("authLogin");
     if (authLoginData) {
