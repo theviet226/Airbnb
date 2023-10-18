@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import css from "./detail.module.scss";
 import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
-import { TRoomIteam } from "src/types";
+import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
@@ -15,12 +15,17 @@ import { DatePicker } from "antd";
 import { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
+import { Comment } from "src/services/comment.service";
+
 
 dayjs.extend(isBetween);
 
 type TPrams = {
   detailId: string;
 };
+type TComments = {  
+  maPhong:string 
+}
 
 function DetailRoom() {
   const navigate = useNavigate();
@@ -66,7 +71,7 @@ function DetailRoom() {
   });
 
   const params = useParams<TPrams>();
-
+  const maPhongComment = useParams<TComments>();
   const [userData, setUserData] = useState<any>(null);
   const maPhong = params.detailId || "";
   const [roomId, setRoomId] = useState<TRoomIteam>();
@@ -75,7 +80,19 @@ function DetailRoom() {
   const [babyQuanTiTy, setBabyQuanTity] = useState(0);
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
-
+  const [comment,setComment] = useState<TComment>()
+  useEffect(() => {
+    if (maPhongComment.maPhong) {
+      Comment(maPhongComment.maPhong)
+        .then((resp) => {
+          setComment(resp.data.content);
+          console.log(resp.data.content);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [maPhongComment]);
   useEffect(() => {
     if (!params.detailId) return;
     getRoomId(params.detailId)
@@ -151,6 +168,7 @@ function DetailRoom() {
         .catch((e) => {
           console.log(e);
         });
+      
     } else {
       alert("Bạn cần phải đăng nhập để đặt phòng !");
       navigate("/login");
@@ -669,8 +687,8 @@ function DetailRoom() {
           <div>
             <div className={css["detail-comment-img"]}>
               <img
-                src="http://i.pravatar.cc/?img=1"
-                style={{ width: 50, height: 50, borderRadius: "50%" }}
+                src={comment?.avatar}
+                style={{ width: 50, height: 50, borderRadius: "50%",border:"none",outline:"none" }}
               />
               <div className={css["detail-comment-img-text"]}>
                 <h3
@@ -680,7 +698,7 @@ function DetailRoom() {
                     marginBottom: 0,
                   }}
                 >
-                  Gero
+                  {comment?.tenNguoiBinhLuan}
                 </h3>
                 <p
                   style={{
@@ -690,52 +708,17 @@ function DetailRoom() {
                     color: "#717171",
                   }}
                 >
-                  tháng 8 năm 2023
+                  {comment?.ngayBinhLuan}
                 </p>
               </div>
             </div>
             <div>
               <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eveniet, tempore?
+                {comment?.noiDung}
               </span>
             </div>
           </div>
-          <div>
-            <div className={css["detail-comment-img"]}>
-              <img
-                src="http://i.pravatar.cc/?img=1"
-                style={{ width: 50, height: 50, borderRadius: "50%" }}
-              />
-              <div className={css["detail-comment-img-text"]}>
-                <h3
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "600",
-                    marginBottom: 0,
-                  }}
-                >
-                  Gero
-                </h3>
-                <p
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    marginBottom: 0,
-                    color: "#717171",
-                  }}
-                >
-                  tháng 8 năm 2023
-                </p>
-              </div>
-            </div>
-            <div>
-              <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eveniet, tempore?
-              </span>
-            </div>
-          </div>
+         
         </div>
         <div className={css["detail-cm"]}>
           <img

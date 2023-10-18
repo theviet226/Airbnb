@@ -1,3 +1,4 @@
+import { type } from "os";
 
 
 export type TRoomIteam ={
@@ -32,3 +33,11 @@ export type TUserInfo = {
     date: string;
     role:string;
 };
+export type TComment  = {
+    id:               number;
+    ngayBinhLuan:     string;
+    noiDung:          string;
+    saoBinhLuan:      number;
+    tenNguoiBinhLuan: string;
+    avatar:           string;
+}
