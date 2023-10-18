@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import {TRoomIteam} from 'src/types/index'
 
 const roomSlice = createSlice({
     name: 'room',
     initialState: {
-        listRoom: []
+        listRoom: [] as TRoomIteam[],
     },
     reducers: {
         setListRoom: (state, action) => {

@@ -87,7 +87,7 @@ function RoomMangage() {
                     <td>{room.maViTri}</td>
                     <td>{room.khach}</td>
                     <td>
-                      <button onClick={() =>handleDeleteRoom(room.id)} style={{ marginRight: "10px" }} className='btn btn-danger' >
+                      <button onClick={() => handleDeleteRoom(room.id)} style={{ marginRight: "10px" }} className='btn btn-danger' >
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning'>

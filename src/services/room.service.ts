@@ -33,6 +33,7 @@ export const deleteRoom= async (id: string) => {
             method: 'delete',
             url: `/phong-thue/${id}`
         })
+        console.log(resp.data)
         return resp.data
     } catch (error) {
         console.log(error)

@@ -23,8 +23,8 @@ dayjs.extend(isBetween);
 type TPrams = {
   detailId: string;
 };
-type TComments = {  
-  maPhong:string 
+type TComments = {
+  maPhong: string
 }
 
 function DetailRoom() {
@@ -33,6 +33,17 @@ function DetailRoom() {
   const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
   const [numberOfNights, setNumberOfNights] = useState<number | null>(null);
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
+  const params = useParams<TPrams>();
+  const [userData, setUserData] = useState<any>(null);
+  const maPhong = params.detailId || "";
+  const [roomId, setRoomId] = useState<TRoomIteam>();
+  const [quantity, setQuantity] = useState(0);
+  const [childQuanTiTy, setChildQuanTity] = useState(0);
+  const [babyQuanTiTy, setBabyQuanTity] = useState(0);
+  const [total, setTotal] = useState(0);
+  const dispatch = useAppDispatch();
+  const [comments, setComment] = useState<TComment[]>([]);
+
   const calculateNumberOfNights = (
     startDate: dayjs.Dayjs,
     endDate: dayjs.Dayjs,
@@ -41,9 +52,7 @@ function DetailRoom() {
     return duration;
   };
 
-  const handleDateRangeChange = (
-    dates: [dayjs.Dayjs | null, dayjs.Dayjs | null],
-  ) => {
+  const handleDateRangeChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]) => {
     setSelectedDateRange(dates);
     if (dates[0] && dates[1]) {
       const startDate = dayjs(dates[0]);
@@ -70,35 +79,21 @@ function DetailRoom() {
     maPhong: "",
   });
 
-  const params = useParams<TPrams>();
-  const maPhongComment = useParams<TComments>();
-  const [userData, setUserData] = useState<any>(null);
-  const maPhong = params.detailId || "";
-  const [roomId, setRoomId] = useState<TRoomIteam>();
-  const [quantity, setQuantity] = useState(0);
-  const [childQuanTiTy, setChildQuanTity] = useState(0);
-  const [babyQuanTiTy, setBabyQuanTity] = useState(0);
-  const [total, setTotal] = useState(0);
-  const dispatch = useAppDispatch();
-  const [comment,setComment] = useState<TComment>()
+
   useEffect(() => {
-    if (maPhongComment.maPhong) {
-      Comment(maPhongComment.maPhong)
-        .then((resp) => {
-          setComment(resp.data.content);
-          console.log(resp.data.content);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }, [maPhongComment]);
+    Comment(maPhong)
+      .then((resp) => {
+        setComment(resp)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  }, [maPhong])
   useEffect(() => {
     if (!params.detailId) return;
     getRoomId(params.detailId)
       .then((resp) => {
         setRoomId(resp.content);
-        console.log(resp.content);
       })
       .catch((e) => {
         console.log(e);
@@ -123,25 +118,22 @@ function DetailRoom() {
     );
 
     if (isLoggedIn()) {
-      
-      console.log(maPhong)
-
       const checkResult = await checkBooking(maPhong);
-    
-      console.log(checkResult) 
+
+
       // Kiểm tra xung đột ngày đặt
-      const isBookingConflict = checkResult.some((booking) => {
+      const isBookingConflict = checkResult.some((booking: { ngayDen: string | number | Dayjs | Date | null | undefined; ngayDi: string | number | Dayjs | Date | null | undefined; }) => {
         const bookingStart = dayjs(booking.ngayDen);
         const bookingEnd = dayjs(booking.ngayDi);
         const userStart = dayjs(ngayDen);
         const userEnd = dayjs(ngayDi);
-      
+
         return (
           userStart.isBetween(bookingStart, bookingEnd, null, "[]") ||
           userEnd.isBetween(bookingStart, bookingEnd, null, "[]")
         );
       });
-      
+
 
       if (isBookingConflict) {
         console.log(isBookingConflict);
@@ -168,7 +160,7 @@ function DetailRoom() {
         .catch((e) => {
           console.log(e);
         });
-      
+
     } else {
       alert("Bạn cần phải đăng nhập để đặt phòng !");
       navigate("/login");
@@ -683,43 +675,47 @@ function DetailRoom() {
           </div>
         </div>
         <hr />
-        <div className={css["detail-comment"]}>
-          <div>
-            <div className={css["detail-comment-img"]}>
-              <img
-                src={comment?.avatar}
-                style={{ width: 50, height: 50, borderRadius: "50%",border:"none",outline:"none" }}
-              />
-              <div className={css["detail-comment-img-text"]}>
-                <h3
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "600",
-                    marginBottom: 0,
-                  }}
-                >
-                  {comment?.tenNguoiBinhLuan}
-                </h3>
-                <p
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "400",
-                    marginBottom: 0,
-                    color: "#717171",
-                  }}
-                >
-                  {comment?.ngayBinhLuan}
-                </p>
+        {comments.map((comment) => (
+          <div key={comment.id} className={css["detail-comment"]}>
+            <div>
+              <div className={css["detail-comment-img"]}>
+                <img
+                  src={comment?.avatar}
+                  style={{ width: 50, height: 50, borderRadius: "50%", border: "none", outline: "none" }}
+                />
+                <div className={css["detail-comment-img-text"]}>
+                  <h3
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "600",
+                      marginBottom: 0,
+                    }}
+                  >
+                    {comment?.tenNguoiBinhLuan}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "400",
+                      marginBottom: 0,
+                      color: "#717171",
+                    }}
+                  >
+                    {comment?.ngayBinhLuan}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
+                  {comment?.noiDung}
+                </span>
               </div>
             </div>
-            <div>
-              <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
-                {comment?.noiDung}
-              </span>
-            </div>
+
           </div>
-         
-        </div>
+        ))}
+
+
         <div className={css["detail-cm"]}>
           <img
             src="http://i.pravatar.cc/?img=2"
@@ -739,3 +735,6 @@ function DetailRoom() {
 }
 
 export default DetailRoom;
+
+
+
