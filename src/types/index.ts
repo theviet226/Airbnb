@@ -39,5 +39,7 @@ export type TComment  = {
     noiDung:          string;
     saoBinhLuan:      number;
     tenNguoiBinhLuan: string;
-    avatar:           string;
+   avatar:string
+
+    
 }

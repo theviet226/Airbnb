@@ -4,10 +4,12 @@ import { getLocalStorage } from "src/utils";
 export interface Booking {
   maPhong:number,
   maNguoiDung:number,
+  id:number,
   
 }
 export interface BookingState{
-  booking:Booking|null
+  booking:Booking|null,
+ 
 }
 
 const initialState:BookingState={
