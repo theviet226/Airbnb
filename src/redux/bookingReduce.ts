@@ -9,6 +9,7 @@ export interface Booking {
 }
 export interface BookingState{
   booking:Booking|null,
+  
  
 }
 

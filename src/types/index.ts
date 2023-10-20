@@ -1,4 +1,3 @@
-import { type } from "os";
 
 
 export type TRoomIteam = {
@@ -43,4 +42,9 @@ export type TComment = {
     saoBinhLuan:string;
 
 
+<<<<<<< HEAD
 }
+=======
+    
+}
+>>>>>>> 44519e7e9f3618b700821e3ac65065b8ce5f1433

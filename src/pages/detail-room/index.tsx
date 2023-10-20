@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
 import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
-import { RootState, useAppDispatch } from "src/redux/config-store";
+import { RootState, useAppDispatch, useAppSelector } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
@@ -288,6 +288,7 @@ function DetailRoom() {
     }
     return sao
   }
+
   return (
     <>
       <div className="container">
@@ -784,7 +785,8 @@ function DetailRoom() {
         ))}
         <div className={css["detail-cm"]}>
           <img
-            src="http://i.pravatar.cc/?img=2"
+            src='src/assets/images/ad.jpg'
+            alt="123"
             style={{ width: 70, height: 70, borderRadius: "50%" }}
           />
           <form>
