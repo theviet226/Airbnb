@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
 import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
-import { RootState, useAppDispatch } from "src/redux/config-store";
+import { RootState, useAppDispatch, useAppSelector } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import  { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
@@ -243,7 +243,12 @@ function DetailRoom() {
   noiDung: "",
   saoBinhLuan: "",
   })
-  const id = useSelector((state) => state.bookingReduce.id)
+  const id = useSelector((state:RootState) =>  {
+    if (typeof state === 'object' && state !== null) {
+      return state.bookingReduce.booking.id;
+    }
+    return null;
+  })
   const handleClick = (e: any) => {
     e.preventDefault();
     const currentDate = new Date()
@@ -777,7 +782,7 @@ const renderSao =(soSao:number)=>{
         ))}
         <div className={css["detail-cm"]}>
           <img
-            src="http://i.pravatar.cc/?img=2"
+            src={userData.avatar}
             style={{ width: 70, height: 70, borderRadius: "50%" }}
           />
           <form>
