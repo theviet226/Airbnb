@@ -1,26 +1,26 @@
 import { type } from "os";
 
 
-export type TRoomIteam ={
-    id:       number;
+export type TRoomIteam = {
+    id: number;
     tenPhong: string;
-    khach:    number;
+    khach: number;
     phongNgu: number;
-    giuong:   number;
+    giuong: number;
     phongTam: number;
-    moTa:     string;
-    giaTien:  number;
-    mayGiat:  boolean;
-    banLa:    boolean;
-    tivi:     boolean;
-    dieuHoa:  boolean;
-    wifi:     boolean;
-    bep:      boolean;
-    doXe:     boolean;
-    hoBoi:    boolean;
-    banUi:    boolean;
-    maViTri:  number;
-    hinhAnh:  string;
+    moTa: string;
+    giaTien: number;
+    mayGiat: boolean;
+    banLa: boolean;
+    tivi: boolean;
+    dieuHoa: boolean;
+    wifi: boolean;
+    bep: boolean;
+    doXe: boolean;
+    hoBoi: boolean;
+    banUi: boolean;
+    maViTri: number;
+    hinhAnh: string;
 }
 
 export type TUserInfo = {
@@ -31,15 +31,16 @@ export type TUserInfo = {
     gender: boolean | undefined;
     name: string;
     date: string;
-    role:string;
+    role: string;
 };
-export type TComment  = {
-    id:               number;
-    ngayBinhLuan:     string;
-    noiDung:          string;
-    saoBinhLuan:      number;
+export type TComment = {
+    id: number;
+    ngayBinhLuan: string;
+    noiDung: string;
+    saoBinhLuan: number;
     tenNguoiBinhLuan: string;
-   avatar:string
+    avatar: string;
+    saoBinhLuan:string;
 
-    
+
 }
