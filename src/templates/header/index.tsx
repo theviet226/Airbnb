@@ -6,7 +6,7 @@ import icvn from "src/assets/images/vn.png"
 
 import { useEffect } from 'react';
 import { useState } from 'react';
-
+import avatar from "../../assets/images/avatar.jpg"
 
 function Header() {
   const [userData, setUserData] = useState<any>(null);
@@ -41,7 +41,7 @@ function Header() {
             <div className={css["user-profile"]}>
               {userData ? (
                 <div className={css["user-name"]}>
-                  <img src={userData.avatar} alt="" />
+                  <img src={avatar} alt="" />
                   {userData.name}
                   <div className={css["profile-dropdown"]}>
 

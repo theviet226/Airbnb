@@ -40,7 +40,15 @@ export type TComment = {
     tenNguoiBinhLuan: string;
     avatar: string;
 }
-
+export type  TProfileUser= {
+    email: string;
+    password: string;
+    confirmPassword: string;
+    phone: string;
+    gender: boolean | undefined;
+    name: string;
+    date: string;
+  };
     
 
 

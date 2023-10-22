@@ -1,0 +1,124 @@
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 20px;
+    font-family: "Roboto";
+}
+.profile-col {
+    grid-template-columns: auto;
+    padding: 50px 50px;
+}
+.profile-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+}
+.profile-img {
+    background-image: url(../../assets/images/bg-1.jpg.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 200px;
+}
+.profile-title h3 {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 24px;
+    font-family: "Roboto";
+}
+.profile-colum {
+    display: flex;
+    column-gap: 15px;
+}
+.profile-form {
+    padding: 30px 50px;
+}
+.profile-input {
+    
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+}
+.profile-control {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #ababab;
+    padding: 0 15px;
+    margin-top: 8px;
+
+
+}
+.profile-placeholeder {
+    color: #707070;
+    font-style: 18px;
+    font-weight: 400;
+
+}
+
+
+.gender-box h4{
+    margin: 0 0 10px 0;
+    color: #707070;
+    font-size: 16px;
+    font-weight: 400;
+}
+.gender-box{
+    margin-top: 20px;
+}
+.gender-option, .gender{
+    display: flex;
+    align-items: center;
+    column-gap: 100px;
+}
+.gender {
+    column-gap: 5px;
+    
+}
+.gender input,.gender label{
+    cursor: pointer;
+    color: #adadad;
+}
+.profile-button{
+    width: 30%;
+    height: 50px;
+    border: 1px solid;
+    background: #2691d9;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+
+}
+.profile-button:hover{
+    border-color: #2691d9;
+    transition: 0.5s;
+}
+.profile-signup{
+    padding: 30px 50px;
+    text-align: center;
+}
+
+.profile-avatar{
+    text-align: center;
+}
+.profile-img-1{
+    border-radius: 50%;
+    width: 135px;
+    height: 135px;
+    border: 4px solid rgb(243, 244, 246);   
+   cursor: pointer;
+}
+
+input[type='file']{
+    display: none;
+}

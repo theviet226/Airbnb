@@ -28,9 +28,7 @@ const signupSchema = Y.object({
 function Register() {
   const [gender, setGender] = useState<boolean | undefined>(undefined);
   const navigate = useNavigate();
-  const [file,setFile] = useState<File|undefined>()
-  const [preview,setPreview] = useState<string|undefined>()
-
+  
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -64,25 +62,6 @@ function Register() {
  const handleGenderChange =(value:boolean) =>{
   setGender(value)
  }
- const handleOnChange = (e:React.FormEvent<HTMLInputElement>)=>{
-  const target = e.target as HTMLInputElement &{
-    files:FileList;
-  }
-  setFile(target.files[0])
-  const file = new FileReader
-  file.onload = function(){
-
-  }
-  file.readAsDataURL(target.files[0])
- }
- const handleOnSubmit =(e:React.SyntheticEvent)=>{
-  e.preventDefault()
-  if(typeof file === 'undefined') return
-  const formData = new FormData()
-  formData.append('file',file)
-  formData.append('upload-preset','test-react-uploads-unsigned')
-  
- }
   return (
     <>
       <div className={css["register-container"]}>
@@ -95,7 +74,7 @@ function Register() {
                 <label htmlFor="profile">
                 <img src={avatar} className={css["register-img-1"]} alt="avatar"/>
                 </label>
-                <input onChange={handleOnChange} type="file" id="profile" name="profile" />
+   
               </div>
               <form onSubmit={formik.handleSubmit}>
                 <div className={css["register-form"]}>

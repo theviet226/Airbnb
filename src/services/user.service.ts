@@ -1,5 +1,5 @@
 import { axiosWithoutAuth, axiosWithAuth } from "./config.service";
-import { TUserInfo } from "src/types";
+import { TProfileUser, TUserInfo } from "src/types";
 
 export const User = async () => {
     try {
@@ -42,6 +42,19 @@ export const deleteUser = async (id: string) => {
 }
 
 export const addUser = async (data:TUserInfo) =>{
+    try {
+        const resp = await axiosWithoutAuth({
+            method: "post",
+            url : `/users`,
+            data,
+        });
+        console.log(resp.data)
+        return resp.data
+    }catch(error){
+        console.log(error)
+    }
+}
+export const updateProfile = async (data:TProfileUser) =>{
     try {
         const resp = await axiosWithoutAuth({
             method: "post",

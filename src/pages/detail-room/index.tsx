@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
 import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
-import {  useAppDispatch } from "src/redux/config-store";
+import {  RootState, useAppDispatch } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
@@ -16,6 +16,9 @@ import { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { Comment, idComment } from "src/services/comment.service";
+import { commentList } from "src/redux/comment";
+import { useSelector } from "react-redux";
+import avatar from "../../assets/images/avatar.jpg"
 
 
 
@@ -205,15 +208,6 @@ function DetailRoom() {
       [name]: value,
     });
   };
-  const [soSao, setSoSao] = useState<number>(0)
-  const [cmment, setComments] = useState({
-    maPhong: "",
-    maNguoiBinhLuan: "",
-    ngayBinhLuan: "",
-    noiDung: "",
-    saoBinhLuan: "",
-  })
-
   useEffect(() => {
 
     Comment(maPhong)
@@ -225,6 +219,16 @@ function DetailRoom() {
       });
 
   }, [maPhong]);
+  const [soSao, setSoSao] = useState<number>(0)
+  const [cmment, setComments] = useState({
+    maPhong: "",
+    maNguoiBinhLuan: "",
+    ngayBinhLuan: "",
+    noiDung: "",
+    saoBinhLuan: 0,
+  })
+
+  
   const authDataString = localStorage.getItem("authLogin");
   let TOKENUSER = '';
   if (authDataString) {
@@ -250,6 +254,7 @@ function DetailRoom() {
       noiDung: value,
     });
   };
+  const commentState = useSelector((state:RootState) =>state.commentList.listComment)
 
   const handleComment = (e: any) => {
     e.preventDefault();
@@ -271,12 +276,15 @@ function DetailRoom() {
     idComment(updateComment, TOKENUSER)
       .then((resp) => {
         setComments(resp.content);
+        
+        dispatch(commentList(resp))
+        
       })
       .catch((e) => {
         console.log(e);
       });
   };
-
+  
   const renderSao = (soSao: number) => {
     const sao = []
     for (let i = 1; i <= 5; i++) {
@@ -359,7 +367,7 @@ function DetailRoom() {
               </div>
               <div>
                 <img
-                  src="http://i.pravatar.cc?img=1"
+                  src={avatar}
                   style={{ width: 70, height: 70, borderRadius: "50%" }}
                 />
               </div>
@@ -741,6 +749,7 @@ function DetailRoom() {
           </div>
         </div>
         <hr />
+                  
         {comments.map((comment) => (
           <div key={comment.id} className={css["detail-comment"]}>
             <div>
@@ -779,19 +788,21 @@ function DetailRoom() {
               <div>
                 {renderSao(comment?.saoBinhLuan)}
               </div>
+              
             </div>
+            
 
           </div>
         ))}
         <div className={css["detail-cm"]}>
           <img
-            src='src/assets/images/ad.jpg'
+            src={avatar}
             alt="123"
             style={{ width: 70, height: 70, borderRadius: "50%" }}
           />
           <form>
             <textarea cols={130} rows={8} onChange={handleChanges} />
-            <span>Hãy đánh giá chất lượng phòng ở {renderSao(soSao)}</span>
+            <p>Hãy đánh giá chất lượng phòng ở {renderSao(soSao)}</p>
 
           </form>
         </div>
