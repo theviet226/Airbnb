@@ -1,0 +1,105 @@
+.profile-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.left-panel {
+    width: 20%;
+    /* Điều chỉnh kích thước thanh bên trái theo ý muốn */
+}
+
+.avatar {
+    width: 100%;
+    text-align: center;
+}
+
+.avatar img {
+    max-width: 100%;
+    border-radius: 50%;
+}
+
+.right-panel {
+    width: 80%;
+    /* Điều chỉnh kích thước phần thông tin bên phải theo ý muốn */
+}
+
+.tab-menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab-menu li {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-bottom: 2px solid transparent;
+    font-weight: bold;
+    transition: border-color 0.3s;
+    flex: 1;
+
+}
+
+.tab-menu li.active {
+    border-color: #007bff;
+}
+
+
+.tab-content {
+    padding: 20px;
+}
+
+/* CSS cho các ô input */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.gender label {
+    display: inline;
+    margin-right: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* CSS cho giới tính và ngày sinh */
+.form-group input[type="radio"],
+.form-group label {
+    display: inline;
+    margin-bottom: 0;
+}
+
+/* CSS cho radio button */
+.form-group div {
+    display: flex;
+    align-items: center;
+}
+
+/* CSS cho hiển thị thông tin cá nhân */
+.info-content {
+    padding: 20px;
+    // background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}

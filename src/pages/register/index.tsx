@@ -1,11 +1,13 @@
-import  { useState } from "react";
+import  React, { useState } from "react";
 import css from "./register.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Y from "yup";
 import { authSignup } from "src/services/auth.service";
 import { toast, ToastContainer } from 'react-toastify';
+import avatar from "../../assets/images/avatar.jpg"
 import 'react-toastify/dist/ReactToastify.css';
+
 export type TSignup = {
   email: string;
   password: string;
@@ -26,6 +28,7 @@ const signupSchema = Y.object({
 function Register() {
   const [gender, setGender] = useState<boolean | undefined>(undefined);
   const navigate = useNavigate();
+  
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -46,6 +49,7 @@ function Register() {
         name: value.name,
         gender: gender,
         date: value.date,
+        
       };
       authSignup(data).then(()=>{
         toast.success('Đăng ký thành công');
@@ -66,6 +70,12 @@ function Register() {
             <div className={css["register-img"]}></div>
             <div className={css["register-title"]}>
               <h3>Sign Up</h3>
+              <div className={css["register-avatar"]}>
+                <label htmlFor="profile">
+                <img src={avatar} className={css["register-img-1"]} alt="avatar"/>
+                </label>
+   
+              </div>
               <form onSubmit={formik.handleSubmit}>
                 <div className={css["register-form"]}>
                   <div className={css["register-colum"]}>

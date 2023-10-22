@@ -43,7 +43,7 @@ export type TAdminInfo = {
 export type TComment = {
     id: number;
     ngayBinhLuan: string;
-    noiDung: string;
+    noiDung:string;
     saoBinhLuan: number;
     tenNguoiBinhLuan: string;
     avatar: string;
@@ -57,3 +57,15 @@ export type TLocalInfo = {
     tenViTri : string;
     tinhThanh: string
 }
+export type  TProfileUser= {
+    email: string;
+    password: string;
+    confirmPassword: string;
+    phone: string;
+    gender: boolean | undefined;
+    name: string;
+    date: string;
+  };
+    
+
+

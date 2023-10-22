@@ -25,7 +25,7 @@ function ListUsers() {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
 
-console.log(users)
+  console.log(users)
 
   const openModal = () => {
     setIsModalOpen(true);

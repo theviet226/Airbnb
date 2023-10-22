@@ -1,33 +1,36 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import css from "./login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "src/redux/config-store";
 import { useFormik } from "formik";
 import { authLogin } from "src/services/auth.service";
-import { getLocalStorage, setLocalStorage } from "src/utils";
+import {  setLocalStorage } from "src/utils";
 import { AUTH_LOGIN } from "src/constants";
 import { authLoginn } from "src/redux/authReduceLogin";
 
 export type TSignin = {
   email: string;
   password: string;
+  
 };
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [loginErr, setLoginErr] = useState("");
-  const [email,setEmail] = useState('')
+  
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+     
     },
     onSubmit: (value) => {
       const data: TSignin = {
         email: value.email,
         password: value.password,
+       
       };
       
       authLogin(data)

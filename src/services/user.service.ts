@@ -1,5 +1,5 @@
 import { axiosWithoutAuth, axiosWithAuth } from "./config.service";
-import { TAdminInfo } from "src/types";
+import { TAdminInfo,TProfileUser } from "src/types";
 
 export const User = async () => {
     try {
@@ -13,9 +13,22 @@ export const User = async () => {
     }
 }
 
+export const getProfile = async (id:string) =>{
+    try{
+        const resp = await axiosWithoutAuth({
+            method: "get",
+            url: `/users/${id}`,
+        })
+        console.log(resp.data)
+        return resp.data.content
+    }catch(error){
+        console.log(error)
+    }
+}
+
 export const updateUser = async (id: string, data: { name: string, email: string, avatar: string, role: string, gender: string }) => {
     try {
-        const resp = await axiosWithAuth({
+        const resp = await axiosWithoutAuth({
             method: "put",
             url: `/users/${id}`,
             data,
@@ -42,6 +55,19 @@ export const deleteUser = async (id: string) => {
 }
 
 export const addUser = async (data:TAdminInfo) =>{
+    try {
+        const resp = await axiosWithoutAuth({
+            method: "post",
+            url : `/users`,
+            data,
+        });
+        console.log(resp.data)
+        return resp.data
+    }catch(error){
+        console.log(error)
+    }
+}
+export const updateProfile = async (data:TProfileUser) =>{
     try {
         const resp = await axiosWithoutAuth({
             method: "post",

@@ -108,3 +108,17 @@
     text-align: center;
 }
 
+.register-avatar{
+    text-align: center;
+}
+.register-img-1{
+    border-radius: 50%;
+    width: 135px;
+    height: 135px;
+    border: 4px solid rgb(243, 244, 246);   
+   
+}
+
+input[type='file']{
+    display: none;
+}

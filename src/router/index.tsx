@@ -40,18 +40,22 @@ export const router = createBrowserRouter([
                 path: "detail/:detailId",
                 element: <DetailRoom />
             },
-        ]
-    },
-    {
-        element: <ListRoomTemplate />,
-        children: [
-
             {
                 path: "profile",
                 element: <Profile />
             },
         ]
     },
+    // {
+    //     element: <ListRoomTemplate />,
+    //     children: [
+
+    //         {
+    //             path: "profile",
+    //             element: <Profile />
+    //         },
+    //     ]
+    // },
     {
         element: <AdminBaseTemplate />,
         children: [
