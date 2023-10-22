@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
 import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
-import { RootState, useAppDispatch, useAppSelector } from "src/redux/config-store";
+import { useAppDispatch } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
@@ -16,7 +16,7 @@ import { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { Comment, idComment } from "src/services/comment.service";
-import { useSelector } from "react-redux";
+import { TOKENUSER } from "src/constants";
 
 
 
@@ -225,23 +225,7 @@ function DetailRoom() {
       });
 
   }, [maPhong]);
-  const authDataString = localStorage.getItem("authLogin");
-  let TOKENUSER = '';
-  if (authDataString) {
-    try {
-      const authData = JSON.parse(authDataString);
-
-      if (authData.token) {
-        TOKENUSER = authData.token;
-      } else {
-        console.log("Token not found in the auth data.");
-      }
-    } catch (error) {
-      console.error("Error parsing the auth data:", error);
-    }
-  } else {
-    console.log("Auth data not found in localStorage.");
-  }
+ 
 
   const handleChanges = (e: any): void => {
     const { value } = e.target;

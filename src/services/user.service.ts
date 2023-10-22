@@ -1,5 +1,5 @@
 import { axiosWithoutAuth, axiosWithAuth } from "./config.service";
-import { TUserInfo } from "src/types";
+import { TAdminInfo } from "src/types";
 
 export const User = async () => {
     try {
@@ -18,7 +18,7 @@ export const updateUser = async (id: string, data: { name: string, email: string
         const resp = await axiosWithAuth({
             method: "put",
             url: `/users/${id}`,
-            data: data,
+            data,
         });
         console.log(resp.data)
         return resp.data;
@@ -41,7 +41,7 @@ export const deleteUser = async (id: string) => {
     }
 }
 
-export const addUser = async (data:TUserInfo) =>{
+export const addUser = async (data:TAdminInfo) =>{
     try {
         const resp = await axiosWithoutAuth({
             method: "post",

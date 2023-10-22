@@ -14,7 +14,7 @@ function ListUsers() {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const users = useSelector((state: any) => state.user.usersList);
-  const selectedUser = useSelector((state: any) => state.user.selectedUser);
+  const selectUser = useSelector((state: any) => state.user.selectedUser);
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
   const [editedGender, setEditedGender] = useState("");
@@ -25,7 +25,7 @@ function ListUsers() {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
 
-
+console.log(users)
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -44,7 +44,7 @@ function ListUsers() {
     };
 
 
-    updateUser(selectedUser.id, updatedUserData)
+    updateUser(selectUser.id, updatedUserData)
       .then((updatedUser) => {
         const updatedUsers = users.map((user: { id: any; }) =>
           user.id === updatedUser.id ? updatedUser : user

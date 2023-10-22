@@ -32,6 +32,14 @@ export type TUserInfo = {
     date: string;
     role: string;
 };
+export type TAdminInfo = {
+    email: string;
+    password: string;
+    confirmPassword: string;
+    phone: string;
+    name: string;
+    role: string;
+};
 export type TComment = {
     id: number;
     ngayBinhLuan: string;
@@ -39,12 +47,13 @@ export type TComment = {
     saoBinhLuan: number;
     tenNguoiBinhLuan: string;
     avatar: string;
-    saoBinhLuan:string;
+}
 
 
-<<<<<<< HEAD
+export type TLocalInfo = {
+    hinhAnh: string;
+    // id : string;
+    quocGia: string;
+    tenViTri : string;
+    tinhThanh: string
 }
-=======
-    
-}
->>>>>>> 44519e7e9f3618b700821e3ac65065b8ce5f1433
