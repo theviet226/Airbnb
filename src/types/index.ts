@@ -35,16 +35,12 @@ export type TUserInfo = {
 export type TComment = {
     id: number;
     ngayBinhLuan: string;
-    noiDung: string;
+    noiDung:string;
     saoBinhLuan: number;
     tenNguoiBinhLuan: string;
     avatar: string;
-    saoBinhLuan:string;
-
-
-<<<<<<< HEAD
 }
-=======
+
     
-}
->>>>>>> 44519e7e9f3618b700821e3ac65065b8ce5f1433
+
+

@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN } from "src/constants"
+
 import { axiosWithAuth, axiosWithoutAuth } from "./config.service"
 
 export const Comment = async (maPhong: string): Promise<any> => {

@@ -1,11 +1,13 @@
-import  { useState } from "react";
+import  React, { useState } from "react";
 import css from "./register.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Y from "yup";
 import { authSignup } from "src/services/auth.service";
 import { toast, ToastContainer } from 'react-toastify';
+import avatar from "../../assets/images/avatar.jpg"
 import 'react-toastify/dist/ReactToastify.css';
+
 export type TSignup = {
   email: string;
   password: string;
@@ -26,6 +28,9 @@ const signupSchema = Y.object({
 function Register() {
   const [gender, setGender] = useState<boolean | undefined>(undefined);
   const navigate = useNavigate();
+  const [file,setFile] = useState<File|undefined>()
+  const [preview,setPreview] = useState<string|undefined>()
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -46,6 +51,7 @@ function Register() {
         name: value.name,
         gender: gender,
         date: value.date,
+        
       };
       authSignup(data).then(()=>{
         toast.success('Đăng ký thành công');
@@ -58,6 +64,25 @@ function Register() {
  const handleGenderChange =(value:boolean) =>{
   setGender(value)
  }
+ const handleOnChange = (e:React.FormEvent<HTMLInputElement>)=>{
+  const target = e.target as HTMLInputElement &{
+    files:FileList;
+  }
+  setFile(target.files[0])
+  const file = new FileReader
+  file.onload = function(){
+
+  }
+  file.readAsDataURL(target.files[0])
+ }
+ const handleOnSubmit =(e:React.SyntheticEvent)=>{
+  e.preventDefault()
+  if(typeof file === 'undefined') return
+  const formData = new FormData()
+  formData.append('file',file)
+  formData.append('upload-preset','test-react-uploads-unsigned')
+  
+ }
   return (
     <>
       <div className={css["register-container"]}>
@@ -66,6 +91,12 @@ function Register() {
             <div className={css["register-img"]}></div>
             <div className={css["register-title"]}>
               <h3>Sign Up</h3>
+              <div className={css["register-avatar"]}>
+                <label htmlFor="profile">
+                <img src={avatar} className={css["register-img-1"]} alt="avatar"/>
+                </label>
+                <input onChange={handleOnChange} type="file" id="profile" name="profile" />
+              </div>
               <form onSubmit={formik.handleSubmit}>
                 <div className={css["register-form"]}>
                   <div className={css["register-colum"]}>
