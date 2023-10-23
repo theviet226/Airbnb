@@ -1,5 +1,5 @@
 import { axiosWithoutAuth, axiosWithAuth } from "./config.service";
-import { TAdminInfo,TProfileUser } from "src/types";
+import { TAdminInfo, TProfileUser } from "src/types";
 
 export const User = async () => {
     try {
@@ -13,15 +13,15 @@ export const User = async () => {
     }
 }
 
-export const getProfile = async (id:string) =>{
-    try{
+export const getProfile = async (id: string) => {
+    try {
         const resp = await axiosWithoutAuth({
             method: "get",
             url: `/users/${id}`,
         })
-        console.log(resp.data)
+        console.log(resp.data.content)
         return resp.data.content
-    }catch(error){
+    } catch (error) {
         console.log(error)
     }
 }
@@ -42,41 +42,41 @@ export const updateUser = async (id: string, data: { name: string, email: string
 };
 
 export const deleteUser = async (id: string) => {
-    try{
+    try {
         const resp = await axiosWithAuth({
             method: "delete",
-            url : `/users?id=${id}`,
+            url: `/users?id=${id}`,
         });
         console.log(resp.data)
         return resp.data;
-    }catch (error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
-export const addUser = async (data:TAdminInfo) =>{
+export const addUser = async (data: TAdminInfo) => {
     try {
         const resp = await axiosWithoutAuth({
             method: "post",
-            url : `/users`,
+            url: `/users`,
             data,
         });
         console.log(resp.data)
         return resp.data
-    }catch(error){
+    } catch (error) {
         console.log(error)
     }
 }
-export const updateProfile = async (data:TProfileUser) =>{
+export const updateProfile = async (data: TProfileUser) => {
     try {
         const resp = await axiosWithoutAuth({
             method: "post",
-            url : `/users`,
+            url: `/users`,
             data,
         });
         console.log(resp.data)
         return resp.data
-    }catch(error){
+    } catch (error) {
         console.log(error)
     }
 }

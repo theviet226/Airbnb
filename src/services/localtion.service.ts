@@ -66,6 +66,7 @@ export const uploadImageLocal = async (data: { image: string, maViTri: string },
         }
         const resp = await axiosWithoutAuth({
             method: 'post',
+            url: '/vi-tri/upload-hinh-vitri',
             data,
             headers,
         })
