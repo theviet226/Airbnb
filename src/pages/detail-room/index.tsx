@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
 import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
-import { RootState, useAppDispatch } from "src/redux/config-store";
+import {  RootState, useAppDispatch } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
@@ -99,7 +99,6 @@ function DetailRoom() {
     const userFromLocalStorage = localStorage.getItem("authLogin");
     if (userFromLocalStorage) {
       const parsedUserData = JSON.parse(userFromLocalStorage);
-      console.log(parsedUserData)
       setUserData(parsedUserData.user);
     }
   }, [params.detailId]);
@@ -238,11 +237,10 @@ function DetailRoom() {
       noiDung: value,
     });
   };
-
-  const commentState = useSelector((state: RootState) => state.commentList.listComment)
-
-  const handleComment = (e: any) => {
-
+  const listComment = useSelector((state:RootState) =>state.commentList.listComment)
+  console.log(listComment)
+  
+  const handleComment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!TOKENUSER) {
       alert("Bạn phải đăng nhập để có thể comment.");
@@ -263,18 +261,14 @@ function DetailRoom() {
     idComment(updateComment, TOKENUSER)
       .then((resp) => {
         setComments(resp.content);
-
-
-        // dispatch(commentList(resp))
-
-
+        dispatch(commentList(comments))
       })
       .catch((e) => {
         console.log(e);
       });
     
   };
-
+  
   const renderSao = (soSao: number) => {
     const sao = []
     for (let i = 1; i <= 5; i++) {
@@ -739,11 +733,9 @@ function DetailRoom() {
           </div>
         </div>
         <hr />
-
-         
-        {commentState.map((commentState) => (
-          <div key={commentState.id} className={css["detail-comment"]}>
-
+                  
+        { comments.map((comment) => (
+          <div key={comment.id} className={css["detail-comment"]}>
             <div>
               <div className={css["detail-comment-img"]}>
                 <img
@@ -780,9 +772,9 @@ function DetailRoom() {
               <div>
                 {renderSao(comment?.saoBinhLuan)}
               </div>
-
+              
             </div>
-
+            
 
           </div>
         ))}
@@ -793,7 +785,7 @@ function DetailRoom() {
             style={{ width: 70, height: 70, borderRadius: "50%" }}
           />
           <form>
-            <textarea cols={130} rows={8} onChange={handleChanges} />
+            <textarea cols={130} rows={8}  onChange={handleChanges} />
             <p>Hãy đánh giá chất lượng phòng ở {renderSao(soSao)}</p>
 
           </form>
