@@ -12,7 +12,8 @@ const commentSlice= createSlice({
     initialState,
     reducers:{
         commentList:(state,action:PayloadAction<TComment[]>)=>{
-            state.listComment=action.payload
+            const comments = action.payload;
+            state.listComment = state.listComment.concat(comments)
         }
     }
 })

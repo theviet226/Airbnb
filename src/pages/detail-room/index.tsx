@@ -18,6 +18,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import { Comment, idComment } from "src/services/comment.service";
 import { TOKENUSER } from "src/constants";
 import { useSelector } from "react-redux";
+import { commentList } from "src/redux/comment";
 
 
 
@@ -228,16 +229,18 @@ function DetailRoom() {
 
 
 
-  const handleChanges = (e: any): void => {
+  const handleChanges = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault()
     const { value } = e.target;
     setComments({
       ...cmment,
       noiDung: value,
     });
   };
-  const commentState = useSelector((state:RootState) =>state.commentList.listComment)
-
-  const handleComment = (e: any) => {
+  const listComment = useSelector((state:RootState) =>state.commentList.listComment)
+  console.log(listComment)
+  
+  const handleComment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!TOKENUSER) {
       alert("Bạn phải đăng nhập để có thể comment.");
@@ -247,23 +250,23 @@ function DetailRoom() {
 
     const currentDate = new Date();
     const updateComment = {
+      noiDung:cmment.noiDung,
       maPhong: maPhong,
       maNguoiBinhLuan: userData.id,
       ngayBinhLuan: currentDate.toISOString(),
       saoBinhLuan: soSao.toString(),
-      noiDung: cmment.noiDung,
+      
     };
 
     idComment(updateComment, TOKENUSER)
       .then((resp) => {
         setComments(resp.content);
-        
-        // dispatch(commentList(resp))
-        
+        dispatch(commentList(comments))
       })
       .catch((e) => {
         console.log(e);
       });
+    
   };
   
   const renderSao = (soSao: number) => {
@@ -731,12 +734,12 @@ function DetailRoom() {
         </div>
         <hr />
                   
-        {commentState.map((commentState) => (
-          <div key={commentState.id} className={css["detail-comment"]}>
+        { comments.map((comment) => (
+          <div key={comment.id} className={css["detail-comment"]}>
             <div>
               <div className={css["detail-comment-img"]}>
                 <img
-                  src={commentState?.avatar}
+                  src={comment?.avatar}
                   style={{ width: 50, height: 50, borderRadius: "50%", border: "none", outline: "none" }}
                 />
                 <div className={css["detail-comment-img-text"]}>
@@ -747,7 +750,7 @@ function DetailRoom() {
                       marginBottom: 0,
                     }}
                   >
-                    {commentState?.tenNguoiBinhLuan}
+                    {comment?.tenNguoiBinhLuan}
                   </h3>
                   <p
                     style={{
@@ -757,17 +760,17 @@ function DetailRoom() {
                       color: "#717171",
                     }}
                   >
-                    {commentState?.ngayBinhLuan}
+                    {comment?.ngayBinhLuan}
                   </p>
                 </div>
               </div>
               <div>
                 <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
-                  {commentState?.noiDung}
+                  {comment?.noiDung}
                 </span>
               </div>
               <div>
-                {renderSao(commentState?.saoBinhLuan)}
+                {renderSao(comment?.saoBinhLuan)}
               </div>
               
             </div>
