@@ -59,12 +59,12 @@ export type TLocalInfo = {
 }
 export type  TProfileUser= {
     email: string;
-    password: string;
-    confirmPassword: string;
     phone: string;
     gender: boolean | undefined;
     name: string;
     date: string;
+    avarta: string;
+    role:string;
   };
     
 

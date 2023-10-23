@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from "./profile.module.scss";
-// import { User } from 'src/services/user.service';
 import { setSelectedUser } from 'src/redux/user.slice';
 import { updateUser, getProfile } from 'src/services/user.service';
 import { bookingHistory } from 'src/services/booking.service';
@@ -14,21 +13,34 @@ function Profile() {
   const [activeTab, setActiveTab] = useState('info');
   const [isEditing, setIsEditing] = useState(false);
   const profileUser = useSelector((state: any) => state.authReducerLogin.authLogin.user);
-  const [editedProfile, setEditedProfile] = useState({ ...profileUser });
-  const [userProfile, setUserProfile] = useState(null);
+
+  const [userProfile, setUserProfile] = useState<{
+    name: string;
+    email: string;
+    avatar: string;
+    role: string;
+    gender: string;
+    phone: string;
+    birthdate: string
+  }>({ name: '', email: '', avatar: '', role: '', gender: '', phone: '', birthdate: '' });
   const [bookingsProfile, setBookingProfile] = useState<any[] | null>(null);
-
-  const dispatch = useDispatch
-
+  const [editedProfile, setEditedProfile] = useState({ ...userProfile });
+  const dispatch = useDispatch();
   const handleConfirmUpdate = async () => {
     try {
       await updateUser(profileUser.id, editedProfile);
+      const updatedUserProfile = { ...userProfile, ...editedProfile };
+      setUserProfile(updatedUserProfile);
+      dispatch(setSelectedUser(updatedUserProfile));
       setIsEditing(false);
-      toast("Cập nhập thông tin thành công!")
+      toast.success("Cập nhập thông tin thành công!");
     } catch (error) {
       console.error(error);
+      toast.error("Cập nhập thông tin thất bại")
     }
   }
+
+
   const bookingProfile = async (id: any) => {
     try {
       const bookingsHistory = await bookingHistory(id);
@@ -43,17 +55,15 @@ function Profile() {
     try {
       const userProfile = await getProfile(id);
       setEditedProfile({ ...userProfile });
-      // dispatch(setSelectedUser(userProfile));
-
-
+      setUserProfile(userProfile);
       console.log("Thông tin người dùng: ", userProfile);
     } catch (error) {
       console.error(error);
     }
   };
+
   useEffect(() => {
     if (profileUser) {
-      console.log(profileUser.id)
       fetchUserProfile(profileUser.id);
       bookingProfile(profileUser.id)
     }
@@ -110,7 +120,7 @@ function Profile() {
                       <input
                         type="text"
                         id="fullName"
-                        value={editedProfile.name}
+                        value={editedProfile.name || ''}
                         onChange={(e) => setEditedProfile({ ...editedProfile, name: e.target.value })}
                       />
                     </div>
@@ -119,7 +129,7 @@ function Profile() {
                       <input
                         type="email"
                         id="email"
-                        value={editedProfile.email}
+                        value={editedProfile.email || ''}
                         onChange={(e) => setEditedProfile({ ...editedProfile, email: e.target.value })}
                       />
                     </div>
@@ -128,7 +138,7 @@ function Profile() {
                       <input
                         type="tel"
                         id="phone"
-                        value={editedProfile.phone}
+                        value={editedProfile.phone || ''}
                         onChange={(e) => setEditedProfile({ ...editedProfile, phone: e.target.value })}
                       />
                     </div>
@@ -136,15 +146,15 @@ function Profile() {
                     <div className={css["form-group"]}>
                       <label>Giới tính:</label>
                       <div className={css.gender}>
-                        <input type="radio" id="male" name="gender" value="male" checked={profileUser.gender === "male"} />
+                        <input type="radio" id="male" name="gender" value="male" checked={editedProfile.gender === "male"} />
                         <label htmlFor="male">Nam</label>
-                        <input type="radio" id="female" name="gender" value="female" checked={profileUser.gender === "female"} />
+                        <input type="radio" id="female" name="gender" value="female" checked={editedProfile.gender === "female"} />
                         <label htmlFor="female">Nữ</label>
                       </div>
                     </div>
                     <div className={css["form-group"]}>
                       <label htmlFor="birthdate">Ngày sinh:</label>
-                      <input type="date" id="birthdate" value={profileUser.birthdate} />
+                      <input type="date" id="birthdate" value={editedProfile.birthdate || ''} />
                     </div>
                     <button className='btn btn-danger' onClick={handleCancelEdit}>Hủy</button>
                     <button className='btn btn-success' onClick={handleConfirmUpdate}>OK</button>
@@ -153,28 +163,28 @@ function Profile() {
                   <div>
                     <div className={css["form-group"]}>
                       <label htmlFor="fullName">Họ và tên:</label>
-                      <input type="text" id="fullName" value={profileUser.name} readOnly />
+                      <input type="text" id="fullName" value={userProfile?.name} readOnly />
                     </div>
                     <div className={css["form-group"]}>
                       <label htmlFor="email">Email:</label>
-                      <input type="email" id="email" value={profileUser.email} readOnly />
+                      <input type="email" id="email" value={userProfile?.email} readOnly />
                     </div>
                     <div className={css["form-group"]}>
                       <label htmlFor="phone">Số điện thoại:</label>
-                      <input type="tel" id="phone" value={profileUser.phone} readOnly />
+                      <input type="tel" id="phone" value={userProfile?.phone} readOnly />
                     </div>
                     <div className={css["form-group"]}>
                       <label>Giới tính:</label>
                       <div className={css.gender}>
-                        <input type="radio" id="male" name="gender" value="male" checked={profileUser.gender === "male"} readOnly />
+                        <input type="radio" id="male" name="gender" value="male" checked={userProfile?.gender === "male"} readOnly />
                         <label htmlFor="male">Nam</label>
-                        <input type="radio" id="female" name="gender" value="female" checked={profileUser.gender === "female"} readOnly />
+                        <input type="radio" id="female" name="gender" value="female" checked={userProfile?.gender === "female"} readOnly />
                         <label htmlFor="female">Nữ</label>
                       </div>
                     </div>
                     <div className={css["form-group"]}>
                       <label htmlFor="birthdate">Ngày sinh:</label>
-                      <input type="date" id="birthdate" value={profileUser.birthdate} readOnly />
+                      <input type="date" id="birthdate" value={userProfile?.birthdate} readOnly />
                     </div>
                     <button className='btn btn-primary' onClick={handleEditProfile}>Cập nhật người dùng</button>
                   </div>
@@ -204,16 +214,16 @@ function Profile() {
                     </thead>
                     <tbody>
                       {bookingsProfile ? (
-                          bookingsProfile.map((booking) => (
-                            <tr key={booking.id}>
-                              <td>{booking.maPhong}</td>
-                              <td>{booking.ngayDen}</td>
-                              <td>{booking.ngayDi}</td>
-                              <td>{booking.soLuongKhach}</td>
+                        bookingsProfile.map((booking) => (
+                          <tr key={booking.id}>
+                            <td>{booking.maPhong}</td>
+                            <td>{booking.ngayDen}</td>
+                            <td>{booking.ngayDi}</td>
+                            <td>{booking.soLuongKhach}</td>
 
-                            </tr>
-                          ))
-                        
+                          </tr>
+                        ))
+
                       ) : (
                         <p>Loading booking history...</p>
                       )}
@@ -227,6 +237,9 @@ function Profile() {
 
           </div>
         </div>
+
+
+
       </div>
       <ToastContainer />
     </div>
