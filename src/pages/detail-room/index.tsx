@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
 import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
-import {  RootState, useAppDispatch } from "src/redux/config-store";
+import { RootState, useAppDispatch } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
@@ -99,6 +99,7 @@ function DetailRoom() {
     const userFromLocalStorage = localStorage.getItem("authLogin");
     if (userFromLocalStorage) {
       const parsedUserData = JSON.parse(userFromLocalStorage);
+      console.log(parsedUserData)
       setUserData(parsedUserData.user);
     }
   }, [params.detailId]);
@@ -237,10 +238,11 @@ function DetailRoom() {
       noiDung: value,
     });
   };
-  const listComment = useSelector((state:RootState) =>state.commentList.listComment)
-  console.log(listComment)
-  
-  const handleComment = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const commentState = useSelector((state: RootState) => state.commentList.listComment)
+
+  const handleComment = (e: any) => {
+
     e.preventDefault();
     if (!TOKENUSER) {
       alert("Bạn phải đăng nhập để có thể comment.");
@@ -261,14 +263,18 @@ function DetailRoom() {
     idComment(updateComment, TOKENUSER)
       .then((resp) => {
         setComments(resp.content);
-        dispatch(commentList(comments))
+
+
+        // dispatch(commentList(resp))
+
+
       })
       .catch((e) => {
         console.log(e);
       });
     
   };
-  
+
   const renderSao = (soSao: number) => {
     const sao = []
     for (let i = 1; i <= 5; i++) {
@@ -733,9 +739,11 @@ function DetailRoom() {
           </div>
         </div>
         <hr />
-                  
-        { comments.map((comment) => (
-          <div key={comment.id} className={css["detail-comment"]}>
+
+         
+        {commentState.map((commentState) => (
+          <div key={commentState.id} className={css["detail-comment"]}>
+
             <div>
               <div className={css["detail-comment-img"]}>
                 <img
@@ -772,9 +780,9 @@ function DetailRoom() {
               <div>
                 {renderSao(comment?.saoBinhLuan)}
               </div>
-              
+
             </div>
-            
+
 
           </div>
         ))}

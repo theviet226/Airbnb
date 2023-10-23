@@ -41,7 +41,7 @@ function Header() {
             <div className={css["user-profile"]}>
               {userData ? (
                 <div className={css["user-name"]}>
-                  <img src={avatar} alt="" />
+                  <img src={userData.avatar} alt="" />
                   {userData.name}
                   <div className={css["profile-dropdown"]}>
 

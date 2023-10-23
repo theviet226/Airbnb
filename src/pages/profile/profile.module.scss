@@ -6,6 +6,9 @@
 
 .left-panel {
     width: 20%;
+    border: 1px solid #ddd;
+    padding-bottom: 300px;
+    border-radius: 10px;
 }
 
 .avatar {
@@ -102,7 +105,8 @@ input[type="radio"] {
 }
 
 
-.modal-overlay {
+/* App.css (hoặc một file CSS riêng) */
+.modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -112,18 +116,28 @@ input[type="radio"] {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal {
-    background-color: #fff;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-  }
-  
-  .preview-image {
-    max-width: 100%;
+}
+
+input[type="file"] {
+    display: block;
+}
+
+.thumbnail {
+    max-width: 200px;
     max-height: 200px;
-  }
-  
+    margin: 10px 0;
+}
+
+.select-img {
+    text-decoration: underline;
+    color: #007bff;
+}
