@@ -89,5 +89,21 @@ export const UserPage = async (pageIndex: number, pageSize: number) => {
         console.log(error)
     }
 }
+export const UpdateAvatar = async(data:FormData,token:string) =>{
+    try {
+        const headers= {
+            'token': token
+        }
+        const resp = await axiosWithoutAuth({
+            method:"post",
+            url:"/users/upload-avatar",
+            data,
+            headers,
+        })
+        return resp.data.content
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 

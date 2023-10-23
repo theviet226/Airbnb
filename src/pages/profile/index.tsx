@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from "./profile.module.scss";
-// import { User } from 'src/services/user.service';
-import { setSelectedUser } from 'src/redux/user.slice';
-import { updateUser, getProfile } from 'src/services/user.service';
+
+
+import { updateUser, getProfile, UpdateAvatar } from 'src/services/user.service';
 import { bookingHistory } from 'src/services/booking.service';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { TOKENUSER } from 'src/constants';
+
 
 
 
@@ -15,10 +17,11 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const profileUser = useSelector((state: any) => state.authReducerLogin.authLogin.user);
   const [editedProfile, setEditedProfile] = useState({ ...profileUser });
-  const [userProfile, setUserProfile] = useState(null);
+  
   const [bookingsProfile, setBookingProfile] = useState<any[] | null>(null);
-
-  const dispatch = useDispatch
+  const [file,setFile] = useState<File|undefined>()
+  const [preview,setPreview] = useState<string|ArrayBuffer|undefined>()
+  
 
   const handleConfirmUpdate = async () => {
     try {
@@ -73,14 +76,45 @@ function Profile() {
   const handleCancelEdit = () => {
     setIsEditing(false);
   }
-
+ const handleOnChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
+  const target =e.target
+  if (!target.files || target.files?.length === 0) return
+  const selectedFile = target.files[0]
+  setFile(selectedFile)
+  const imageURL = URL.createObjectURL(selectedFile)
+  setPreview(imageURL)
+ }
+  const handleUpLoad = (e:any)=>{
+    e.preventDefault();
+    const formData = new FormData()
+    if(typeof file === 'undefined') return
+    formData.append('formFile',file)
+    UpdateAvatar(formData,TOKENUSER)
+    .then((resp) =>{
+      if (resp   === "Thành công"){
+        console.log("Thành công")
+        
+      }else{
+        console.log("Thất bại")
+      }
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
   return (
+    <>
     <div style={{ paddingTop: '100px' }} className='container'>
       <div className={css["profile-container"]}>
         <div className={css['left-panel']}>
+          <form>
           <div className={css.avatar}>
-            <img src={profileUser.avatar} alt="Avatar" />
+            <label htmlFor="avatar">
+             <img src={preview as string} alt="Avatar" id='avatar' />
+            <input type="file" name='avatar' onChange={handleOnChange} accept='image/png, imgae/jpg' />
+            <button onClick={handleUpLoad}>Upload</button>
+            </label>
           </div>
+          </form>
         </div>
         <div className={css["right-panel"]}>
           <div className={css["tab-menu"]}>
@@ -176,7 +210,7 @@ function Profile() {
                       <label htmlFor="birthdate">Ngày sinh:</label>
                       <input type="date" id="birthdate" value={profileUser.birthdate} readOnly />
                     </div>
-                    <button className='btn btn-primary' onClick={handleEditProfile}>Cập nhật người dùng</button>
+                    <button type='submit' className='btn btn-primary' onClick={handleEditProfile}>Cập nhật người dùng</button>
                   </div>
                 )}
               </div>
@@ -230,7 +264,9 @@ function Profile() {
       </div>
       <ToastContainer />
     </div>
+    </>
   );
 }
+
 
 export default Profile;
