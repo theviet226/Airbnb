@@ -12,6 +12,7 @@ if (authDataString) {
 
     if (authData.token) {
       TOKENUSER = authData.token;
+      console.log(TOKENUSER)
     } else {
       console.log("Token not found in the auth data.");
     }
