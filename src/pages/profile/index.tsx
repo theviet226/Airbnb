@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from "./profile.module.scss";
-
-
-
-import { updateUser, getProfile, UpdateAvatar } from 'src/services/user.service';
-
 import { setSelectedUser } from 'src/redux/user.slice';
-
-
+import { updateUser, getProfile, UpdateAvatar } from 'src/services/user.service';
 import { bookingHistory } from 'src/services/booking.service';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
@@ -21,8 +15,6 @@ function Profile() {
   const [activeTab, setActiveTab] = useState('info');
   const [isEditing, setIsEditing] = useState(false);
   const profileUser = useSelector((state: any) => state.authReducerLogin.authLogin.user);
-
-  
   const [file,setFile] = useState<File|undefined>()
   const [preview,setPreview] = useState<string|ArrayBuffer|undefined>()
   
@@ -114,12 +106,12 @@ function Profile() {
     formData.append('formFile',file)
     UpdateAvatar(formData,TOKENUSER)
     .then((resp) =>{
-      if (resp   === "Thành công"){
-        console.log("Thành công")
-        
-      }else{
-        console.log("Thất bại")
-      }
+        setUserProfile((prevProfile) => ({
+          ...prevProfile,
+          avatar: resp.avatar,
+        }));
+      
+      toast("Thay đổi ảnh thành công")
     }).catch((e) => {
       console.log(e)
     })
@@ -129,15 +121,15 @@ function Profile() {
     <div style={{ paddingTop: '100px' }} className='container'>
       <div className={css["profile-container"]}>
         <div className={css['left-panel']}>
-          <form>
+          
           <div className={css.avatar}>
             <label htmlFor="avatar">
-             <img src={preview as string} alt="Avatar" id='avatar' />
+            <img src={preview as string} alt="Avatar" id='avatar' />
             <input type="file" name='avatar' onChange={handleOnChange} accept='image/png, imgae/jpg' />
             <button onClick={handleUpLoad}>Upload</button>
             </label>
           </div>
-          </form>
+          
         </div>
         <div className={css["right-panel"]}>
           <div className={css["tab-menu"]}>

@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { Comment, idComment } from "src/services/comment.service";
 import { TOKENUSER } from "src/constants";
+import { useSelector } from "react-redux";
 
 
 
@@ -234,7 +235,7 @@ function DetailRoom() {
       noiDung: value,
     });
   };
-  // const commentState = useSelector((state:RootState) =>state.commentList.listComment)
+  const commentState = useSelector((state:RootState) =>state.commentList.listComment)
 
   const handleComment = (e: any) => {
     e.preventDefault();
@@ -730,12 +731,12 @@ function DetailRoom() {
         </div>
         <hr />
                   
-        {comments.map((comment) => (
-          <div key={comment.id} className={css["detail-comment"]}>
+        {commentState.map((commentState) => (
+          <div key={commentState.id} className={css["detail-comment"]}>
             <div>
               <div className={css["detail-comment-img"]}>
                 <img
-                  src={comment?.avatar}
+                  src={commentState?.avatar}
                   style={{ width: 50, height: 50, borderRadius: "50%", border: "none", outline: "none" }}
                 />
                 <div className={css["detail-comment-img-text"]}>
@@ -746,7 +747,7 @@ function DetailRoom() {
                       marginBottom: 0,
                     }}
                   >
-                    {comment?.tenNguoiBinhLuan}
+                    {commentState?.tenNguoiBinhLuan}
                   </h3>
                   <p
                     style={{
@@ -756,17 +757,17 @@ function DetailRoom() {
                       color: "#717171",
                     }}
                   >
-                    {comment?.ngayBinhLuan}
+                    {commentState?.ngayBinhLuan}
                   </p>
                 </div>
               </div>
               <div>
                 <span style={{ fontSize: "16px", fontFamily: "Roboto" }}>
-                  {comment?.noiDung}
+                  {commentState?.noiDung}
                 </span>
               </div>
               <div>
-                {renderSao(comment?.saoBinhLuan)}
+                {renderSao(commentState?.saoBinhLuan)}
               </div>
               
             </div>
