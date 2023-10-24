@@ -107,6 +107,9 @@
     color: #2691d9;
     text-decoration: none;
 }
-@media screen and (max-width:980px) {
-    
+@media screen and (max-width:768px) {
+    .login-container{
+        justify-content: center;
+        
+    }
 }

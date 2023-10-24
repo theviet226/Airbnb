@@ -7,7 +7,7 @@
 .left-panel {
     width: 20%;
     border: 1px solid #ddd;
-    padding-bottom: 300px;
+    padding-bottom: 50px;
     border-radius: 10px;
 }
 
@@ -140,4 +140,62 @@ input[type="file"] {
 .select-img {
     text-decoration: underline;
     color: #007bff;
+}
+.profile-avatar{
+    width:175px;
+    height:175px;
+    text-align:center;
+}
+@media screen and (max-width:1200px) {
+    .proflie-name{
+        font-size: 20px;
+    }
+    .left-panel{
+        padding-bottom: 0;
+    }
+    .profile-avatar{
+        width: 150px;
+        height: 150px;
+    }
+}
+@media screen and (max-width:992px) {
+    .profile-avatar{
+        width: 100px;
+        height: 100px;
+    }
+    
+}
+@media screen and (max-width:768px) {
+   .profile-container{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr;
+   
+   }
+   .avatar{
+    width: 300px;
+   }
+   .left-panel{
+    padding-bottom: 0;
+    margin-left: 180px;
+    border: none;
+    display: grid;
+}
+.right-panel{
+    margin-left: 60px;
+}
+}
+@media screen and (max-width:767px) {
+    .avatar{
+        width: 300px;
+       }
+       .left-panel{
+        padding-bottom: 0;
+        margin-left: 100px;
+        border: none;
+        display: grid;
+    }
+    .right-panel{
+        margin-left: 50px;
+    }
 }

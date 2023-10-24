@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
 import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
-import {  RootState, useAppDispatch } from "src/redux/config-store";
+import { RootState, useAppDispatch } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
@@ -19,9 +19,7 @@ import { Comment, idComment } from "src/services/comment.service";
 import { TOKENUSER } from "src/constants";
 import { useSelector } from "react-redux";
 import { commentList } from "src/redux/comment";
-
-
-
+import axios from "axios";
 
 dayjs.extend(isBetween);
 
@@ -29,11 +27,12 @@ type TPrams = {
   detailId: string;
 };
 
-
 function DetailRoom() {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedDateRange, setSelectedDateRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
+  const [selectedDateRange, setSelectedDateRange] = useState<
+    [Dayjs | null, Dayjs | null] | null
+  >(null);
   const [numberOfNights, setNumberOfNights] = useState<number | null>(null);
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const params = useParams<TPrams>();
@@ -45,7 +44,7 @@ function DetailRoom() {
   const [babyQuanTiTy, setBabyQuanTity] = useState(0);
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
-  const [comments, setComment] = useState<TComment[]>([])
+  const [comments, setComment] = useState<TComment[]>([]);
   const calculateNumberOfNights = (
     startDate: dayjs.Dayjs,
     endDate: dayjs.Dayjs,
@@ -84,14 +83,11 @@ function DetailRoom() {
     maPhong: "",
   });
 
-
-
   useEffect(() => {
     if (!params.detailId) return;
     getRoomId(params.detailId)
       .then((resp) => {
         setRoomId(resp.content);
-
       })
       .catch((e) => {
         console.log(e);
@@ -112,22 +108,27 @@ function DetailRoom() {
     }
 
     const [ngayDen, ngayDi] = selectedDateRange.map((date) =>
-      date ? date.format("YYYY-MM-DD") : ""
+      date ? date.format("YYYY-MM-DD") : "",
     );
 
     if (isLoggedIn()) {
       const checkResult = await checkBooking(maPhong);
       // Kiểm tra xung đột ngày đặt
-      const isBookingConflict = checkResult.some((booking: { ngayDen: string | number | Dayjs | Date | null | undefined; ngayDi: string | number | Dayjs | Date | null | undefined; }) => {
-        const bookingStart = dayjs(booking.ngayDen);
-        const bookingEnd = dayjs(booking.ngayDi);
-        const userStart = dayjs(ngayDen);
-        const userEnd = dayjs(ngayDi);
-        return (
-          userStart.isBetween(bookingStart, bookingEnd, null, "[]") ||
-          userEnd.isBetween(bookingStart, bookingEnd, null, "[]")
-        );
-      });
+      const isBookingConflict = checkResult.some(
+        (booking: {
+          ngayDen: string | number | Dayjs | Date | null | undefined;
+          ngayDi: string | number | Dayjs | Date | null | undefined;
+        }) => {
+          const bookingStart = dayjs(booking.ngayDen);
+          const bookingEnd = dayjs(booking.ngayDi);
+          const userStart = dayjs(ngayDen);
+          const userEnd = dayjs(ngayDi);
+          return (
+            userStart.isBetween(bookingStart, bookingEnd, null, "[]") ||
+            userEnd.isBetween(bookingStart, bookingEnd, null, "[]")
+          );
+        },
+      );
       if (isBookingConflict) {
         toast.error("Ngày đặt trùng lịch với đơn đặt phòng khác.");
         return;
@@ -208,7 +209,6 @@ function DetailRoom() {
     });
   };
   useEffect(() => {
-
     Comment(maPhong)
       .then((resp) => {
         setComment(resp);
@@ -216,70 +216,80 @@ function DetailRoom() {
       .catch((e) => {
         console.log(e);
       });
-
   }, [maPhong]);
-  const [soSao, setSoSao] = useState<number>(0)
+  const [soSao, setSoSao] = useState<number>(0);
   const [cmment, setComments] = useState({
     maPhong: "",
     maNguoiBinhLuan: "",
     ngayBinhLuan: "",
     noiDung: "",
     saoBinhLuan: 0,
-  })
-
-
+  });
 
   const handleChanges = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     const { value } = e.target;
     setComments({
       ...cmment,
       noiDung: value,
     });
   };
-  const listComment = useSelector((state:RootState) =>state.commentList.listComment)
-  console.log(listComment)
-  
+  const listComment = useSelector(
+    (state: RootState) => state.commentList.listComment,
+  );
+
   const handleComment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!TOKENUSER) {
       alert("Bạn phải đăng nhập để có thể comment.");
-      navigate('/login')
+      navigate("/login");
       return;
     }
 
     const currentDate = new Date();
     const updateComment = {
-      noiDung:cmment.noiDung,
+      noiDung: cmment.noiDung,
       maPhong: maPhong,
       maNguoiBinhLuan: userData.id,
       ngayBinhLuan: currentDate.toISOString(),
       saoBinhLuan: soSao.toString(),
-      
     };
 
     idComment(updateComment, TOKENUSER)
       .then((resp) => {
         setComments(resp.content);
-        dispatch(commentList(comments))
+        dispatch(commentList(comments));
       })
       .catch((e) => {
         console.log(e);
       });
-    
   };
-  
+
   const renderSao = (soSao: number) => {
-    const sao = []
+    const sao = [];
     for (let i = 1; i <= 5; i++) {
       sao.push(
-        <span key={i} onClick={() => setSoSao(i)} style={{ color: i <= soSao ? "yellow" : "gray", cursor: "pointer", fontSize: "20px" }}>
+        <span
+          key={i}
+          onClick={() => setSoSao(i)}
+          style={{
+            color: i <= soSao ? "yellow" : "gray",
+            cursor: "pointer",
+            fontSize: "20px",
+          }}
+        >
           ★
-        </span>
-      )
+        </span>,
+      );
     }
-    return sao
-  }
+    return sao;
+  };
+  
+  
+ 
+      
+  
+
 
   return (
     <>
@@ -351,7 +361,7 @@ function DetailRoom() {
               </div>
               <div>
                 <img
-                  src=''
+                  src=""
                   style={{ width: 70, height: 70, borderRadius: "50%" }}
                 />
               </div>
@@ -399,6 +409,7 @@ function DetailRoom() {
               ></i>
               <span>Một số thông tin đã được dịch tự động.</span>
               <a
+               
                 href=""
                 style={{
                   fontWeight: "600",
@@ -733,14 +744,20 @@ function DetailRoom() {
           </div>
         </div>
         <hr />
-                  
-        { comments.map((comment) => (
+
+        {comments.map((comment) => (
           <div key={comment.id} className={css["detail-comment"]}>
             <div>
               <div className={css["detail-comment-img"]}>
                 <img
                   src={comment?.avatar}
-                  style={{ width: 50, height: 50, borderRadius: "50%", border: "none", outline: "none" }}
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: "50%",
+                    border: "none",
+                    outline: "none",
+                  }}
                 />
                 <div className={css["detail-comment-img-text"]}>
                   <h3
@@ -769,29 +786,25 @@ function DetailRoom() {
                   {comment?.noiDung}
                 </span>
               </div>
-              <div>
-                {renderSao(comment?.saoBinhLuan)}
-              </div>
-              
+              <div>{renderSao(comment?.saoBinhLuan)}</div>
             </div>
-            
-
           </div>
         ))}
         <div className={css["detail-cm"]}>
           <img
-            src=''
+            src=""
             alt="123"
             style={{ width: 70, height: 70, borderRadius: "50%" }}
           />
           <form>
-            <textarea cols={130} rows={8}  onChange={handleChanges} />
+            <textarea cols={130} rows={8} onChange={handleChanges} />
             <p>Hãy đánh giá chất lượng phòng ở {renderSao(soSao)}</p>
-
           </form>
         </div>
         <div className={css["detail-cm-buuton"]}>
-          <button onClick={handleComment} className={css["detail-cm-add"]}>Add Comment</button>
+          <button onClick={handleComment} className={css["detail-cm-add"]}>
+            Add Comment
+          </button>
         </div>
       </div>
       <ToastContainer />

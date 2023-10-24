@@ -1,19 +1,20 @@
-.container{
+.container {
     padding: 50px 30px;
-    font-family: "Inter";  
+    font-family: "Inter";
 }
-.list-title{
+.list-title {
     font-weight: 600;
     font-size: 26px;
-
 }
-.list-detail,ul{
-   display: flex;
+.list-detail,
+ul {
+    display: flex;
 }
-.list-detail,li{
+.list-detail,
+li {
     padding-right: 10px;
 }
-.list-button{
+.list-button {
     padding: 5px 15px;
     border-radius: 10px;
     font-weight: 400px;
@@ -21,21 +22,71 @@
     background: #2691d9;
     border: 1px solid;
 }
-.list-button:hover{
+.list-button:hover {
     border-color: #2691d9;
-    transition: .5s;
+    transition: 0.5s;
 }
-.list-col{
+.list-col {
     display: grid;
     grid-template-columns: 2fr 1fr;
     padding: 15px 0;
     max-height: auto;
     overflow: auto;
-    
 }
-.list-map{
+.list-map-1 {
     width: 100%;
     height: auto;
     position: sticky;
     z-index: 0;
 }
+.list-container {
+    margin: 0 50px;
+}
+.list-map-2 {
+    border: 0;
+
+    z-index: 1;
+    width: 450px;
+    height: 500px;
+}
+@media screen and (max-width: 1400px) {
+    .list-map-1 {
+        width: 300px;
+    }
+    .list-col {
+        gap: 20px;
+    }
+}
+@media screen and (max-width: 1197px) {
+    .list-map-2 {
+        height: 450px;
+    }
+}
+@media screen and (max-width: 1171px) {
+    .list-map-2 {
+        height: 430px;
+    }
+}
+@media screen and (max-width: 1125px) {
+    .list-map-2 {
+        height: 400px;
+    }
+}
+@media screen and (max-width: 1080px) {
+    .list-map-2 {
+        height: 380px;
+    }
+}
+@media screen and (max-width:950px) {
+    .list-col{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .list-map-2{
+        width: 1277px;
+    }
+}
+@media screen and (max-width:655 ){
+   
+}
+

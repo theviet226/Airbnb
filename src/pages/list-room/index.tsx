@@ -38,7 +38,7 @@ function ListRoom() {
     <>
       <div style={{
         padding: "50px 10px"
-      }} className='container'>
+      }} className={css["list-container"]}>
         <div>
           <div className={css["list-title"]}>
             <p>Chỗ ở tại khu vực bản đồ đã chọn</p>
@@ -71,17 +71,11 @@ function ListRoom() {
                 return <CardRoom key={item.id} data={item} />;
               })}
             </div>
-            <div className={css["list-map"]}>
+            <div className={css["list-map-1"]}>
               <iframe
+              className={css["list-map-2"]}
                 src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d299213.59201617626!2d105.6982301238565!3d9.819754702494679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zS2jDoWNoIHPhuqFu!5e0!3m2!1svi!2s!4v1695388312454!5m2!1svi!2s"
-                style={{
-                  border: 0,
-                 
-                  zIndex: "1",
-                  width: "450px",
-                  height: "500px",
-                  right: "10x",
-                }}
+                
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

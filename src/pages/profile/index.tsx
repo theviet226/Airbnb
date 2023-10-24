@@ -145,10 +145,10 @@ function Profile() {
           <div className={css['left-panel']}>
             <div className={css.avatar}>
               <label htmlFor="avatar">
-                <img src={userProfile.avatar} alt="Avatar" id='avatar' style={{width:"175px",height:"175px",textAlign:"center"}}/>
+                <img className={css["profile-avatar"]} src={userProfile.avatar} alt="Avatar" id='avatar' />
                 <br />
                 <a className={css['select-img']} onClick={openModal}>Cập nhập ảnh đại diện</a>
-                <h1>Xin chào {userProfile.name}</h1>
+                <h1 className={css["proflie-name"]}>Xin chào {userProfile.name}</h1>
               </label>
             </div>
 
