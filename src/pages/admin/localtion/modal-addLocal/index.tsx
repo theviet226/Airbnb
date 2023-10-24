@@ -29,9 +29,9 @@ function ModalAddLocal() {
                     validationSchema={validationSchema}
                     onSubmit={async (data, { resetForm }) => {
                         try {
-                            const newUser = await addLocal(data, TOKENUSER);
-                            console.log('New user added:', newUser);
-                            toast('Thêm vị trí thành công')
+                            const newLocal = await addLocal(data, TOKENUSER);
+                            console.log('New user added:', newLocal);
+                            toast.success('Thêm vị trí thành công')
                             resetForm()
                         } catch (error) {
                             console.log(error)
@@ -89,23 +89,6 @@ function ModalAddLocal() {
                                         />
                                     </div>
                                 </div>
-
-                                {/* <div className="col-md-12">
-                                    <div className="mb-3">
-                                        <label>Hình ảnh</label>
-                                        <Field
-                                            style={{ fontSize: '18px' }}
-                                            className="form-control"
-                                            type="file"
-                                            name="hinhanh"
-                                        />
-                                        <ErrorMessage
-                                            name="hinhanh"
-                                            component="div"
-                                            className='error-message text-danger'
-                                        />
-                                    </div>
-                                </div> */}
 
 
                             </div>

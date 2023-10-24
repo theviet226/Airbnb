@@ -36,7 +36,6 @@ function Login() {
       authLogin(data)
         .then((resp) => {
           setLocalStorage(AUTH_LOGIN, resp.content);
-          console.log(resp.content)
           dispatch(authLoginn(resp.content));
           const role = resp.content.user
           const userRole = role.role;

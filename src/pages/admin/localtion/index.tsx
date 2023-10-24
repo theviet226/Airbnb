@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { setListLocal, setSelectedLocal, deleteLocalId } from 'src/redux/localtion.slice';
-import { Local, updateLocal, deleteLocal } from 'src/services/localtion.service';
+import { Local, updateLocal, deleteLocal, uploadImageLocal } from 'src/services/localtion.service';
 import ModalAddLocal from './modal-addLocal';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import css from "./localtion.module.scss"
@@ -19,9 +19,14 @@ function Location() {
   const [editedCountry, setEditedCountry] = useState("");
   const [editedImage, setEditedImage] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const localsPerPage = 9; // Số lượng người dùng trên mỗi trang
+  const localsPerPage = 9;
   const indexOfLastUser = currentPage * localsPerPage;
   const indexOfFirstUser = indexOfLastUser - localsPerPage;
+  const [idLocal, setIdLocal] = useState("");
+  const [isModalOpenImage, setModalOpenImage] = useState(false)
+  const [selectedImage] = useState(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | undefined>()
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -29,6 +34,13 @@ function Location() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  const openModalImage = (id: any) => {
+    setModalOpenImage(true);
+    setIdLocal(id);
+  }
+  const closeModalImage = () => {
+    setModalOpenImage(false);
+  }
   useEffect(() => {
     Local()
       .then((content) => {
@@ -36,7 +48,7 @@ function Location() {
       });
   }, [dispatch]);
 
-  console.log(locals)
+
   const handleUpdaterLocal = () => {
     const updatedLocalData = {
       id: selectLocal.id,
@@ -47,22 +59,61 @@ function Location() {
     };
 
     updateLocal(selectLocal.id, updatedLocalData, TOKENUSER)
-      .then((updateLocal) => {
-        // Sử dụng map để tìm và cập nhật local trong mảng locals
+      .then((resp) => {
+        const updatedLocal = resp.content;
         const updatedLocals = locals.map((local: any) =>
-          local.id === updateLocal.id ? updateLocal : local
+          local.id === selectLocal.id ? updatedLocal : local
         );
         dispatch(setListLocal(updatedLocals));
         closeModal();
-        toast.success('Cập nhật vị trí thành công !');
+        toast.success(resp.message);
       })
       .catch((error) => {
         console.log(error);
         toast.error('Cập nhật vị trí thất bại !');
       });
+
   }
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    if (!target.files || target.files.length === 0) return;
+
+    const selectedFile = target.files[0];
+    setFile(selectedFile);
+
+    const imageURL = URL.createObjectURL(selectedFile);
+    setPreview(imageURL);
+  };
+
+
+
+  const handleImageUpload = () => {
+    const formData = new FormData();
+    if (!file) return;
+    formData.append('formFile', file);
+    uploadImageLocal(idLocal, formData, TOKENUSER)
+      .then((resp) => {
+        console.log('Image upload successful:', resp);
+        const updatedLocals = locals.map((local: any) => {
+          if (local.id === idLocal) {
+            return {
+              ...local,
+              hinhAnh: resp.hinhAnh,
+            };
+          }
+          return local;
+        });
+        dispatch(setListLocal(updatedLocals));
+
+        closeModalImage();
+      })
+      .catch((error) => {
+        console.error('Image upload failed:', error);
+      });
+  };
+
   const handleDeleteLocal = (localId: string) => {
-    deleteLocal(localId)
+    deleteLocal(localId, TOKENUSER)
       .then(() => {
         dispatch(deleteLocalId(localId))
         toast.success('Xoá vị trí thành công !')
@@ -127,9 +178,9 @@ function Location() {
                     <td>{local.tenViTri}</td>
                     <td>{local.tinhThanh}</td>
                     <td>{local.quocGia}</td>
-                    <td><img style={{ display: "block", width: "100px" }} src={local.hinhAnh} alt="" /></td>
+                    <td><img style={{ display: "block", width: "100px" }} src={local.hinhAnh} alt="" /> <button className='btn btn-primary' onClick={() => openModalImage(local.id)}>Cập nhập hình ảnh</button></td>
                     <td>
-                      <button style={{ marginRight: "10px" }} className='btn btn-danger' onClick={()=> {handleDeleteLocal(local.id)}} >
+                      <button style={{ marginRight: "10px" }} className='btn btn-danger' onClick={() => { handleDeleteLocal(local.id) }} >
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button className='btn btn-warning' onClick={() => { handleViewLocal(local) }}>
@@ -254,6 +305,27 @@ function Location() {
           </Button>
         </ModalFooter>
       </Modal>
+      {isModalOpenImage && (
+        <div className={css.modal}>
+          <div className={css["modal-content"]}>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+            {preview && <img src={preview} alt="Preview" width="200" />}
+            {selectedImage && (
+              <img
+                src={selectedImage}
+                alt="Thumbnail"
+                className={css["thumbnail"]}
+              />
+            )}
+            <button style={{ fontSize: '20px', marginRight: '10px' }} className='btn btn-success' onClick={handleImageUpload}>OK</button>
+            <button style={{ fontSize: '20px' }} className='btn btn-danger' onClick={closeModalImage}>Hủy</button>
+          </div>
+        </div>
+      )}
       <ToastContainer />
     </div>
   )
