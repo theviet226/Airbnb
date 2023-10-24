@@ -10,7 +10,7 @@ import roomReducer from './room.slice';
 import bookingReducer from './booking-room.slice'
 import localReducer from './localtion.slice'
 import bookingReduce from './bookingReduce';
-import comment from './comment';
+
 
 
 
@@ -25,7 +25,7 @@ export const store = configureStore({
     booking: bookingReducer,
     local: localReducer,
     bookingReduce:bookingReduce,
-    commentList:comment
+    
 
   },
 })

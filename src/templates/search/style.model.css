@@ -1,0 +1,48 @@
+.fa-map{ 
+    position: relative;
+    left:20px;
+    top: 10px;
+    z-index: 1;
+    font-size: 14px;
+}
+.fa-calendar-days{
+    position: relative;
+    left:15px;
+    top: 10px;
+    z-index: 1;
+    font-size: 14px;
+}
+.fa-person{
+    position: relative;
+    left: 5px;
+    top: 5px;
+    z-index: 1;
+    font-size: 14px;
+}
+@media screen and (max-width:992px) {
+    .fa-magnifying-glass{
+        font-size: 20px;
+        position: relative;
+        z-index: 1;
+        bottom: 5px;
+    }
+    .fa-map{
+        display: none;
+    }
+    .fa-regular{
+        display: none;
+    }
+    .fa-calendar-days{
+        display: none;
+    }
+    .fa-person{
+        display: none;
+    }
+    
+}
+@media screen and (max-width:768px) {
+    .search{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}

@@ -4,21 +4,19 @@ import { useParams } from "react-router-dom";
 import { getRoomId } from "src/services/room.service";
 import { TComment, TRoomIteam } from "src/types";
 import { useNavigate } from "react-router-dom";
-import { RootState, useAppDispatch } from "src/redux/config-store";
+import { useAppDispatch } from "src/redux/config-store";
 import { Booking, checkBooking } from "src/services/booking.service";
 import { setBookingRoom } from "src/redux/bookingReduce";
 import { setLocalStorage } from "src/utils";
 import { BOOKING } from "src/constants";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { DatePicker } from "antd";
+import {  DatePicker } from "antd";
 import { Dayjs } from "dayjs";
 import dayjs from 'dayjs';
 import isBetween from "dayjs/plugin/isBetween";
 import { Comment, idComment } from "src/services/comment.service";
 import { TOKENUSER } from "src/constants";
-import { useSelector } from "react-redux";
-
 import { RangeValue } from 'rc-picker/lib/interface';
 
 
@@ -45,6 +43,7 @@ function DetailRoom() {
   const [total, setTotal] = useState(0);
   const dispatch = useAppDispatch();
   const [comments, setComment] = useState<TComment[]>([]);
+  
   const calculateNumberOfNights = (
     startDate: dayjs.Dayjs,
     endDate: dayjs.Dayjs,
@@ -249,9 +248,8 @@ function DetailRoom() {
       noiDung: value,
     });
   };
-
-  const listComment = useSelector((state: RootState) => state.commentList.listComment)
-  console.log(listComment)
+  
+  
 
   const handleComment = (e: any) => {
     e.preventDefault();
@@ -283,12 +281,12 @@ function DetailRoom() {
           ...cmment,
           noiDung: '',
         });
-
       })
+
       .catch((e) => {
         console.log(e);
       });
-
+      
   }
 
   const renderSao = (soSao: number) => {
@@ -310,12 +308,6 @@ function DetailRoom() {
     }
     return sao;
   };
-  
-  
- 
-      
-  
-
 
   return (
     <>
@@ -373,7 +365,7 @@ function DetailRoom() {
           </div>
         </div>
         <div className={css["detail-img"]}>
-          <img src={roomId?.hinhAnh} />
+          <img src={roomId?.hinhAnh}  className={css["image"]}/>
         </div>
         <div className={css["detail-col"]}>
           <div className={css["detail-left"]}>
@@ -757,10 +749,6 @@ function DetailRoom() {
                 </p>
                 <p>${totalPrice}</p>
               </div>
-              <div className={css["detail-cacl"]}>
-                <p>Phí dịch vụ</p>
-                <p>$2</p>
-              </div>
               <hr />
               <div className={css["detail-total"]}>
                 <p>Tổng trước thuế</p>
@@ -839,11 +827,12 @@ function DetailRoom() {
         <div className={css["detail-cm"]}>
           <img
             src=""
-            alt="123"
+            alt="avtar"
             style={{ width: 70, height: 70, borderRadius: "50%" }}
+            className={css["dtail-img"]}
           />
           <form>
-            <textarea cols={130} rows={8} onChange={handleChanges} />
+            <textarea style={{width:"900px",height:"150px" }} onChange={handleChanges} className={css["textarea"]} />
             <p>Hãy đánh giá chất lượng phòng ở {renderSao(soSao)}</p>
           </form>
         </div>

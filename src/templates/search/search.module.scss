@@ -10,7 +10,6 @@
     margin-bottom: -40px;
     z-index: 10;
     border: 1px solid #006dde;
-    
 }
 
 .search-content {
@@ -18,11 +17,23 @@
     border-right: 1px solid gray;
     padding: 0 35px;
 }
+.search-content-1 {
+    border: none;
+    font-size: 30px;
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+    background-color: #006dde;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    padding: 0;
+    margin-right: 20px;
+}
 
 .search-item {
     display: flex;
     flex-direction: column;
-
 }
 
 .search-input {
@@ -35,14 +46,75 @@
     display: flex;
 }
 
-
 .react-datepicker-ignore-onclickoutside {
     font-size: 14px;
     padding: 5px px;
     width: 100px;
 }
 
-
 .react-datepicker-popper {
     font-size: 14px;
+}
+
+@media screen and (max-width: 1400px) {
+    .search-name {
+        font-size: 15px;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .search-content {
+        padding: 0 15px;
+    }
+}
+@media screen and (max-width: 992px) {
+    .search-item {
+        display: block;
+    }
+    
+    .search-content-1{
+        width: 50px;
+        height: 50px;
+    }
+    .search{
+        gap: 0;
+    }
+    .search-name{
+        display: none;
+    }
+}
+@media screen and (max-width:768px) {
+    .search{
+        display: grid;
+        grid-template-columns:  1fr;
+    }
+    .search-name{
+        display: block;
+    }
+    .search-label{
+        display: flex;
+        justify-content: center;
+    }
+    .search-content-1{
+       text-align: center;
+       position: relative;
+       left: 250px;
+    }
+}
+@media screen and (max-width:767px) {
+    
+    .search-content-1{
+       text-align: center;
+       position: relative;
+       left: 180px;
+       padding-bottom: 10px;
+    }
+}
+@media screen and (max-width:520px) {
+    
+    .search-content-1{
+       text-align: center;
+       position: relative;
+       left: 170px;
+       padding-bottom: 10px;
+    }
 }

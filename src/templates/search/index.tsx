@@ -3,6 +3,7 @@ import css from './search.module.scss';
 import { DatePicker } from 'antd';
 import { Dayjs } from 'dayjs';
 import AutoCompleteInput from 'src/components/SearchResults';
+import "./style.model.css"
 // import 'antd/dist/antd.css';
 
 // const { RangePicker } = DatePicker;
@@ -23,19 +24,19 @@ function Search() {
             <div className={css.search}>
                 <div className={css['search-item']}>
                     <div className={css['search-content']}>
-                        <p>Địa điểm</p>
+                        <p className={css['search-name']}>Địa điểm</p>
                         <div className={css["search-label"]}>
                             <i className="fa-solid fa-map"></i>
                             {/* <input className={css['search-input']} placeholder="Bạn sắp đi đâu ?" /> */}
-                            <AutoCompleteInput onSelect={handleSelect} />
+                            <AutoCompleteInput onSelect={handleSelect}  />
                         </div>
                     </div>
                 </div>
                 <div className={css['search-item']}>
                     <div className={css['search-content']}>
-                        <p>Ngày nhận phòng -- Ngày trả phòng</p>
+                        <p className={css['search-name']}>Ngày nhận phòng -- Ngày trả phòng</p>
                         <div className={css["search-label"]}>
-                            <i className="fa-regular fa-calendar-days"></i>
+                            <i className="fa-regular fa-calendar-days" ></i>
                             <DatePicker.RangePicker
                                 className={css['search-input']}
                                 placeholder={['Ngày nhận phòng', 'Ngày trả phòng']}
@@ -50,7 +51,7 @@ function Search() {
                 </div>
                 <div className={css['search-item']}>
                     <div style={{ border: 'none' }} className={css['search-content']}>
-                        <p>Khách</p>
+                        <p className={css["search-name"]}>Khách</p>
                         <div className={css["search-label"]}>
                             <i className="fa-solid fa-person"></i>
                             <input
@@ -61,19 +62,9 @@ function Search() {
                     </div>
                 </div>
                 <div className={css['search-item']}>
-                    <div style={{
-                        border: 'none',
-                        fontSize: "30px",
-                        height: "60px",
-                        width: "60px",
-                        lineHeight: "60px",
-                        backgroundColor: "#006dde",
-                        color: "#fff",
-                        borderRadius: "50%",
-                        textAlign: "center",
-                        padding: "0",
-                        marginRight: "20px"
-                    }} className={css['search-content']}>
+                    <div 
+                        
+                    className={css['search-content-1']}>
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </div>
                 </div>
