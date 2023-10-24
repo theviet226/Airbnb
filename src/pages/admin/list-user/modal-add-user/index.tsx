@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { addUser } from 'src/services/user.service';
 import { TAdminInfo } from 'src/types';
 import css from './modal-add-user.module.scss';

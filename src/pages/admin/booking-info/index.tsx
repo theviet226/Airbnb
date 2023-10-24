@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setListBooking } from 'src/redux/booking-room.slice';
 import { BookingRoom } from "src/services/room.service"
 import { deleteBooking } from 'src/services/booking.service';
-import { deleteBookingId, deleteAllBookings } from 'src/redux/booking-room.slice';
+import { deleteBookingId } from 'src/redux/booking-room.slice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,7 +13,7 @@ function BookingInfo() {
   const dispatch = useDispatch();
   const bookings = useSelector((state: any) => state.booking.listBooking)
   const [currentPage, setCurrentPage] = useState(1);
-  const bookingsPerPage = 21; // Số lượng người dùng trên mỗi trang
+  const bookingsPerPage = 21; 
   const indexOfLastUser = currentPage * bookingsPerPage;
   const indexOfFirstUser = indexOfLastUser - bookingsPerPage;
 
@@ -44,12 +44,7 @@ function BookingInfo() {
         toast.error('Xoá thông tin đặt phòng thất bại')
       })
   }
-  const handleDeleteAllBookings = () => {
-    if (window.confirm('Bạn có chắc chắn muốn xóa tất cả thông tin đặt phòng?')) {
-      dispatch(deleteAllBookings()); // Sử dụng hàm deleteAllBookings để xóa tất cả thông tin đặt phòng trong Redux
-      toast.success('Xoá tất cả thông tin đặt phòng thành công');
-    }
-  }
+ 
 
   const totalUsers = bookings.length;
   const totalPages = Math.ceil(totalUsers / bookingsPerPage);
@@ -126,9 +121,7 @@ function BookingInfo() {
             </button>
           ))}
           <button className='btn ' onClick={nextPage}><i className="fa-solid fa-forward"></i></button>
-          <button className='btn btn-danger' onClick={handleDeleteAllBookings}>
-            Xoá tất cả
-          </button>
+          
         </div>
       </div>
       <ToastContainer />
