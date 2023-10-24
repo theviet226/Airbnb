@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import css from "./register.module.scss";
-import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Y from "yup";
 import { authSignup } from "src/services/auth.service";
 import { toast, ToastContainer } from 'react-toastify';
-import avatar from "../../assets/images/avatar.jpg"
 import 'react-toastify/dist/ReactToastify.css';
 
 export type TSignup = {
@@ -27,7 +25,7 @@ const signupSchema = Y.object({
 });
 function Register() {
   const [gender, setGender] = useState<boolean | undefined>(undefined);
-  const navigate = useNavigate();
+
 
   const formik = useFormik({
     initialValues: {

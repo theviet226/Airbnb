@@ -13,16 +13,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DatePicker } from "antd";
 import { Dayjs } from "dayjs";
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 import isBetween from "dayjs/plugin/isBetween";
 import { Comment, idComment } from "src/services/comment.service";
 import { TOKENUSER } from "src/constants";
 import { useSelector } from "react-redux";
-import { commentList } from "src/redux/comment";
-import axios from "axios";
+
+import { RangeValue } from 'rc-picker/lib/interface';
+
 
 dayjs.extend(isBetween);
-
 type TPrams = {
   detailId: string;
 };
@@ -53,13 +53,12 @@ function DetailRoom() {
     return duration;
   };
 
-  const handleDateRangeChange = (
-    dates: [dayjs.Dayjs | null, dayjs.Dayjs | null],
-  ) => {
+  const handleDateRangeChange = (dates: RangeValue<Dayjs> | null) => {
+    dates = dates || [null, null];
     setSelectedDateRange(dates);
     if (dates[0] && dates[1]) {
-      const startDate = dayjs(dates[0]);
-      const endDate = dayjs(dates[1]);
+      const startDate = dates[0];
+      const endDate = dates[1];
       const nights = calculateNumberOfNights(startDate, endDate);
       setNumberOfNights(nights);
       const roomPrice = roomId?.giaTien || 0;
@@ -82,6 +81,18 @@ function DetailRoom() {
     maNguoiDung: "",
     maPhong: "",
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const commentsPerPage = 5;
+  const indexOfLastComment = currentPage * commentsPerPage;
+  const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+  const totalUsers = comments.length;
+  const totalPages = Math.ceil(totalUsers / commentsPerPage);
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+
 
   useEffect(() => {
     if (!params.detailId) return;
@@ -113,22 +124,19 @@ function DetailRoom() {
 
     if (isLoggedIn()) {
       const checkResult = await checkBooking(maPhong);
-      // Kiểm tra xung đột ngày đặt
-      const isBookingConflict = checkResult.some(
-        (booking: {
-          ngayDen: string | number | Dayjs | Date | null | undefined;
-          ngayDi: string | number | Dayjs | Date | null | undefined;
-        }) => {
-          const bookingStart = dayjs(booking.ngayDen);
-          const bookingEnd = dayjs(booking.ngayDi);
-          const userStart = dayjs(ngayDen);
-          const userEnd = dayjs(ngayDi);
-          return (
-            userStart.isBetween(bookingStart, bookingEnd, null, "[]") ||
-            userEnd.isBetween(bookingStart, bookingEnd, null, "[]")
-          );
-        },
-      );
+
+
+      const isBookingConflict = checkResult.some((booking: { ngayDen: string | number | Dayjs | Date | null | undefined; ngayDi: string | number | Dayjs | Date | null | undefined; }) => {
+        const bookingStart = dayjs(booking.ngayDen);
+        const bookingEnd = dayjs(booking.ngayDi);
+        const userStart = dayjs(ngayDen);
+        const userEnd = dayjs(ngayDi);
+        return (
+          userStart.isBetween(bookingStart, bookingEnd, null, "[]") ||
+          userEnd.isBetween(bookingStart, bookingEnd, null, "[]")
+        );
+      });
+
       if (isBookingConflict) {
         toast.error("Ngày đặt trùng lịch với đơn đặt phòng khác.");
         return;
@@ -211,20 +219,27 @@ function DetailRoom() {
   useEffect(() => {
     Comment(maPhong)
       .then((resp) => {
+        resp.sort((a: any, b: any) => new Date(b.ngayBinhLuan).getTime() - new Date(a.ngayBinhLuan).getTime());
         setComment(resp);
       })
       .catch((e) => {
         console.log(e);
       });
   }, [maPhong]);
-  const [soSao, setSoSao] = useState<number>(0);
+
+
+  const [soSao, setSoSao] = useState<number>(0)
+
   const [cmment, setComments] = useState({
     maPhong: "",
     maNguoiBinhLuan: "",
     ngayBinhLuan: "",
     noiDung: "",
     saoBinhLuan: 0,
-  });
+
+  })
+
+
 
   const handleChanges = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
@@ -234,36 +249,47 @@ function DetailRoom() {
       noiDung: value,
     });
   };
-  const listComment = useSelector(
-    (state: RootState) => state.commentList.listComment,
-  );
 
-  const handleComment = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const listComment = useSelector((state: RootState) => state.commentList.listComment)
+  console.log(listComment)
+
+  const handleComment = (e: any) => {
     e.preventDefault();
     if (!TOKENUSER) {
       alert("Bạn phải đăng nhập để có thể comment.");
-      navigate("/login");
+      navigate('/login');
+
       return;
     }
 
     const currentDate = new Date();
     const updateComment = {
-      noiDung: cmment.noiDung,
+
+
       maPhong: maPhong,
       maNguoiBinhLuan: userData.id,
       ngayBinhLuan: currentDate.toISOString(),
       saoBinhLuan: soSao.toString(),
+
+      noiDung: cmment.noiDung,
+
     };
 
     idComment(updateComment, TOKENUSER)
       .then((resp) => {
-        setComments(resp.content);
-        dispatch(commentList(comments));
+
+        setComment([resp, ...comments]);
+        setComments({
+          ...cmment,
+          noiDung: '',
+        });
+
       })
       .catch((e) => {
         console.log(e);
       });
-  };
+
+  }
 
   const renderSao = (soSao: number) => {
     const sao = [];
@@ -745,7 +771,9 @@ function DetailRoom() {
         </div>
         <hr />
 
-        {comments.map((comment) => (
+
+        {comments.slice(indexOfFirstComment, indexOfLastComment).map((comment: any) => (
+
           <div key={comment.id} className={css["detail-comment"]}>
             <div>
               <div className={css["detail-comment-img"]}>
@@ -786,10 +814,28 @@ function DetailRoom() {
                   {comment?.noiDung}
                 </span>
               </div>
-              <div>{renderSao(comment?.saoBinhLuan)}</div>
+
+              <div>
+                {renderSao(comment?.saoBinhLuan)}
+              </div>
+
             </div>
           </div>
         ))}
+        <div className={css.pagination}>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              style={{
+                fontSize: '20px'
+              }}
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`btn ${currentPage === index + 1 ? 'btn-primary' : 'btn-light'}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
         <div className={css["detail-cm"]}>
           <img
             src=""

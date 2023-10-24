@@ -16,13 +16,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
     const data = locals?.map((local: any) => local.tinhThanh);
 
     useEffect(() => {
-        Local({
-            id: locals?.id,
-            tenViTri: locals?.tenViTri,
-            tinhThanh: locals?.tinhThanh,
-            quocGia: locals?.quocGia,
-            hinhAnh: locals?.hinhAnh,
-        })
+        Local()
             .then((content) => {
                 dispatch(setListLocal(content));
             })
@@ -33,11 +27,9 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = ({ onSelect }) => {
     };
 
     const handleSearch = (text: string) => {
-        // Lọc danh sách tỉnh thành dựa trên từ khóa tìm kiếm
         const filteredProvinces = data.filter((data: string) =>
             data.toLowerCase().includes(text.toLowerCase())
         );
-
         const filteredOptions = filteredProvinces.map((data: any) => ({ value: data }));
         setOptions(filteredOptions);
     };

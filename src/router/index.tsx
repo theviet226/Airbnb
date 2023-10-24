@@ -1,20 +1,13 @@
 import { Navigate, createBrowserRouter } from "react-router-dom"
 import { BaseTemplate } from "../templates/base"
 import { lazy } from "react"
-// import BaseLoginRegister from "../templates/login-register"
 import { AdminBaseTemplate } from "../templates/admin"
 import BaseLoginRegister from "src/templates/login-register"
-// import RoomMangage from "src/pages/admin/room-manage"
-import ListRoomTemplate from "src/templates/room"
-
-
 const Location = lazy(() => import("../pages/admin/localtion"))
 const BookingInfo = lazy(() => import("../pages/admin/booking-info"))
 const Admin = lazy(() => import("../pages/admin"));
 const ListUsers = lazy(() => import("../pages/admin/list-user"));
 const RoomManage = lazy(() => import("../pages/admin/room-manage"));
-
-
 const Home = lazy(() => import("../pages/home"))
 const ListRoom = lazy(() => import("../pages/list-room"))
 const DetailRoom = lazy(() => import("../pages/detail-room"))
@@ -46,16 +39,6 @@ export const router = createBrowserRouter([
             },
         ]
     },
-    // {
-    //     element: <ListRoomTemplate />,
-    //     children: [
-
-    //         {
-    //             path: "profile",
-    //             element: <Profile />
-    //         },
-    //     ]
-    // },
     {
         element: <AdminBaseTemplate />,
         children: [
@@ -104,9 +87,7 @@ function isAdminLoggedIn() {
 
     if (userDataFromLocalStorage) {
         const userData = JSON.parse(userDataFromLocalStorage);
-        // Kiểm tra xem vai trò của người dùng có phải là "ADMIN" hay không
         return userData && userData.user && userData.user.role === 'ADMIN';
-
     }
 
     return false;

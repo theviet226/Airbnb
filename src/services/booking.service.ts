@@ -13,16 +13,16 @@ export const Booking = async (data: { ngayDen: string, ngayDi: string, soLuongKh
     console.log(error)
   }
 }
-export const checkBooking = async (data: { maPhong: string }): Promise<any> => {
+export const checkBooking = async (maPhong: string): Promise<any> => {
   try {
     const resp = await axiosWithoutAuth({
       method: "get",
       url: "/dat-phong",
+      data: maPhong,
     });
 
     const allBookings = resp.data.content;
 
-    // Lọc dữ liệu để chỉ lấy các mục có mã phòng giống với mã phòng bạn quan tâm
 
     return allBookings;
   } catch (error) {

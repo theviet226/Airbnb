@@ -6,7 +6,7 @@ import icvn from "src/assets/images/vn.png"
 
 import { useEffect } from 'react';
 import { useState } from 'react';
-import avatar from "../../assets/images/avatar.jpg"
+
 
 function Header() {
   const [userData, setUserData] = useState<any>(null);

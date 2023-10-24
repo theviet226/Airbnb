@@ -16,9 +16,8 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const profileUser = useSelector((state: any) => state.authReducerLogin.authLogin.user);
   const [file, setFile] = useState<File | undefined>()
-  // const [preview, setPreview] = useState<string | ArrayBuffer | undefined>()
   const [isModalOpen, setModalOpen] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage] = useState(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [userProfile, setUserProfile] = useState<{
     name: string;

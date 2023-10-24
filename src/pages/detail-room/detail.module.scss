@@ -286,6 +286,9 @@
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
 }
-@media screen and (max-width:1192px) {
-    
-}
+
+.pagination {
+    display: flex;
+    justify-content: flex-end; 
+  }
+
