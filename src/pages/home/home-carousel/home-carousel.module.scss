@@ -2,48 +2,7 @@
     display: inline !important;
     height: 50px;
 }
-// .title-carousel {
-//     display: grid;
-//     align-items: center;
-//     grid-template-columns: 1fr 1fr;
-//     font-family: "Inter";
-//     padding: 0 1rem;
-// }
-// .name-right {
-//     font-weight: 300;
-//     font-size: 40px;
-//     line-height: 48.41px;
-// }
-// .text-right {
-//     font-weight: 300;
-//     font-size: 20px;
-// }
-// .img-left {
-//     text-align: center;
-//     min-width: 70%;
-//     min-height: auto;
-//     padding-left: 5rem;
-//     display: inline !important;
-// }
-// .carousel-right {
-//     padding-right: 30px;
-// }
-// .carousel-button {
-//     width: 150px;
-//     height: 50px;
-//     background-color: #f8b653;
-//     border: #f8b653;
-//     font-weight: 300;
-//     font-size: 20px;
-//     color: #ffffff;
-//     rotate: 90 deg;
-//     cursor: pointer;
-//     border-radius: 10px;
-//     padding: 15px 50px;
-//     align-items: center;
-//     text-decoration: none;
-//     margin: 15px 0;
-// }
+
 .button-Prev{
     border:1px;
     cursor: pointer;
@@ -61,4 +20,12 @@
     top: 350px;
     right:10px;
     z-index: 2;
+}
+@media screen and (max-width:768px) {
+    .button-Prev{
+        top:620px;
+    }
+    .button-Next{
+        top:620px
+    }
 }

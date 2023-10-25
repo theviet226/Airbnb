@@ -9,7 +9,7 @@ export default function HomePreferential() {
             <div className='container'>
                 <p className='home-title'>Ưu đãi</p>
                 <p className='home-text'>Khuyễn mãi ,giảm giá và ưu đãi đặc biệt dành riêng cho bạn</p>
-                <div className={css.preferential}>
+                <div className={css.preferential} >
                     <div className={css['preferential-item']}>
                         <img src={preferential1} alt="" />
                         <div className={css['preferential-content']}>

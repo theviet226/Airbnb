@@ -147,10 +147,11 @@
 .detail-cm{
     display: flex;
     padding: 50px 80px 20px;
-    justify-content: space-between;
+    justify-content: flex-start;
+    
 }
 .detail-cm-buuton{
-    padding-left:205px ;
+    padding-left:150px ;
 }
 .detail-cm-add{
     padding: 10px 15px;

@@ -51,3 +51,8 @@ a.active {
     font-weight: 700;
     line-height: 32px;
 }
+@media screen and (max-width:1200px) {
+    .home{
+        padding-top: 0px;
+    }
+}
