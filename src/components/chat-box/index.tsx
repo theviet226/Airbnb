@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import css from "./chat-box.module.scss"
 
 const ChatBox = () => {
-    const [questionsAndAnswers, setQuestionsAndAnswers] = useState([
+    const [questionsAndAnswers] = useState([
         { question: "Câu hỏi 1", answer: "Câu trả lời cho câu hỏi 1" },
         { question: "Câu hỏi 2", answer: "Câu trả lời cho câu hỏi 2" },
         { question: "Câu hỏi 3", answer: "Câu trả lời cho câu hỏi 3" },

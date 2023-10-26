@@ -1,5 +1,3 @@
-
-
 export type TRoomIteam = {
     id: number;
     tenPhong: string;

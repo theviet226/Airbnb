@@ -1,7 +1,16 @@
-.img-room{
+.img-room {
     width: 300px;
     display: block;
 }
-.pagination{
+
+.pagination {
     text-align: center;
 }
+
+.option-room {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+

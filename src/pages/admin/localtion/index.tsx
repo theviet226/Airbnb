@@ -66,7 +66,7 @@ function Location() {
         );
         dispatch(setListLocal(updatedLocals));
         closeModal();
-        toast.success(resp.message);
+        toast.success("Cập nhập vị trí thành công!");
       })
       .catch((error) => {
         console.log(error);

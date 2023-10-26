@@ -1,5 +1,6 @@
 
 
+import { TRoomIteam } from "src/types";
 import { axiosWithAuth, axiosWithoutAuth } from "./config.service";
 
 
@@ -27,7 +28,7 @@ export const getRoomId = async (id: number | string) => {
         console.log(error)
     }
 }
-export const deleteRoom= async (id: string) => {
+export const deleteRoom = async (id: string) => {
     try {
         const resp = await axiosWithAuth({
             method: 'delete',
@@ -39,16 +40,31 @@ export const deleteRoom= async (id: string) => {
         console.log(error)
     }
 }
+export const updateRoom = async (id: string, data: TRoomIteam, token: string) => {
+    try {
+        const headers = {
+            'token': token
+        }
+        const resp = await axiosWithAuth({
+            method: 'put',
+            url: `/phong-thue/${id}`,
+            data,
+            headers
+        })
+        return resp.data
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 
-
-export const Room = async (data: { tenphong: string, khach: string, hinhanh: string, vitri: string }) => {
+export const Room = async () => {
     try {
         const resp = await axiosWithoutAuth({
             method: "get",
             url: "/phong-thue",
-            data,
+            
         })
         console.log(resp.data)
         return resp.data.content
