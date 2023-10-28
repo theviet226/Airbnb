@@ -25,8 +25,6 @@ function ListUsers() {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
 
-  console.log(users)
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -108,7 +106,7 @@ function ListUsers() {
     <div className={css.user}>
       <div className="row">
         <div className="col-md-3">
-          <ModalAddUser />
+          <ModalAddUser users= {users} />
         </div>
         <div className="col-md-9">
           <div className="card">
@@ -119,7 +117,7 @@ function ListUsers() {
               <table className="table table-bordered table-responsive" id="danhSachAdmin">
                 <thead>
                   <tr className="text-center bg-primary">
-                    <th className="text-nowrap">#</th>
+                    <th className="text-nowrap">ID</th>
 
                     <th className="text-nowrap">Họ Và Tên</th>
                     <th className="text-nowrap">Email</th>
@@ -132,7 +130,7 @@ function ListUsers() {
                 <tbody>
                   {users.slice(indexOfFirstUser, indexOfLastUser).map((user: any, index: any) => (
                     <tr key={index} className="text-center">
-                      <td>{index + 1}</td>
+                      <td>{user.id}</td>
                       <td>{user.name}</td>
                       <td>{user.email}</td>
                       <td>{user.role}</td>
@@ -204,6 +202,7 @@ function ListUsers() {
               type="text"
               id="email"
               name="email"
+              disabled
               value={editedEmail}
               onChange={(e) => setEditedEmail(e.target.value)}
               className="form-control"

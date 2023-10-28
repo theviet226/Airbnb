@@ -28,6 +28,22 @@ export const getRoomId = async (id: number | string) => {
         console.log(error)
     }
 }
+export const addRoom = async (data:TRoomIteam,token:string) => {
+    try{
+        const headers = {
+            'token' : token
+        }
+        const resp = await axiosWithoutAuth({
+            method: 'post',
+            url : '/phong-thue',
+            data,
+            headers
+        })
+        return resp.data.content
+    }catch (error) {
+        console.log(error)
+    }
+}
 export const deleteRoom = async (id: string) => {
     try {
         const resp = await axiosWithAuth({

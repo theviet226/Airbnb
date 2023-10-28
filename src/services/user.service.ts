@@ -62,7 +62,7 @@ export const addUser = async (data: TAdminInfo) => {
             data,
         });
         console.log(resp.data)
-        return resp.data
+        return resp.data.content
     } catch (error) {
         console.log(error)
     }

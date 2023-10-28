@@ -1,11 +1,13 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { addUser } from 'src/services/user.service';
 import { TAdminInfo } from 'src/types';
+import { useDispatch } from 'react-redux';
 import css from './modal-add-user.module.scss';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setUsers } from 'src/redux/user.slice';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Địa chỉ email không hợp lệ').required('Bạn phải nhập email'),
@@ -18,7 +20,11 @@ const validationSchema = Yup.object().shape({
     role: Yup.string().required('Bạn phải chọn role'),
 });
 
-function ModalAddUser() {
+interface ModalAddUserProps {
+    users: any;
+}
+function ModalAddUser({ users }: ModalAddUserProps) {
+    const dispatch = useDispatch()
     const [formData] = useState<TAdminInfo>({
         email: '',
         password: '',
@@ -41,7 +47,8 @@ function ModalAddUser() {
                         try {
                             const newUser = await addUser(values);
                             console.log('New user added:', newUser);
-                            toast("Thêm mới admin thành công!")
+                            dispatch(setUsers([...users, newUser]))
+                            toast.success("Thêm mới admin thành công!")
                             resetForm();
                         } catch (error) {
                             console.error('Error adding user:', error);

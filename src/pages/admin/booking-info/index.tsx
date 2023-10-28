@@ -95,9 +95,6 @@ function BookingInfo() {
                       <button onClick={() => handleDeleteBooking(booking.id)} style={{ marginRight: "10px" }} className='btn btn-danger' >
                         <i className="fa-solid fa-trash"></i>
                       </button>
-                      <button className='btn btn-warning'>
-                        <i className="fa-solid fa-pen-to-square"></i>
-                      </button>
                     </td>
                   </tr>
                 ))}

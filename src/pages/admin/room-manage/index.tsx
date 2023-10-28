@@ -1,12 +1,37 @@
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Room, deleteRoom} from "src/services/room.service"
-import { deleteRoomId, setListRoom } from "src/redux/room.slice";
+import { Room, deleteRoom, updateRoom } from "src/services/room.service"
+import { deleteRoomId, setListRoom, setSelectedRoom } from "src/redux/room.slice";
 import css from "./room-manage.module.scss"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { TOKENUSER } from 'src/constants';
+import ModalAddRoom from './modal-addroom';
+interface TRoomIteam {
+  id: number;
+  tenPhong: string;
+  maViTri: string;
+  giaTien: string;
+  moTa: string;
+  khach: string;
+  giuong: string;
+  phongNgu: string;
+  phongTam: string;
+  banLa: boolean;
+  banUi: boolean;
+  bep: boolean;
+  dieuHoa: boolean;
+  doXe: boolean;
+  hoBoi: boolean;
+  mayGiat: boolean;
+  tivi: boolean;
+  wifi: boolean;
+  hinhAnh: any;
+}
+
+
 
 
 
@@ -15,31 +40,33 @@ function RoomMangage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const rooms = useSelector((state: any) => state.room.listRoom);
   const selectRoom = useSelector((state: any) => state.room.selectedRoom)
+
   const [currentPage, setCurrentPage] = useState(1);
   const roomsPerPage = 6;
   const indexOfLastUser = currentPage * roomsPerPage;
   const indexOfFirstUser = indexOfLastUser - roomsPerPage;
-  // const [editedLocal, seteditedLocal] = useState("");
-  // const [editedRoomName, setEditedRoomName] = useState("");
-  // const [editedPrice, setEditedPrice] = useState("");
-  // const [editedDescription, setEditedDes] = useState("");
-  // const [editedGuests, setEditedGuest] = useState("");
-  // const [editedBeds, setEditedBed] = useState("");
-  // const [editedBedRoom, seteditedBedRoom] = useState("");
-  // const [editedBathRoom, seteditedBathRoom] = useState("");
-  // const [editedTivi, setEditedTivi] = useState(true);
-  // const [editedWifi, setEditedWifi] = useState(true);
-  // const [editedHoBoi, setEditedHoBoi] = useState(true);
-  // const [editedBanLa, setEditedBanLa] = useState(true);
-  // const [editedBanUi, setEditedBanUi] = useState(true);
-  // const [editedBep, setEditedBep] = useState(true);
-  // const [editedDieuHoa, setEditedDieuHoa] = useState(true);
-  // const [editedDoXe, setEditedDoXe] = useState(true);
-  // const [editedMayGiat, setEditedMayGiat] = useState(true);
-  // const editedImage = useState('')
+  const [editedLocal, seteditedLocal] = useState(0);
+  const [editedRoomName, setEditedRoomName] = useState('');
+  const [editedPrice, setEditedPrice] = useState(0);
+  const [editedDescription, setEditedDes] = useState('');
+  const [editedGuests, setEditedGuest] = useState('');
+  const [editedBeds, setEditedBed] = useState(0);
+  const [editedBedRoom, seteditedBedRoom] = useState(0);
+  const [editedBathRoom, seteditedBathRoom] = useState(0);
+  const [editedTivi, setEditedTivi] = useState(true);
+  const [editedWifi, setEditedWifi] = useState(true);
+  const [editedHoBoi, setEditedHoBoi] = useState(true);
+  const [editedBanLa, setEditedBanLa] = useState(true);
+  const [editedBanUi, setEditedBanUi] = useState(true);
+  const [editedBep, setEditedBep] = useState(true);
+  const [editedDieuHoa, setEditedDieuHoa] = useState(true);
+  const [editedDoXe, setEditedDoXe] = useState(true);
+  const [editedMayGiat, setEditedMayGiat] = useState(true);
+  const editedImage = useState('')
 
   const openModal = () => {
     setIsModalOpen(true);
+
   };
 
   const closeModal = () => {
@@ -49,50 +76,50 @@ function RoomMangage() {
     Room()
       .then((content) => {
         dispatch(setListRoom(content));
-        console.log(content)
       })
       .catch((error) => {
         console.log(error)
       })
   }, [dispatch])
-  // const handleUpdaterRoom = () => {
-  //   const updatedRoomData = {
-  //     id: selectRoom.id,
-  //     tenPhong: editedRoomName,
-  //     maViTri: editedLocal,
-  //     giaTien: editedPrice,
-  //     moTa: editedDescription,
-  //     khach: editedGuests,
-  //     giuong: editedBeds,
-  //     phongNgu: editedBedRoom,
-  //     phongTam: editedBathRoom,
-  //     banLa: editedBanLa,
-  //     banUi: editedBanUi,
-  //     bep: editedBep,
-  //     dieuHoa: editedDieuHoa,
-  //     doXe: editedDoXe,
-  //     hoBoi: editedHoBoi,
-  //     mayGiat: editedMayGiat,
-  //     tivi: editedTivi,
-  //     wifi: editedWifi,
-  //     hinhAnh: editedImage,
-  //   };
+  const handleUpdaterRoom = () => {
+    const updatedRoomData = {
+      id: selectRoom.id,
+      tenPhong: editedRoomName,
+      maViTri: editedLocal,
+      giaTien: editedPrice,
+      moTa: editedDescription,
+      khach: editedGuests,
+      giuong: editedBeds,
+      phongNgu: editedBedRoom,
+      phongTam: editedBathRoom,
+      banLa: editedBanLa,
+      banUi: editedBanUi,
+      bep: editedBep,
+      dieuHoa: editedDieuHoa,
+      doXe: editedDoXe,
+      hoBoi: editedHoBoi,
+      mayGiat: editedMayGiat,
+      tivi: editedTivi,
+      wifi: editedWifi,
+      hinhAnh: ''
+    };
 
-  //   updateRoom(selectRoom.id, updatedRoomData, TOKENUSER)
-  //     .then((resp) => {
-  //       const updatedRoom = resp.content;
-  //       const updatedRooms = rooms.map((room: any) =>
-  //         room.id === selectRoom.id ? updatedRoom : room
-  //       );
-  //       dispatch(setListRoom(updatedRooms));
-  //       closeModal();
-  //       toast.success(resp.message);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       toast.error('Cập nhật phòng thất bại !');
-  //     });
-  // }
+    updateRoom(selectRoom.id, updatedRoomData, TOKENUSER)
+      .then((resp) => {
+        const updatedRoom = resp.content;
+        console.log(updatedRoom)
+        const updatedRooms = rooms.map((room: any) =>
+          room.id === selectRoom.id ? updatedRoom : room
+        );
+        dispatch(setListRoom(updatedRooms));
+        closeModal();
+        toast.success(resp.message);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error('Cập nhật phòng thất bại !');
+      });
+  }
 
   const handleDeleteRoom = (id: string) => {
     deleteRoom(id)
@@ -104,6 +131,30 @@ function RoomMangage() {
         console.log(error)
         toast.error('Xoá thông tin  phòng thất bại')
       })
+  }
+
+  const handleViewRoom = (room: any) => {
+    dispatch(setSelectedRoom(room));
+    openModal()
+    seteditedLocal(room.maViTri);
+    setEditedRoomName(room.tenPhong);
+    console.log(room.tenPhong)
+    setEditedPrice(room.giaTien);
+    setEditedDes(room.moTa);
+    seteditedBathRoom(room.phongTam);
+    seteditedBedRoom(room.phongNgu);
+    setEditedBanLa(room.banLa);
+    setEditedBanUi(room.banUi)
+    setEditedBep(room.bep);
+    setEditedBed(room.giuong);
+    setEditedDieuHoa(room.dieuHoa);
+    setEditedDoXe(room.doXe);
+    setEditedGuest(room.khach);
+    setEditedHoBoi(room.hoBoi);
+    setEditedTivi(room.tivi);
+    setEditedWifi(room.wifi);
+    setEditedMayGiat(room.mayGiat);
+
   }
 
   const totalUsers = rooms.length;
@@ -124,7 +175,10 @@ function RoomMangage() {
   }
   return (
     <div className='row'>
-      <div className="col-md-12">
+      <div className='col-md-3'>
+        <ModalAddRoom rooms={rooms}/>
+      </div>
+      <div className="col-md-9">
         <div className="card">
           <div className="card-header text-center">
             <h2>Danh sách phòng</h2>
@@ -155,7 +209,7 @@ function RoomMangage() {
                       <button onClick={() => handleDeleteRoom(room.id)} style={{ marginRight: "10px" }} className='btn btn-danger' >
                         <i className="fa-solid fa-trash"></i>
                       </button>
-                      <button onClick={openModal} className='btn btn-warning'>
+                      <button onClick={() => { handleViewRoom(room) }} className='btn btn-warning'>
                         <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                     </td>
@@ -207,9 +261,8 @@ function RoomMangage() {
               type="text"
               id="local"
               name="local"
-              // value={editedLocal}
+              value={editedLocal}
               className="form-control"
-              disabled
               style={{
                 fontSize: "20px"
               }}
@@ -222,8 +275,8 @@ function RoomMangage() {
               type="text"
               id="name"
               name="name"
-              // value={editedRoomName}
-              // onChange={(e) => setEditedNameLocal(e.target.value)}
+              value={editedRoomName}
+              onChange={(e) => setEditedRoomName(e.target.value)}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -236,8 +289,8 @@ function RoomMangage() {
               type="number"
               id="price"
               name="price"
-              // value={editedPrice}
-              // onChange={(e) => setEditedNameLocal(e.target.value)}
+              value={editedPrice}
+              onChange={(e) => setEditedPrice(e.target.value)}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -250,8 +303,8 @@ function RoomMangage() {
               type="text"
               id="des"
               name="des"
-              // value={editedDescription}
-              // onChange={(e) => setEditedNameProvince(e.target.value)}
+              value={editedDescription}
+              onChange={(e) => setEditedDes(e.target.value)}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -264,8 +317,8 @@ function RoomMangage() {
               type="number"
               id="guest"
               name="guest"
-              // value={editedGuests}
-              // onChange={(e) => setEditedCountry(e.target.value)}
+              value={editedGuests}
+              onChange={(e) => setEditedGuest(e.target.value)}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -278,8 +331,8 @@ function RoomMangage() {
               type="text"
               id="bed"
               name="bed"
-              // value={editedBeds}
-              // onChange={(e) => setEditedCountry(e.target.value)}
+              value={editedBeds}
+              onChange={(e) => setEditedBed(e.target.value)}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -291,8 +344,8 @@ function RoomMangage() {
               type="text"
               id="phongtam"
               name="phongtam"
-              // value={editedBathRoom}
-              // onChange={(e) => setEditedCountry(e.target.value)}
+              value={editedBathRoom}
+              onChange={(e) => seteditedBathRoom(e.target.value)}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -305,8 +358,8 @@ function RoomMangage() {
               type="text"
               id="phongngu"
               name="phongngu"
-              // value={editedBedRoom}
-              // onChange={(e) => setEditedCountry(e.target.value)}
+              value={editedBedRoom}
+              onChange={(e) => seteditedBedRoom(e.target.value)}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -321,7 +374,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="banLa"
                   name="banLa"
-                  // checked={editedBanLa}
+                  checked={editedBanLa}
+                  onChange={(e) => setEditedBanLa(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -331,7 +385,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="banUi"
                   name="banUi"
-                  // checked={editedBanUi}
+                  checked={editedBanUi}
+                  onChange={(e) => setEditedBanUi(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -341,7 +396,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="bep"
                   name="bep"
-                  // checked={editedBep}
+                  checked={editedBep}
+                  onChange={(e) => setEditedBep(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -351,7 +407,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="dieuhoa"
                   name="dieuhoa"
-                  // checked={editedDieuHoa}
+                  checked={editedDieuHoa}
+                  onChange={(e) => setEditedDieuHoa(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -363,7 +420,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="doxe"
                   name="doxe"
-                  // checked={editedDoXe}
+                  checked={editedDoXe}
+                  onChange={(e) => setEditedDoXe(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -373,7 +431,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="maygiat"
                   name="maygiat"
-                  // checked={editedMayGiat}
+                  checked={editedMayGiat}
+                  onChange={(e) => setEditedMayGiat(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -383,7 +442,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="hoboi"
                   name="hoboi"
-                  // checked={editedHoBoi}
+                  checked={editedHoBoi}
+                  onChange={(e) => setEditedHoBoi(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -393,7 +453,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="tivi"
                   name="tivi"
-                  // checked={editedTivi}
+                  checked={editedTivi}
+                  onChange={(e) => setEditedTivi(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -403,7 +464,8 @@ function RoomMangage() {
                   type="checkbox"
                   id="wifi"
                   name="wifi"
-                  // checked={editedWifi}
+                  checked={editedWifi}
+                  onChange={(e) => setEditedWifi(e.target.checked)}
                   className="form-check-input"
                 />
               </div>
@@ -417,7 +479,7 @@ function RoomMangage() {
           <Button onClick={closeModal} style={{ fontSize: "20px" }} color="danger" >
             Đóng
           </Button>
-          <Button  style={{ fontSize: "20px" }} color="primary"  >
+          <Button onClick={handleUpdaterRoom} style={{ fontSize: "20px" }} color="primary"  >
             Cập nhật
           </Button>
         </ModalFooter>

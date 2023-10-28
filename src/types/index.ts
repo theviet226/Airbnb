@@ -1,7 +1,7 @@
 export type TRoomIteam = {
     id: number;
     tenPhong: string;
-    khach: number;
+    khach: string;
     phongNgu: number;
     giuong: number;
     phongTam: number;

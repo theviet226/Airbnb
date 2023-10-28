@@ -151,7 +151,7 @@ function Location() {
   return (
     <div className='row'>
       <div className='col-3'>
-        <ModalAddLocal />
+        <ModalAddLocal locals={locals} />
       </div>
       <div className="col-md-9">
         <div className="card">
