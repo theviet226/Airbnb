@@ -9,27 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { TOKENUSER } from 'src/constants';
 import ModalAddRoom from './modal-addroom';
-interface TRoomIteam {
-  id: number;
-  tenPhong: string;
-  maViTri: string;
-  giaTien: string;
-  moTa: string;
-  khach: string;
-  giuong: string;
-  phongNgu: string;
-  phongTam: string;
-  banLa: boolean;
-  banUi: boolean;
-  bep: boolean;
-  dieuHoa: boolean;
-  doXe: boolean;
-  hoBoi: boolean;
-  mayGiat: boolean;
-  tivi: boolean;
-  wifi: boolean;
-  hinhAnh: any;
-}
+
 
 
 
@@ -62,7 +42,7 @@ function RoomMangage() {
   const [editedDieuHoa, setEditedDieuHoa] = useState(true);
   const [editedDoXe, setEditedDoXe] = useState(true);
   const [editedMayGiat, setEditedMayGiat] = useState(true);
-  const editedImage = useState('')
+  // const editedImage = useState('')
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -290,7 +270,7 @@ function RoomMangage() {
               id="price"
               name="price"
               value={editedPrice}
-              onChange={(e) => setEditedPrice(e.target.value)}
+              onChange={(e) => setEditedPrice(parseFloat(e.target.value))}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -332,7 +312,7 @@ function RoomMangage() {
               id="bed"
               name="bed"
               value={editedBeds}
-              onChange={(e) => setEditedBed(e.target.value)}
+              onChange={(e) => setEditedBed(parseFloat(e.target.value))}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -345,7 +325,7 @@ function RoomMangage() {
               id="phongtam"
               name="phongtam"
               value={editedBathRoom}
-              onChange={(e) => seteditedBathRoom(e.target.value)}
+              onChange={(e) => seteditedBathRoom(parseFloat(e.target.value))}
               className="form-control"
               style={{
                 fontSize: "20px"
@@ -359,7 +339,7 @@ function RoomMangage() {
               id="phongngu"
               name="phongngu"
               value={editedBedRoom}
-              onChange={(e) => seteditedBedRoom(e.target.value)}
+              onChange={(e) => seteditedBedRoom(parseFloat(e.target.value))}
               className="form-control"
               style={{
                 fontSize: "20px"
